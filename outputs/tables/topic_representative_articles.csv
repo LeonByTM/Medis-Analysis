@@ -1,0 +1,22 @@
+topic_id,window,rank,article_id,date,source,topic_weight,title,url
+0,overall,1,179609,2024-11-06,zbrain,0.17456432491726753,"GenAI in Manufacturing: Scope, Integration, and Use Cases",https://zbrain.ai/generative-ai-for-manufacturing/
+0,overall,2,179605,2024-10-16,zbrain,0.1674639590490552,"GenAI for Procurement: Adoption, Use Cases, and Trends",https://zbrain.ai/generative-ai-for-procurement-and-sourcing/
+0,overall,3,180190,2025-03-24,zbrain,0.1666884143217189,"GenAI in Sales: Scope, Adoption, Use Cases, ROI and Challenges",https://zbrain.ai/generative-ai-for-sales/
+0,first_6_months,1,179609,2024-11-06,zbrain,0.17456432491726753,"GenAI in Manufacturing: Scope, Integration, and Use Cases",https://zbrain.ai/generative-ai-for-manufacturing/
+0,first_6_months,2,179605,2024-10-16,zbrain,0.1674639590490552,"GenAI for Procurement: Adoption, Use Cases, and Trends",https://zbrain.ai/generative-ai-for-procurement-and-sourcing/
+0,last_6_months,1,74289,2026-08-03,aithority,0.15672126883403048,Living AI: The Rise Of Self-Evolving Tech That Never Stop Learning,https://aithority.com/ait-featured-posts/living-ai-the-rise-of-self-evolving-tech-that-never-stop-learning/
+0,last_6_months,2,13180,2026-07-20,aithority,0.1506987590228134,AI and The Future of Work: Artificial Intelligence Is Expanding Organizational Intelligence Beyond Human Limits,https://aithority.com/ait-featured-posts/ai-and-the-future-of-work-artificial-intelligence-is-expanding-organizational-intelligence-beyond-human-limits/
+1,overall,1,51566,2026-06-10,dev,0.20303138485550473,Architecting Agentic AI Applications: The Complete Engineering Guide,https://www.dev.to/sreeni5018/architecting-agentic-ai-applications-the-complete-engineering-guide-508c
+1,overall,2,44181,2026-01-13,addyosmani,0.19985646509637744,AddyOsmani.com - How to write a good spec for AI agents,https://addyosmani.com/blog/good-spec/
+1,overall,3,44182,2026-01-31,addyosmani,0.19480423488588586,AddyOsmani.com,https://addyosmani.com/blog/self-improving-agents/
+1,first_6_months,1,160465,2024-10-31,gravitee,0.1671669237538123,How to Build an API: From Endpoints to Deployment in 1 Guide,https://www.gravitee.io/blog/how-to-build-an-api-guide
+1,first_6_months,2,171827,2024-09-12,modelcontextprotocol,0.1591062376412016,Writing Effective Tools for Agents: Complete MCP Development Guide – Model Context Protocol （MCP）,https://modelcontextprotocol.info/docs/tutorials/writing-effective-tools/
+1,last_6_months,1,51566,2026-06-10,dev,0.20303138485550473,Architecting Agentic AI Applications: The Complete Engineering Guide,https://www.dev.to/sreeni5018/architecting-agentic-ai-applications-the-complete-engineering-guide-508c
+1,last_6_months,2,164498,2026-06-04,truefoundry,0.19398468892754817,"Enterprise MCP Governance: How to Control, Audit, and Secure MCP Server Access at Scale",https://www.truefoundry.com/blog/enterprise-mcp-governance-control-audit-secure-mcp-server-access
+2,overall,1,131031,2025-08-07,marketbeat,0.17642336835982,DKNG Q2 2025 Earnings Report on 8/6/2025,https://www.marketbeat.com/earnings/reports/2025-8-6-draftkings-inc-stock/
+2,overall,2,101108,2026-04-30,stripe,0.17611609495217548,Indexing the economy,https://stripe.com/sessions/2026/indexing-the-economy
+2,overall,3,2376,2025-08-01,cnbc,0.17447486417761127,Human-AI relationships are no longer just science fiction,https://www.cnbc.com/2025/08/01/human-ai-relationships-love-nomi.html
+2,first_6_months,1,32996,2025-01-03,nytimes,0.17349757902603297,Our 2025 Tech Predictions and Resolutions + We Answer Your Questions​​ - The New York Times,https://www.nytimes.com/2025/01/03/podcasts/hardfork-predictions-resolutions.html
+2,first_6_months,2,65772,2025-02-14,engadget,0.171173145244013,"Engadget Podcast: What's up, DOGE? Diving into Elon Musk's hack on America",https://www.engadget.com/ai/engadget-podcast-whats-up-doge-diving-into-elon-musks-hack-on-america-123006530.html
+2,last_6_months,1,101108,2026-04-30,stripe,0.17611609495217548,Indexing the economy,https://stripe.com/sessions/2026/indexing-the-economy
+2,last_6_months,2,128827,2026-04-03,semafor,0.16915399755312646,Joanna Stern on how AI told her to quit The Wall Street Journal,https://www.semafor.com/article/04/03/2026/joanna-stern-on-how-ai-told-her-to-quit-the-wall-street-journal

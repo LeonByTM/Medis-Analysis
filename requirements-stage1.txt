@@ -1,0 +1,22 @@
+# Tested environment for notebooks/stage1_analysis.ipynb (Python 3.11.9, macOS). Install with: pip install -r requirements-stage1.txt
+# Then: python -m spacy download en_core_web_sm   (tested model version: en_core_web_sm 3.8.0)
+# Stage 1 needs only the packages below; requirements.txt is the broader baseline for later stages.
+kagglehub==1.0.2
+pandas==3.0.5
+numpy==2.3.3
+scipy==1.16.2
+scikit-learn==1.7.2
+spacy==3.8.16
+networkx==3.5
+matplotlib==3.10.6
+pyarrow==24.0.0
+ipykernel==7.4.0
+nbformat==5.11.1
+nbclient==0.11.0
+# LLM structured-extraction pilot (section 7.1); needs a key in a git-ignored .env file: LANGEXTRACT_API_KEY=...
+langextract==1.7.1
+openai==3.29.0
+python-dotenv==1.2.3
+# Known environment warning (does not change results): the tested machine also had torch 2.2.2 (built for NumPy 1.x), which prints a
+# NumPy-2 ABI warning when spaCy/thinc import it. Stage 1 does not use torch; use torch>=2.3 or leave torch uninstalled to silence it.
+# Dataset access: kagglehub.dataset_download("jannalipenkova/ai-media-dataset") requires working Kaggle access; no credentials are stored in the notebook.

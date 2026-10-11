@@ -1,0 +1,219 @@
+{
+  "schema_version": "agentic-claim-v1",
+  "entity_types": [
+    "ORGANIZATION",
+    "PERSON",
+    "PRODUCT",
+    "AI_PRODUCT",
+    "AI_MODEL",
+    "FRAMEWORK",
+    "PROTOCOL",
+    "AI_TECHNOLOGY"
+  ],
+  "entity_mention_fields": [
+    "article_id",
+    "entity_id",
+    "surface_form",
+    "canonical_name",
+    "entity_type",
+    "start_char",
+    "end_char",
+    "extraction_method",
+    "confidence"
+  ],
+  "normalization_policy": "Curated domain aliases link to stable lexicon IDs; spaCy-only mentions retain surface-derived IDs without disambiguation; NIL linking is not implemented.",
+  "predicates": {
+    "USES": {
+      "domain_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "ORGANIZATION",
+        "PERSON",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "INTEGRATES_WITH": {
+      "domain_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "ORGANIZATION",
+        "PERSON",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "ORGANIZATION",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "DEVELOPS": {
+      "domain_types": [
+        "ORGANIZATION"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "BUILDS_ON": {
+      "domain_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "FRAMEWORK",
+        "ORGANIZATION",
+        "PRODUCT"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "RELEASES": {
+      "domain_types": [
+        "ORGANIZATION"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "ANNOUNCES": {
+      "domain_types": [
+        "ORGANIZATION"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "PARTNERS_WITH": {
+      "domain_types": [
+        "ORGANIZATION"
+      ],
+      "range_types": [
+        "ORGANIZATION"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "ACQUIRES": {
+      "domain_types": [
+        "ORGANIZATION"
+      ],
+      "range_types": [
+        "AI_PRODUCT",
+        "ORGANIZATION",
+        "PRODUCT"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    },
+    "POWERED_BY": {
+      "domain_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "range_types": [
+        "AI_MODEL",
+        "AI_PRODUCT",
+        "AI_TECHNOLOGY",
+        "FRAMEWORK",
+        "ORGANIZATION",
+        "PRODUCT",
+        "PROTOCOL"
+      ],
+      "direction": "subject_to_object_as_stated_or_voice-normalized"
+    }
+  },
+  "claim_fields": [
+    "claim_id",
+    "schema_version",
+    "article_id",
+    "source_id",
+    "source_domain",
+    "source_url",
+    "source_title",
+    "published_at",
+    "event_time",
+    "event_time_status",
+    "subject_id",
+    "subject_surface",
+    "subject_type",
+    "subject_start_char",
+    "subject_end_char",
+    "predicate",
+    "object_id",
+    "object_surface",
+    "object_type",
+    "object_start_char",
+    "object_end_char",
+    "relation_kind",
+    "evidence_sentence_id",
+    "evidence_text",
+    "evidence_start_char",
+    "evidence_end_char",
+    "relation_cue_text",
+    "relation_cue_start_char",
+    "relation_cue_end_char",
+    "polarity",
+    "modality",
+    "temporal_status",
+    "extraction_method",
+    "confidence",
+    "validation_status"
+  ],
+  "cooccurrence_relation": {
+    "predicate": "MENTIONED_WITH",
+    "relation_kind": "cooccurrence",
+    "graph_type": "undirected Graph"
+  },
+  "semantic_claim_graph": {
+    "graph_type": "directed MultiDiGraph",
+    "edge_status": "unreviewed relation candidates"
+  },
+  "time_policy": "published_at is the dataset publication date; event_time remains null unless independently annotated.",
+  "evidence_offset_basis": "title + newline + first 2,500 characters of text_clean",
+  "confidence_policy": "Uncalibrated confidence is null; no confidence score is fabricated."
+}

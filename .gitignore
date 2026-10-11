@@ -1,0 +1,29 @@
+# Secrets and credentials: never commit
+.env
+.env.*
+*.key
+
+# Python / notebook artifacts
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+
+# Large regenerable data files (the notebook recreates them; GitHub rejects files over 100 MB)
+data/processed/*.parquet
+
+# Working notes and AI-assistant instruction files: kept locally, not part of the submission
+claude.md
+CLAUDE.md
+CODING_AGENT_INSTRUCTIONS.md
+PROJECT_SPEC.md
+IMPLEMENTATION_PLAN.md
+DATA_CONTRACT.md
+EVALUATION_PROTOCOL.md
+SLIDE_TRACEABILITY.md
+
+# LangExtract / LLM response caches may contain article text and request metadata
+outputs/llm_cache/
+
+# Professor-provided course material: not redistributed
+CLT_AI_Trend_Project.pdf

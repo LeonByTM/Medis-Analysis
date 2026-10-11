@@ -1,0 +1,2 @@
+nodes,directed_claim_edges,unique_claims,source_articles,weakly_connected_components,isolated_nodes,graph_type,edge_semantics
+8183,496,496,440,7969,7948,directed MultiDiGraph,"unreviewed, evidence-linked relation candidates"

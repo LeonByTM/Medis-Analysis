@@ -1,0 +1,7 @@
+topic_id,window,articles,distinct_sources,top_source,top_source_share
+0,first_6_months,702,87,zbrain,0.3547008547008547
+0,last_6_months,1143,111,builtin,0.21084864391951005
+1,first_6_months,281,58,gravitee,0.1601423487544484
+1,last_6_months,2256,105,dev,0.2801418439716312
+2,first_6_months,456,86,crn,0.09429824561403509
+2,last_6_months,1491,134,digiday,0.07243460764587525

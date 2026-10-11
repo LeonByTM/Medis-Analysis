@@ -1,0 +1,78 @@
+# Agentic AI Radar — Computational Language Technologies
+
+**Research theme:** Tracking the Rise of Autonomous AI Agents  
+**Chosen assignment track:** Agentic Web  
+**Primary data source:** [AI Media Dataset (Kaggle)](https://www.kaggle.com/datasets/jannalipenkova/ai-media-dataset)
+
+## Objective
+Build a reproducible NLP research pipeline to investigate how AI agents are discussed in media coverage. Analyze topics, entities, and relationships; construct a knowledge graph; train and evaluate language representations; and test whether graph-enhanced retrieval improves evidence-grounded question answering.
+
+## Assignment alignment
+The project is organized into **three documented Jupyter notebooks**. These are the main deliverables, not an external dashboard or report.
+
+| Notebook | Core purpose |
+| --- | --- |
+| `notebooks/stage1_analysis.ipynb` | Data preparation, exploratory analysis, topic modeling, entity/relation extraction, knowledge graph |
+| `notebooks/stage2_models.ipynb` | Word embeddings, compact language-model adaptation, evaluation |
+| `notebooks/stage3_rag.ipynb` | Baseline RAG, graph-enhanced RAG, controlled comparison |
+
+**Scope guardrails:** Use the assigned Kaggle dataset. Stage 1 and Stage 3 may emphasize Agentic Web articles, but Stage 2 should use the **full assigned dataset**, based on the previously discussed assignment instructions. Do not substitute a finance-news dataset or introduce live data as the primary source. There is **no Streamlit scope in this plan**.
+
+> **Verification note:** The authoritative assignment is the professor's official brief, `CLT_AI_Trend_Project.pdf`. This pack is a working specification derived from earlier discussion; where it disagrees with the PDF, the PDF governs. Recheck deadlines and submission guidance (ILIAS) before submitting. Stage 1 is an individual submission by Leon Bytyqi (confirmed by the student).
+
+## Status
+- **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). It is an **individual submission by Leon Bytyqi**. Audit evidence: `audits/PROFESSOR_REQUIREMENTS.md` (requirement-by-requirement status) and `audits/STAGE1_IMPROVEMENT_PLAN.md`.
+- **Stage 2 and Stage 3** notebooks have **not** been started.
+- Nothing in Stage 1 is human-validated: the review worksheets in `outputs/evaluations/` are unlabelled (optional; see `outputs/evaluations/REVIEW_GUIDE.md`).
+- **AI use:** see the "AI tools and LLM use" section below.
+
+## AI tools and LLM use (disclosure)
+- **Code drafting:** GitHub Copilot and AI language models drafted the code for Stage 1. Leon Bytyqi directed the project, specified the analytical objectives, oversaw implementation, and is responsible for reviewing the results, interpreting the findings and documenting limitations. AI tools were also used for debugging and documentation.
+- **OpenAI LLM in the analysis:** the OpenAI model `gpt-4o-mini` (temperature 0), called through the LangExtract library, was used for a structured entity and relation extraction **pilot on 50 articles** (notebook section 7.1). Text from those 50 public-dataset articles was sent to OpenAI. The outputs are unreviewed candidates and are compared with the rule-based extractor by overlap only; **no accuracy is claimed**, because no human labels exist.
+- **API key:** stored only in a git-ignored `.env` file (`LANGEXTRACT_API_KEY`); it is never part of the notebook, outputs or repository. Raw LLM responses are cached locally in `outputs/llm_cache/` (also git-ignored).
+- The full disclosure is in the introduction of `notebooks/stage1_analysis.ipynb`.
+
+## Quick start (Stage 1)
+1. Create a Python 3.11 environment and install `requirements-stage1.txt` (tested versions), then `python -m spacy download en_core_web_sm`. (`requirements.txt` is the broader baseline for later stages.)
+2. The notebook downloads the dataset itself with `kagglehub` (`jannalipenkova/ai-media-dataset`); no files need to be placed in `data/raw/`, and original files are never modified.
+3. Optional, for the LangExtract pilot only: create a git-ignored `.env` file in the project root containing `LANGEXTRACT_API_KEY=<your key>`. Without a key the pilot uses its local cache (`outputs/llm_cache/`) if present, otherwise it is skipped.
+4. Run `notebooks/stage1_analysis.ipynb` top to bottom (about 25 minutes on CPU; entity extraction dominates).
+5. Outputs are written to `data/processed/` and `outputs/` (tables, figures, graph, evaluations), with metadata in `data/processed/stage1_metadata.json`.
+6. Stage 2 and Stage 3 are not started: run them only after Stage 1 is approved.
+
+## Repository structure
+Items marked *(planned)* do not exist yet.
+```text
+.
+├── README.md
+├── (local only) CLT_AI_Trend_Project.pdf   # professor's official brief (authoritative; not redistributed)
+├── (local only, git-ignored working notes: PROJECT_SPEC.md, IMPLEMENTATION_PLAN.md,
+│    EVALUATION_PROTOCOL.md, CODING_AGENT_INSTRUCTIONS.md, DATA_CONTRACT.md, SLIDE_TRACEABILITY.md, claude.md)
+├── requirements.txt                # broad baseline
+├── requirements-stage1.txt         # tested Stage 1 versions
+├── .gitignore                      # excludes .env and LLM caches
+├── audits/                         # requirement audit and improvement plan
+├── notebooks/
+│   ├── stage1_analysis.ipynb
+│   ├── stage2_models.ipynb         # (planned)
+│   └── stage3_rag.ipynb            # (planned)
+├── data/processed/                 # cleaned corpus, Agentic Web subset, metadata
+├── outputs/{figures,tables,graph,evaluations}/
+├── src/                            # (planned, optional support code)
+└── tests/                          # (planned)
+```
+
+The `src/` package is optional support code. **Notebook cells must clearly explain methodology, show results, and link to reproducible artifacts.**
+
+## Research questions
+Project-wide questions (RQ1–RQ3 are answered by Stage 1, see section 11.1 of the Stage 1 notebook, which words them slightly more specifically; RQ4–RQ5 belong to Stages 2–3 and are not yet addressed):
+- RQ1: How does Agentic Web coverage evolve over the dataset's observed time range?
+- RQ2: Which organizations, tools, models, and concepts co-occur or participate in explicitly stated relationships?
+- RQ3: Which latent themes characterize Agentic Web reporting?
+- RQ4: Do domain-adapted representations improve the chosen intrinsic or downstream evaluation?
+- RQ5: Does knowledge-graph augmentation improve retrieval-grounded answers compared with the same baseline RAG system?
+
+**Important:** Media attention is not equivalent to real-world adoption or market impact. Report coverage trends as coverage trends.
+
+## Definition of done
+All three notebooks execute in order on documented hardware; each has markdown explanations, methodology, plots/tables, evaluation, limitations, and saved outputs. Every chart and quantitative claim is traceable to a reproducible cell. Dataset provenance and AI-assistance disclosure are included.

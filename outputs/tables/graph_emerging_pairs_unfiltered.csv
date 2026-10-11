@@ -1,0 +1,51 @@
+pair,subject_id,object_id,support_first,support_last,rate_first_per_1000_articles,rate_last_per_1000_articles,rate_change_per_1000_articles,involves_publisher_dominated_entity
+Fortune Media IP Limited + GitLab,organization:fortune-media-ip-limited,organization:gitlab,0,214,0.0,43.76278118609407,43.76278118609407,True
+AI agent + Model Context Protocol,ai_technology:ai-agent,protocol:model-context-protocol,0,124,0.0,25.357873210633947,25.357873210633947,False
+large language model + MCPs & Agents,ai_technology:large-language-model,organization:mcps-agents,0,92,0.0,18.813905930470348,18.813905930470348,True
+large language model + VAR & VAD,ai_technology:large-language-model,organization:var-vad,0,92,0.0,18.813905930470348,18.813905930470348,True
+MCPs & Agents + VAR & VAD,organization:mcps-agents,organization:var-vad,0,92,0.0,18.813905930470348,18.813905930470348,True
+API + Model Context Protocol,ai_technology:api,protocol:model-context-protocol,1,89,0.6949270326615705,18.20040899795501,17.505481965293438,False
+SaaStr + Jason Lemkin,organization:saastr,person:jason-lemkin,0,78,0.0,15.950920245398773,15.950920245398773,True
+AI agent + API,ai_technology:ai-agent,ai_technology:api,8,95,5.559416261292564,19.427402862985684,13.867986601693119,False
+Anthropic + OpenAI,organization:anthropic,organization:openai,29,164,20.152883947185547,33.537832310838446,13.3849483636529,False
+Gartner Hype Cycle + TrueFoundry,organization:gartner-hype-cycle,organization:truefoundry,0,62,0.0,12.678936605316974,12.678936605316974,True
+Claude Code + Anthropic,ai_product:claude-code,organization:anthropic,1,62,0.6949270326615705,12.678936605316974,11.984009572655403,False
+large language model + Model Context Protocol,ai_technology:large-language-model,protocol:model-context-protocol,1,56,0.6949270326615705,11.451942740286299,10.757015707624728,False
+API + Google,ai_technology:api,organization:google,4,61,2.779708130646282,12.474437627811861,9.694729497165579,False
+Claude + ChatGPT,ai_model:claude,ai_product:chatgpt,11,84,7.644197359277276,17.177914110429448,9.533716751152173,False
+AI agent + OpenClaw,ai_technology:ai-agent,framework:openclaw,0,44,0.0,8.997955010224949,8.997955010224949,False
+Gemini + Google,ai_model:gemini,organization:google,55,230,38.22098679638638,47.034764826175866,8.81377802978949,False
+API + large language model,ai_technology:api,ai_technology:large-language-model,10,75,6.949270326615705,15.337423312883436,8.38815298626773,False
+Anthropic + Model Context Protocol,organization:anthropic,protocol:model-context-protocol,0,38,0.0,7.770961145194274,7.770961145194274,False
+Claude + Gemini,ai_model:claude,ai_model:gemini,9,67,6.254343293954135,13.701431492842536,7.447088198888401,False
+Gemini + API,ai_model:gemini,ai_technology:api,5,53,3.4746351633078527,10.838445807770961,7.363810644463109,False
+Anthropic + Google,organization:anthropic,organization:google,8,62,5.559416261292564,12.678936605316974,7.1195203440244095,False
+Google + Model Context Protocol,organization:google,protocol:model-context-protocol,0,34,0.0,6.952965235173824,6.952965235173824,False
+Claude Code + GitHub Copilot,ai_product:claude-code,ai_product:github-copilot,0,31,0.0,6.339468302658487,6.339468302658487,False
+Gemini + AI agent,ai_model:gemini,ai_technology:ai-agent,6,51,4.169562195969423,10.429447852760736,6.2598856567913135,False
+Claude + Model Context Protocol,ai_model:claude,protocol:model-context-protocol,1,34,0.6949270326615705,6.952965235173824,6.258038202512254,False
+Claude + Anthropic,ai_model:claude,organization:anthropic,36,152,25.01737317581654,31.083844580777097,6.066471404960556,False
+Agent2Agent Protocol + Model Context Protocol,protocol:agent2agent-protocol,protocol:model-context-protocol,0,29,0.0,5.930470347648262,5.930470347648262,False
+Claude + Claude Code,ai_model:claude,ai_product:claude-code,2,35,1.389854065323141,7.157464212678937,5.7676101473557955,False
+Gartner Hype Cycle + Model Context Protocol,organization:gartner-hype-cycle,protocol:model-context-protocol,0,27,0.0,5.521472392638037,5.521472392638037,True
+Google + Cloud Next,organization:google,person:cloud-next,0,27,0.0,5.521472392638037,5.521472392638037,False
+BigQuery + Google,organization:bigquery,organization:google,2,33,1.389854065323141,6.748466257668712,5.3586121923455705,False
+Agent Development Kit + Development Kit,framework:agent-development-kit,person:development-kit,0,26,0.0,5.316973415132924,5.316973415132924,False
+GTC + NVIDIA,organization:gtc,organization:nvidia,0,25,0.0,5.112474437627812,5.112474437627812,False
+Agent Development Kit + Google,framework:agent-development-kit,organization:google,0,25,0.0,5.112474437627812,5.112474437627812,False
+TrueFoundry + Model Context Protocol,organization:truefoundry,protocol:model-context-protocol,0,24,0.0,4.9079754601226995,4.9079754601226995,True
+Google + Google Cloud,organization:google,product:google-cloud,11,61,7.644197359277276,12.474437627811861,4.8302402685345855,False
+ChatGPT + AI Overviews,ai_product:chatgpt,organization:ai-overviews,0,23,0.0,4.703476482617587,4.703476482617587,False
+General Service + `` Pre-GA Offerings Terms,organization:general-service,product:pre-ga-offerings-terms,0,23,0.0,4.703476482617587,4.703476482617587,False
+Capital Management + Securities and Exchange Commission,organization:capital-management,organization:securities-and-exchange-commission,0,22,0.0,4.4989775051124745,4.4989775051124745,False
+a16z Capital Management + LLC,organization:a16z-capital-management,organization:llc,0,22,0.0,4.4989775051124745,4.4989775051124745,False
+Gemini + Claude Code,ai_model:gemini,ai_product:claude-code,0,22,0.0,4.4989775051124745,4.4989775051124745,False
+Claude + AI agent,ai_model:claude,ai_technology:ai-agent,4,35,2.779708130646282,7.157464212678937,4.377756082032654,False
+Microsoft + Microsoft Edge,organization:microsoft,organization:microsoft-edge,2,28,1.389854065323141,5.725971370143149,4.336117304820008,True
+Gemini + Model Context Protocol,ai_model:gemini,protocol:model-context-protocol,0,21,0.0,4.294478527607362,4.294478527607362,False
+OpenClaw + NVIDIA,framework:openclaw,organization:nvidia,0,21,0.0,4.294478527607362,4.294478527607362,False
+agentic AI + Model Context Protocol,ai_technology:agentic-ai,protocol:model-context-protocol,0,21,0.0,4.294478527607362,4.294478527607362,False
+Gemini Enterprise + Google,organization:gemini-enterprise,organization:google,2,27,1.389854065323141,5.521472392638037,4.131618327314896,False
+Coinbase + JP Morgan,organization:coinbase,organization:jp-morgan,0,20,0.0,4.08997955010225,4.08997955010225,False
+GKE + Google,organization:gke,organization:google,0,20,0.0,4.08997955010225,4.08997955010225,False
+Gemini + ChatGPT,ai_model:gemini,ai_product:chatgpt,8,47,5.559416261292564,9.611451942740286,4.052035681447722,False

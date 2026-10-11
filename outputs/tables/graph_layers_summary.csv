@@ -1,0 +1,7 @@
+layer,nodes,edges,status
+Entity inventory (all normalized entity IDs; nodes of both GraphML files),8183,,extracted entities (unvalidated NER + lexicon)
+Co-occurrence graph: nodes with >=1 co-occurrence edge,7291,31817.0,article-level same-sentence co-mentions; not relations
+Co-occurrence graph: isolated nodes,892,0.0,entity never shares a sentence with another extracted entity
+Directed semantic candidates: nodes with >=1 candidate edge,235,496.0,unreviewed lexical-template candidates
+Directed semantic candidates: isolated nodes (inventory entities with no candidate),7948,0.0,no candidate extracted
+Human-validated relations,0,0.0,none: no human review performed

@@ -1,0 +1,29 @@
+check,status,detail
+unique cleaned article IDs,Passed,"47,443 rows"
+unique selected article IDs,Passed,"11,867 rows"
+selected rows satisfy frozen rule,Passed,agentic-web-lexicon-v2
+entity article provenance,Passed,"11,397 articles represented"
+generic spaCy labels filtered,Passed,Generic AI/ML terms are not retained as spaCy people or organizations
+entity offsets valid for truncated NER input,Passed,"137,715 mention spans"
+relation predicates explicitly co-occurrence,Passed,"64,971 article-level relation records"
+relation evidence and article provenance present,Passed,Every edge evidence sentence is linked to a selected article
+topic assignments in configured range,Passed,NMF K=3
+typed relation domain/range constraints,Passed,496 directed candidates
+claim source/date/evidence provenance,Passed,"Claims link to source article IDs, publication dates, URLs, and exact sentence evidence"
+claim character spans align with evidence,Passed,496 evidence spans
+event time is explicitly unextracted,Passed,Publication time is preserved; event time is not inferred
+semantic claim graph preserves direction and provenance,Passed,496 directed claim edges
+entity co-occurrence matrix is symmetric with zero diagonal,Passed,35 top-mentioned entities
+"spaCy-derived entity names have no leading 'the', possessive or trailing punctuation",Passed,"8,147 spaCy-derived entity IDs"
+one normalized spaCy name maps to exactly one entity ID,Passed,"8,132 spaCy-only IDs"
+entity spans equal the NER source text (spaCy and lexicon spans),Passed,"137,715 mention spans compared with the exact NER input"
+"distinct products/business units stay distinct (no AWS->Amazon, DeepMind->Google, GitHub Copilot->Copilot merge)",Passed,Lexicon keeps parent and product/unit entities separate
+protected words are not lemmatized in the topic view,Passed,e.g. 'data' is not mapped to 'datum'
+topic stability grid completed with fixed seeds,Passed,30 replicate fits
+monthly topic counts reconcile with selected-article denominators,Passed,"24 months, 11,867 selected articles"
+graph layers are consistent (claim nodes are inventory nodes; no validated relations),Passed,235 entities in candidate claims; all 496 candidates unreviewed
+emerging pairs are co-occurrence edges with window-normalized rates; publisher-dominated entities excluded from the ranking,Passed,"130 ranked pairs (142 before the exclusion); windows of 1,439 and 4,890 selected articles"
+"LLM pilot: accepted relations have exact source offsets, an allowed predicate, and name both entities in the evidence",Passed,41 accepted of 65 LLM relation extractions on 50 pilot articles
+LLM pilot: every LLM relation is an unreviewed candidate (no validation claimed),Passed,validation_status = unreviewed_candidate
+API key does not appear in the notebook or in exported LLM tables,Passed,"key never printed, stored or exported"
+required statements present: individual contribution and explicit 'drafted the code' AI disclosure; no placeholder or stale text,Passed,"Checks the saved notebook text, including its markdown"

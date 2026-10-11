@@ -1,0 +1,7 @@
+min_supporting_articles,nodes_with_edges,edges,density,connected_components,largest_component_share_of_nodes,average_clustering,top10_degree_entities,top10_jaccard_vs_threshold_1
+1,7291,31817,0.001197221747164091,109,0.9665340831161706,0.5051616077153727,AI agent; Google; agentic AI; Microsoft; large language model; NVIDIA; OpenAI; API; Gemini; Anthropic,1.0
+2,3729,8360,0.0012027295630926609,277,0.8165728077232502,0.4005701668868589,AI agent; Google; NVIDIA; Microsoft; OpenAI; agentic AI; API; Gemini; large language model; Anthropic,1.0
+3,1557,3454,0.0028513735959833112,123,0.8021836865767502,0.3916019654899697,Google; AI agent; NVIDIA; Microsoft; OpenAI; API; Gemini; agentic AI; Anthropic; large language model,1.0
+5,680,1529,0.0066230615957723294,42,0.8529411764705882,0.37458708901510723,Google; AI agent; NVIDIA; Microsoft; Gemini; OpenAI; API; large language model; Anthropic; agentic AI,1.0
+10,267,583,0.016417448114668696,19,0.8389513108614233,0.3901486933066349,Google; AI agent; NVIDIA; Microsoft; OpenAI; Gemini; large language model; API; agentic AI; ChatGPT,0.8181818181818182
+20,117,252,0.03713527851458886,10,0.8376068376068376,0.35930853271100444,Google; AI agent; OpenAI; Microsoft; NVIDIA; Gemini; large language model; Anthropic; agentic AI; Model Context Protocol,0.8181818181818182

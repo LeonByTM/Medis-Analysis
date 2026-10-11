@@ -1,0 +1,645 @@
+{
+  "dataset_ref": "jannalipenkova/ai-media-dataset",
+  "kaggle_dataset_version": "2",
+  "kaggle_version_metadata": "Version inferred from the KaggleHub versioned cache path; public Kaggle dataset metadata reported version 2, updated 2026-09-16 at retrieval.",
+  "dataset_filename": "ai_media_dataset_20260911.csv",
+  "dataset_license_reported": "MIT",
+  "retrieved_at_utc": "2026-10-11T21:20:19.415542+00:00",
+  "source_files": [
+    {
+      "path": "ai_media_dataset_20260911.csv",
+      "bytes": 529709045,
+      "suffix": ".csv"
+    }
+  ],
+  "dataset_cache_location": "KaggleHub-managed cache; local absolute path intentionally omitted",
+  "dataset_metadata_url": "https://www.kaggle.com/datasets/jannalipenkova/ai-media-dataset",
+  "source_columns": [
+    "Unnamed: 0",
+    "title",
+    "date",
+    "content",
+    "domain",
+    "url",
+    "tags"
+  ],
+  "column_mapping": {
+    "title": "title",
+    "date": "date",
+    "content": "content",
+    "source": "domain",
+    "url": "url",
+    "tags": "tags",
+    "source_id": "Unnamed: 0"
+  },
+  "article_id_basis": "Unnamed: 0",
+  "language_distribution": "Unavailable: source schema contains no language field; no language detector was run.",
+  "analysis_date_start_inclusive": "2024-09-01",
+  "analysis_date_end_inclusive": "2026-08-31",
+  "raw_rows": 47751,
+  "clean_rows": 47443,
+  "agentic_subset_rows": 11867,
+  "invalid_dates_removed": 0,
+  "outside_window_rows_excluded": 243,
+  "missing_text_rows": 0,
+  "exact_duplicate_clean_text_removed": 65,
+  "duplicate_url_occurrences_reported": 0,
+  "text_parse_fallbacks": 0,
+  "selection_rule_version": "agentic-web-lexicon-v2",
+  "selection_rule": "curated Agentic Web phrase in title OR body (at least one hit); agent-related tags are metadata only",
+  "selection_evaluation": {
+    "status": "Needs review",
+    "n_reviewed": 0,
+    "note": "No manual labels were supplied; precision/recall are not reported."
+  },
+  "topic_model": {
+    "method": "TF-IDF + NMF",
+    "n_topics": 3,
+    "seed": 20261011,
+    "repeated_sentence_document_frequency_threshold": 119,
+    "repeated_sentence_forms_removed_from_topic_view": 105,
+    "mean_top12_npmi": 0.13991557214411973,
+    "candidate_diagnostics": [
+      {
+        "n_topics": 3,
+        "iterations": 171,
+        "converged_within_limit": true,
+        "reconstruction_error": 46.97531715240685,
+        "mean_top12_npmi": 0.13991557214411973
+      },
+      {
+        "n_topics": 4,
+        "iterations": 175,
+        "converged_within_limit": true,
+        "reconstruction_error": 46.80287950231643,
+        "mean_top12_npmi": 0.1488198123112683
+      },
+      {
+        "n_topics": 6,
+        "iterations": 145,
+        "converged_within_limit": true,
+        "reconstruction_error": 46.496684266916276,
+        "mean_top12_npmi": 0.19373584414054137
+      }
+    ],
+    "representation": {
+      "boilerplate_sentence_forms_removed": 105,
+      "phrase_canonical_rules": 9,
+      "vocabulary_before_lemma_merge": 12000,
+      "vocabulary_after_lemma_merge": 9723,
+      "terms_changed_by_lemmatization": 3672,
+      "protected_from_lemmatization": [
+        "access",
+        "address",
+        "analytics",
+        "axes",
+        "best",
+        "better",
+        "born",
+        "business",
+        "class",
+        "cves",
+        "data",
+        "dies",
+        "does",
+        "gas",
+        "id",
+        "im",
+        "lives",
+        "media",
+        "metadata",
+        "news",
+        "process",
+        "series",
+        "status",
+        "worse",
+        "worst"
+      ],
+      "lemmatization_scope": "topic view only; vocabulary-level, one-word context; NER/stored text unchanged"
+    },
+    "selected_n_topics_rationale": "K=3 most reproducible across resamples (see topic_stability_summary.csv); NPMI alone would favour larger K",
+    "stability": {
+      "replicates_per_k": 10,
+      "sample_size": 2500,
+      "grid": [
+        3,
+        4,
+        6
+      ],
+      "summary": [
+        {
+          "n_topics": 3,
+          "replicates": 10,
+          "mean_matched_cosine": 0.9842,
+          "worst_topic_cosine_min": 0.971,
+          "mean_top12_jaccard": 0.6991,
+          "mean_assignment_ari": 0.833,
+          "sd_assignment_ari": 0.0588,
+          "converged_replicates": 10,
+          "mean_top12_npmi": 0.1399
+        },
+        {
+          "n_topics": 4,
+          "replicates": 10,
+          "mean_matched_cosine": 0.9667,
+          "worst_topic_cosine_min": 0.7527,
+          "mean_top12_jaccard": 0.6918,
+          "mean_assignment_ari": 0.7505,
+          "sd_assignment_ari": 0.1186,
+          "converged_replicates": 10,
+          "mean_top12_npmi": 0.1488
+        },
+        {
+          "n_topics": 6,
+          "replicates": 10,
+          "mean_matched_cosine": 0.9138,
+          "worst_topic_cosine_min": 0.0819,
+          "mean_top12_jaccard": 0.5755,
+          "mean_assignment_ari": 0.7288,
+          "sd_assignment_ari": 0.1075,
+          "converged_replicates": 10,
+          "mean_top12_npmi": 0.1937
+        }
+      ],
+      "surface_vs_lemma_view_assignment_ari": 0.8461
+    },
+    "temporal": {
+      "windows": {
+        "first": [
+          "2024-09",
+          "2024-10",
+          "2024-11",
+          "2024-12",
+          "2025-01",
+          "2025-02"
+        ],
+        "last": [
+          "2026-03",
+          "2026-04",
+          "2026-05",
+          "2026-06",
+          "2026-07",
+          "2026-08"
+        ]
+      },
+      "low_denominator_threshold": 100,
+      "bulk_ingest_rule": {
+        "min_articles": 100,
+        "min_month_share": 0.2
+      }
+    }
+  },
+  "ner_model": "spaCy en_core_web_sm",
+  "ner_max_characters": 2500,
+  "ner_truncated_articles": 11867,
+  "relation_semantics": "MENTIONED_WITH co-occurrence is separate from unreviewed directed lexical-template claim candidates; neither is treated as validated real-world fact.",
+  "semantic_claim_extraction": {
+    "schema_version": "agentic-claim-v1",
+    "method": "typed lexical templates over adjacent same-sentence entity mentions",
+    "claim_count": 496,
+    "predicate_counts": {
+      "RELEASES": 176,
+      "USES": 109,
+      "DEVELOPS": 59,
+      "INTEGRATES_WITH": 43,
+      "POWERED_BY": 31,
+      "PARTNERS_WITH": 27,
+      "ANNOUNCES": 25,
+      "ACQUIRES": 23,
+      "BUILDS_ON": 3
+    },
+    "source_article_count": 440,
+    "publication_date_field": "published_at",
+    "event_time": "not extracted; null in every candidate",
+    "manual_review": "unreviewed candidates; blank annotations in outputs/evaluations/relation_review.csv",
+    "review_sample_size": 51,
+    "evidence_offset_basis": "title + newline + first 2,500 characters of text_clean",
+    "graph_type": "directed NetworkX MultiDiGraph",
+    "graph_file": "outputs/graph/agentic_semantic_claims.graphml",
+    "graph_reload_checks": "performed in notebook artifact round-trip cell"
+  },
+  "entity_resolution_status": "Domain lexicon aliases are linked to canonical IDs; spaCy-only mentions retain surface-form IDs and are not disambiguated or assigned NIL.",
+  "confidence_policy": "Entity/relation confidence is left null because neither spaCy entity scores nor calibrated relation probabilities are available.",
+  "graph_type": "undirected NetworkX Graph for co-occurrence; separate directed MultiDiGraph for unreviewed semantic claim candidates",
+  "seed": 20261011,
+  "python": "3.11.9",
+  "pandas": "3.0.5",
+  "numpy": "2.3.3",
+  "scikit_learn": "1.7.2",
+  "scipy": "1.16.2",
+  "networkx": "3.5",
+  "spacy": "3.8.16",
+  "notebook": "notebooks/stage1_analysis.ipynb",
+  "entity_normalization": {
+    "rules": [
+      {
+        "rule": "trim_article_possessive_quote_or_trailing_punctuation",
+        "mentions_affected": 6644
+      },
+      {
+        "rule": "drop_non_latin_or_garbled_span",
+        "mentions_affected": 507
+      },
+      {
+        "rule": "drop_span_already_covered_by_lexicon_match",
+        "mentions_affected": 21888
+      },
+      {
+        "rule": "link_spelling_variant_to_lexicon_entity",
+        "mentions_affected": 259
+      },
+      {
+        "rule": "resolve_entity_type_conflict_by_majority_vote",
+        "mentions_affected": 4957
+      },
+      {
+        "rule": "unify_spelling_variant_of_same_normalized_name",
+        "mentions_affected": 1852
+      },
+      {
+        "rule": "spacy_ids_before_vs_after_type_resolution",
+        "mentions_affected": 1943
+      },
+      {
+        "rule": "drop_spacy_candidates_failing_frequency_or_generic_filter",
+        "mentions_affected": 61803
+      }
+    ],
+    "lexicon_entities": 51,
+    "case_sensitive_acronyms": [
+      "A2A",
+      "ADK",
+      "AGI",
+      "AP2",
+      "API",
+      "AWS",
+      "GPT 4",
+      "GPT-4",
+      "IBM",
+      "LLM",
+      "MCP",
+      "RAG"
+    ]
+  },
+  "graph_analysis": {
+    "core_threshold_supporting_articles": 5,
+    "threshold_grid": [
+      1,
+      2,
+      3,
+      5,
+      10,
+      20
+    ],
+    "layers": [
+      {
+        "layer": "Entity inventory (all normalized entity IDs; nodes of both GraphML files)",
+        "nodes": 8183,
+        "edges": NaN,
+        "status": "extracted entities (unvalidated NER + lexicon)"
+      },
+      {
+        "layer": "Co-occurrence graph: nodes with >=1 co-occurrence edge",
+        "nodes": 7291,
+        "edges": 31817.0,
+        "status": "article-level same-sentence co-mentions; not relations"
+      },
+      {
+        "layer": "Co-occurrence graph: isolated nodes",
+        "nodes": 892,
+        "edges": 0.0,
+        "status": "entity never shares a sentence with another extracted entity"
+      },
+      {
+        "layer": "Directed semantic candidates: nodes with >=1 candidate edge",
+        "nodes": 235,
+        "edges": 496.0,
+        "status": "unreviewed lexical-template candidates"
+      },
+      {
+        "layer": "Directed semantic candidates: isolated nodes (inventory entities with no candidate)",
+        "nodes": 7948,
+        "edges": 0.0,
+        "status": "no candidate extracted"
+      },
+      {
+        "layer": "Human-validated relations",
+        "nodes": 0,
+        "edges": 0.0,
+        "status": "none: no human review performed"
+      }
+    ]
+  },
+  "llm_extraction_pilot": {
+    "ran": true,
+    "provider": "OpenAI via LangExtract",
+    "model": "gpt-4o-mini",
+    "temperature": 0.0,
+    "langextract_version": "1.7.1",
+    "prompt_sha": "cf18eb7b68acff57",
+    "pilot_articles": 50,
+    "sampling": "fixed seed 20261011; 25 with and 25 without template candidates",
+    "input": "title + first 2,500 characters (same as the NER input)",
+    "api_calls_this_run": 50,
+    "api_failures_this_run": 0,
+    "validation": "grounding only (aligned span names both entities, predicate in schema); accuracy not measured",
+    "human_review": "none",
+    "summary": {
+      "pilot articles with responses": 50,
+      "LLM entity extractions": 423,
+      "LLM entities exactly aligned to source text": 341,
+      "LLM entities also found by the NER pipeline": 211,
+      "LLM entities not found by the NER pipeline": 212,
+      "pipeline entities (distinct names) not extracted by the LLM": 198,
+      "LLM relation extractions (all)": 65,
+      "LLM relations accepted by grounding validation": 41,
+      "LLM relations rejected by grounding validation": 24,
+      "accepted LLM relations violating the predicate domain/range types": 4,
+      "template candidates on pilot articles": 31,
+      "template candidates: same pair, predicate and direction as an accepted LLM relation": 4,
+      "template candidates: same pair but different predicate/direction": 1,
+      "template candidates not extracted by the LLM": 26,
+      "accepted LLM relations whose pair is also a template candidate": 5,
+      "accepted LLM relations found only by the LLM": 36,
+      "accepted LLM relations in articles where the template extractor found none": 15
+    }
+  },
+  "authorship_and_ai_disclosure": {
+    "student": "Leon Bytyqi",
+    "submission": "individual (permitted; confirmed by the student)",
+    "ai_disclosure": "GitHub Copilot and AI language models drafted the code for Stage 1; the student directed the project and is responsible for reviewing results, interpreting findings and documenting limitations; AI tools were also used for debugging and documentation.",
+    "human_validation_performed": "none beyond executed structural checks"
+  },
+  "compliance_audit": [
+    {
+      "id": "R1",
+      "requirement": "Use the AI Media Dataset",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "1",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "KaggleHub jannalipenkova/ai-media-dataset v2; 47,751 rows; 7 columns; ai_media_dataset_20260911.csv"
+    },
+    {
+      "id": "R2",
+      "requirement": "One topic track, used consistently for the graph (Agentic Web)",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "3, 6-8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "11,867 rule-selected articles; graph built on that subset"
+    },
+    {
+      "id": "R3",
+      "requirement": "Graph evidence traceable to the AI Media Dataset",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "7-8, 10",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Article/source IDs, URLs, publication dates and exact evidence offsets on every claim and edge"
+    },
+    {
+      "id": "R4",
+      "requirement": "Clean data: duplicates, missing values, normalize text",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "2",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "65 exact duplicate texts removed; 0 invalid dates; 0 missing texts; 47,443 final records"
+    },
+    {
+      "id": "R5",
+      "requirement": "Tokenization, lemmatization, stop-word removal where appropriate",
+      "classification": "Conditional",
+      "source": "Brief p.2",
+      "notebook_section": "5",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Topic view: tokenization, stop words, vocabulary-level lemmatization (3,672 terms merged to lemmas); NER/stored text deliberately not lemmatized"
+    },
+    {
+      "id": "R6",
+      "requirement": "Consistent representation incl. acronyms/abbreviations",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "5, 6",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Acronym canonicalization in the topic view; alias lexicon (A2A, ADK, RAG, LLM, AGI, MCP...); spaCy name/type normalization (see entity_normalization_report.csv). No exhaustive acronym audit; bare 'Copilot' stays ambiguous"
+    },
+    {
+      "id": "R7",
+      "requirement": "Temporal analysis, Sep 2024 - Aug 2026",
+      "classification": "Mandatory",
+      "source": "Brief p.2",
+      "notebook_section": "4, 5.3",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Monthly counts/shares with explicit denominators; window comparison; bulk-ingest robustness"
+    },
+    {
+      "id": "R8",
+      "requirement": "Sentiment or stance analysis where meaningful",
+      "classification": "Conditional",
+      "source": "Brief p.3",
+      "notebook_section": "4.1",
+      "status": "NOT APPLICABLE",
+      "evidence_or_remaining_issue": "Not performed; written justification (sentiment is not stance; no validation labels; not needed for the research questions). Decision awaits the student's confirmation"
+    },
+    {
+      "id": "R9",
+      "requirement": "Clear visualizations (bar charts, time series, term/topic trajectories)",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "4-8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "10 figures saved under outputs/figures"
+    },
+    {
+      "id": "R10",
+      "requirement": "Pretrained NER for organizations, technologies, models, standards, products, people",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "6",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "spaCy core_web_sm + domain lexicon; 137,715 mentions with article provenance; no human NER evaluation"
+    },
+    {
+      "id": "R11",
+      "requirement": "LangExtract or a comparable structured extraction approach for entities and relations",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "7, 7.1",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "LangExtract (OpenAI gpt-4o-mini) applied to a 50-article fixed-seed pilot: 41 of 65 relation extractions passed source-grounding validation and are compared with the template candidates (496 on the full subset). Pilot only: no human labels exist, so the accuracy of neither method is measured and no improvement over templates is claimed"
+    },
+    {
+      "id": "R12",
+      "requirement": "Entity co-occurrence matrix",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Symmetric 35 x 35 article-support matrix and heatmap"
+    },
+    {
+      "id": "R13",
+      "requirement": "Compact topic-specific schema before graph construction",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "7-8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Entity types, predicate domain/range, graph types, provenance, temporal and confidence policies"
+    },
+    {
+      "id": "R14",
+      "requirement": "Graph with entities as nodes and co-mention or extracted-relation edges",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Co-occurrence: 8,183 nodes/31,817 edges; directed candidates: 496 edges (unreviewed)"
+    },
+    {
+      "id": "R15",
+      "requirement": "Network metrics (centrality, clustering) to reveal influential entities and emerging relationships",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Degree, weighted degree, PageRank, clustering, approximate betweenness (core graph), threshold sensitivity, and normalized first-vs-last-six-month emergence of entities and co-mention pairs"
+    },
+    {
+      "id": "R16",
+      "requirement": "Visualize the graph (NetworkX/Graphviz)",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "8",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Focused co-occurrence and directed-candidate subgraph figures"
+    },
+    {
+      "id": "R17",
+      "requirement": "Store graph and schema for Stage 3 reuse",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "10",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Two GraphML files, node/edge CSVs and schema JSON reloaded and compared"
+    },
+    {
+      "id": "R18",
+      "requirement": "Topic model (LDA, NMF, Top2Vec, BERTopic as examples)",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "5",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "TF-IDF/NMF K=3; NPMI 0.140; stability over 10 resamples per K"
+    },
+    {
+      "id": "R19",
+      "requirement": "Hierarchical or dynamic topic analysis where useful",
+      "classification": "Conditional",
+      "source": "Brief p.3",
+      "notebook_section": "5.1, 5.3",
+      "status": "PARTIAL",
+      "evidence_or_remaining_issue": "Evolution analysed with fixed topics by month and window, and subtopic splitting inspected via K=4/6; no hierarchical or dynamic topic model fitted (judged unnecessary, not tested)"
+    },
+    {
+      "id": "R20",
+      "requirement": "Interpret topic distributions over time for the track",
+      "classification": "Mandatory",
+      "source": "Brief p.3",
+      "notebook_section": "5.2-5.4",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Interpretation text verified against executed results by assertion"
+    },
+    {
+      "id": "R21",
+      "requirement": "Document key insights and notable developments",
+      "classification": "Mandatory",
+      "source": "Brief pp.2-3",
+      "notebook_section": "11.1",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Research-question answers generated from executed results with evidence levels"
+    },
+    {
+      "id": "R22",
+      "requirement": "Notebook with cleaning/preprocessing, annotations, explanations, visualized results",
+      "classification": "Mandatory",
+      "source": "Brief pp.3, 5",
+      "notebook_section": "all",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "28 executable checks"
+    },
+    {
+      "id": "R23",
+      "requirement": "Each member indicates their contribution",
+      "classification": "Mandatory",
+      "source": "Brief p.5",
+      "notebook_section": "Introduction",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "Individual submission by Leon Bytyqi (confirmed by the student); statement does not claim human validation"
+    },
+    {
+      "id": "R24",
+      "requirement": "Disclose AI coding tools by name and use",
+      "classification": "Mandatory",
+      "source": "Brief p.5",
+      "notebook_section": "Introduction",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "GitHub Copilot and AI language models 'drafted the code'; student responsibilities stated separately"
+    },
+    {
+      "id": "R25",
+      "requirement": "Submit the notebook per ILIAS deadlines/guidance",
+      "classification": "Mandatory",
+      "source": "Brief p.5",
+      "notebook_section": "-",
+      "status": "NOT VERIFIED",
+      "evidence_or_remaining_issue": "Cannot be verified from the workspace"
+    },
+    {
+      "id": "O1",
+      "requirement": "Human-reviewed article-selection precision/recall",
+      "classification": "Optional",
+      "source": "Quality improvement",
+      "notebook_section": "9",
+      "status": "NOT VERIFIED",
+      "evidence_or_remaining_issue": "0 of 40 worksheet rows labelled; no metrics reported"
+    },
+    {
+      "id": "O2",
+      "requirement": "Human-reviewed NER and relation precision",
+      "classification": "Optional",
+      "source": "Quality improvement",
+      "notebook_section": "9",
+      "status": "NOT VERIFIED",
+      "evidence_or_remaining_issue": "0 of 56 entity and 0 of 51 relation rows labelled; no metrics reported"
+    },
+    {
+      "id": "O3",
+      "requirement": "Event-time extraction for relation candidates",
+      "classification": "Optional",
+      "source": "Quality improvement",
+      "notebook_section": "7",
+      "status": "NOT VERIFIED",
+      "evidence_or_remaining_issue": "Event time is null; modality/polarity are lexical heuristics"
+    },
+    {
+      "id": "O4",
+      "requirement": "Human review of the LangExtract pilot relations",
+      "classification": "Optional",
+      "source": "Quality improvement",
+      "notebook_section": "7.1",
+      "status": "NOT VERIFIED",
+      "evidence_or_remaining_issue": "41 accepted LLM relations in outputs/evaluations/llm_relation_review.csv are unlabelled; no accuracy reported"
+    },
+    {
+      "id": "G1",
+      "requirement": "Stage 2 / Stage 3 / Streamlit excluded",
+      "classification": "Mandatory",
+      "source": "Scope guardrail",
+      "notebook_section": "-",
+      "status": "PASS",
+      "evidence_or_remaining_issue": "No later-stage notebook or application created"
+    }
+  ]
+}

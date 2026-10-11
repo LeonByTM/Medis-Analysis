@@ -1,0 +1,18 @@
+metric,value
+pilot articles with responses,50
+LLM entity extractions,423
+LLM entities exactly aligned to source text,341
+LLM entities also found by the NER pipeline,211
+LLM entities not found by the NER pipeline,212
+pipeline entities (distinct names) not extracted by the LLM,198
+LLM relation extractions (all),65
+LLM relations accepted by grounding validation,41
+LLM relations rejected by grounding validation,24
+accepted LLM relations violating the predicate domain/range types,4
+template candidates on pilot articles,31
+"template candidates: same pair, predicate and direction as an accepted LLM relation",4
+template candidates: same pair but different predicate/direction,1
+template candidates not extracted by the LLM,26
+accepted LLM relations whose pair is also a template candidate,5
+accepted LLM relations found only by the LLM,36
+accepted LLM relations in articles where the template extractor found none,15

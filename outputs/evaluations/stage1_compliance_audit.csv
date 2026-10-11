@@ -1,0 +1,31 @@
+id,requirement,classification,source,notebook_section,status,evidence_or_remaining_issue
+R1,Use the AI Media Dataset,Mandatory,Brief p.2,1,PASS,"KaggleHub jannalipenkova/ai-media-dataset v2; 47,751 rows; 7 columns; ai_media_dataset_20260911.csv"
+R2,"One topic track, used consistently for the graph (Agentic Web)",Mandatory,Brief p.2,"3, 6-8",PASS,"11,867 rule-selected articles; graph built on that subset"
+R3,Graph evidence traceable to the AI Media Dataset,Mandatory,Brief p.2,"7-8, 10",PASS,"Article/source IDs, URLs, publication dates and exact evidence offsets on every claim and edge"
+R4,"Clean data: duplicates, missing values, normalize text",Mandatory,Brief p.2,2,PASS,"65 exact duplicate texts removed; 0 invalid dates; 0 missing texts; 47,443 final records"
+R5,"Tokenization, lemmatization, stop-word removal where appropriate",Conditional,Brief p.2,5,PASS,"Topic view: tokenization, stop words, vocabulary-level lemmatization (3,672 terms merged to lemmas); NER/stored text deliberately not lemmatized"
+R6,Consistent representation incl. acronyms/abbreviations,Mandatory,Brief p.2,"5, 6",PASS,"Acronym canonicalization in the topic view; alias lexicon (A2A, ADK, RAG, LLM, AGI, MCP...); spaCy name/type normalization (see entity_normalization_report.csv). No exhaustive acronym audit; bare 'Copilot' stays ambiguous"
+R7,"Temporal analysis, Sep 2024 - Aug 2026",Mandatory,Brief p.2,"4, 5.3",PASS,Monthly counts/shares with explicit denominators; window comparison; bulk-ingest robustness
+R8,Sentiment or stance analysis where meaningful,Conditional,Brief p.3,4.1,NOT APPLICABLE,Not performed; written justification (sentiment is not stance; no validation labels; not needed for the research questions). Decision awaits the student's confirmation
+R9,"Clear visualizations (bar charts, time series, term/topic trajectories)",Mandatory,Brief p.3,4-8,PASS,10 figures saved under outputs/figures
+R10,"Pretrained NER for organizations, technologies, models, standards, products, people",Mandatory,Brief p.3,6,PASS,"spaCy core_web_sm + domain lexicon; 137,715 mentions with article provenance; no human NER evaluation"
+R11,LangExtract or a comparable structured extraction approach for entities and relations,Mandatory,Brief p.3,"7, 7.1",PASS,"LangExtract (OpenAI gpt-4o-mini) applied to a 50-article fixed-seed pilot: 41 of 65 relation extractions passed source-grounding validation and are compared with the template candidates (496 on the full subset). Pilot only: no human labels exist, so the accuracy of neither method is measured and no improvement over templates is claimed"
+R12,Entity co-occurrence matrix,Mandatory,Brief p.3,8,PASS,Symmetric 35 x 35 article-support matrix and heatmap
+R13,Compact topic-specific schema before graph construction,Mandatory,Brief p.3,7-8,PASS,"Entity types, predicate domain/range, graph types, provenance, temporal and confidence policies"
+R14,Graph with entities as nodes and co-mention or extracted-relation edges,Mandatory,Brief p.3,8,PASS,"Co-occurrence: 8,183 nodes/31,817 edges; directed candidates: 496 edges (unreviewed)"
+R15,"Network metrics (centrality, clustering) to reveal influential entities and emerging relationships",Mandatory,Brief p.3,8,PASS,"Degree, weighted degree, PageRank, clustering, approximate betweenness (core graph), threshold sensitivity, and normalized first-vs-last-six-month emergence of entities and co-mention pairs"
+R16,Visualize the graph (NetworkX/Graphviz),Mandatory,Brief p.3,8,PASS,Focused co-occurrence and directed-candidate subgraph figures
+R17,Store graph and schema for Stage 3 reuse,Mandatory,Brief p.3,10,PASS,"Two GraphML files, node/edge CSVs and schema JSON reloaded and compared"
+R18,"Topic model (LDA, NMF, Top2Vec, BERTopic as examples)",Mandatory,Brief p.3,5,PASS,TF-IDF/NMF K=3; NPMI 0.140; stability over 10 resamples per K
+R19,Hierarchical or dynamic topic analysis where useful,Conditional,Brief p.3,"5.1, 5.3",PARTIAL,"Evolution analysed with fixed topics by month and window, and subtopic splitting inspected via K=4/6; no hierarchical or dynamic topic model fitted (judged unnecessary, not tested)"
+R20,Interpret topic distributions over time for the track,Mandatory,Brief p.3,5.2-5.4,PASS,Interpretation text verified against executed results by assertion
+R21,Document key insights and notable developments,Mandatory,Brief pp.2-3,11.1,PASS,Research-question answers generated from executed results with evidence levels
+R22,"Notebook with cleaning/preprocessing, annotations, explanations, visualized results",Mandatory,"Brief pp.3, 5",all,PASS,28 executable checks
+R23,Each member indicates their contribution,Mandatory,Brief p.5,Introduction,PASS,Individual submission by Leon Bytyqi (confirmed by the student); statement does not claim human validation
+R24,Disclose AI coding tools by name and use,Mandatory,Brief p.5,Introduction,PASS,GitHub Copilot and AI language models 'drafted the code'; student responsibilities stated separately
+R25,Submit the notebook per ILIAS deadlines/guidance,Mandatory,Brief p.5,-,NOT VERIFIED,Cannot be verified from the workspace
+O1,Human-reviewed article-selection precision/recall,Optional,Quality improvement,9,NOT VERIFIED,0 of 40 worksheet rows labelled; no metrics reported
+O2,Human-reviewed NER and relation precision,Optional,Quality improvement,9,NOT VERIFIED,0 of 56 entity and 0 of 51 relation rows labelled; no metrics reported
+O3,Event-time extraction for relation candidates,Optional,Quality improvement,7,NOT VERIFIED,Event time is null; modality/polarity are lexical heuristics
+O4,Human review of the LangExtract pilot relations,Optional,Quality improvement,7.1,NOT VERIFIED,41 accepted LLM relations in outputs/evaluations/llm_relation_review.csv are unlabelled; no accuracy reported
+G1,Stage 2 / Stage 3 / Streamlit excluded,Mandatory,Scope guardrail,-,PASS,No later-stage notebook or application created
