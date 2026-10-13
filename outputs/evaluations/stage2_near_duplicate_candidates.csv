@@ -1,0 +1,27 @@
+article_id_a,article_id_b,split_a,split_b,published_at_a,published_at_b,title_a,title_b,prefix_simhash_hamming,prefix_shingle_jaccard,full_body_shingle_jaccard,quarantine_threshold,algorithmic_quarantine
+171920,172117,train,validation,2025-02-04,2026-05-01,BNP Paribas Personal Finance - Graph Database & Analytics,BNP Paribas Personal Finance,0,1.0,0.9697336561743342,0.8,True
+169740,170483,train,test,2025-06-20,2026-07-22,Differences between Dataset and IterableDataset,Differences between Dataset and IterableDataset · Hugging Face,1,0.9822485207100592,0.9917203311867525,0.8,True
+49630,33037,train,test,2025-11-25,2026-08-11,AI Agents,"What Are AI Agents? Definition, Uses & Examples",2,0.9697542533081286,0.9859154929577465,0.8,True
+88150,88222,train,validation,2025-12-22,2026-05-21,3D Convolutional Neural Network ( 3D CNN) â A Guide for Engineers,3D Convolutional Neural Network ( 3D CNN) — A Guide for Engineers,2,0.9950576606260296,1.0,0.8,True
+177324,177454,train,validation,2026-01-03,2026-05-25,Usability Engineering for Medical Devices: 2025 & Beyond,Usability Engineering for Medical Devices: 2026 & Beyond,5,0.9827288428324698,0.9878345498783455,0.8,True
+50417,50783,train,test,2026-01-06,2026-07-16,Product digital twins bridge the digital and physical for L’ Oréal,Product digital twins bridge the digital and physical for L’ Oréal￼,5,0.9059080962800875,0.9313543599257885,0.8,True
+170278,170423,train,validation,2026-01-21,2026-06-01,Chat templates,Chat templates · Hugging Face,0,1.0,0.9089048106448311,0.8,True
+48232,48856,train,test,2026-02-04,2026-07-05,"Senior Lead AI Engineer ( FM Hosting, LLM Inference) at Capital One","Lead AI Engineer ( AI Foundations, LLM Customization and Finetuning) at Capital One",1,0.9835796387520526,0.9921752738654147,0.8,True
+172062,172119,train,validation,2026-02-10,2026-05-01,"Arhasi Delivers Trusted, Defensible AI and a 370% ROI with Neo4j and Google Cloud - Graph Database & Analytics","Arhasi Delivers Trusted, Defensible AI and a 370% ROI with Neo4j and Google Cloud",0,1.0,0.9584295612009238,0.8,True
+171419,171458,train,validation,2026-02-14,2026-04-25,Your favourite sci-fi series that are perfect from start to finish,‘ Best series ever made’: TV fans reveal greatest sci-fi shows of all time,4,0.8704663212435233,0.9433962264150944,0.8,True
+143264,143311,train,test,2026-03-01,2026-08-05,TSA Agents Do So Much More Than Screen Your Carry-On,What TSA Agents Actually Do Besides Check Your Carry-On,1,0.9826771653543307,0.9624413145539906,0.8,True
+157560,157714,train,validation,2026-03-03,2026-05-28,"Media and Entertainment Enterprise Finance, HR and Planning Software","Media and Entertainment Finance, HR and Planning Software",3,0.9908256880733946,0.9899328859060402,0.8,True
+157473,157886,train,test,2026-03-03,2026-06-17,Workday vs. Other Workforce Management Vendors,Workday vs Other Workforce Management Vendors,10,0.8279883381924198,0.8490284005979073,0.8,True
+48479,48623,train,validation,2026-04-12,2026-05-16,"Engagement Manager, META - GitLab",Engagement Manager - EMEA - GitLab,6,0.9471830985915493,0.9851694915254238,0.8,True
+44650,170463,train,test,2026-04-17,2026-07-14,Gemma 4 model card,unsloth/gemma-4-E4B-it-NVFP4 · Hugging Face,6,0.8433179723502304,0.8421468034727704,0.8,True
+48502,48844,train,test,2026-04-20,2026-06-29,Senior Solutions Architect - AI & Platforms SME - GitLab,"Principal Solutions Architect, AI / Core DevOps SME - GitLab",4,0.9397163120567376,0.8816793893129771,0.8,True
+139489,149681,train,validation,2026-04-23,2026-04-28,New chip can protect wireless biomedical devices from quantum attacks,New Chip Can Protect Wireless Biomedical Devices From Quantum Attacks,4,0.9323181049069373,0.8738738738738738,0.8,True
+48523,48884,validation,test,2026-04-27,2026-07-13,Commercial Account Executive - DACH - GitLab,Senior Named Account Executive - DACH - GitLab,3,0.9206896551724137,0.9757894736842105,0.8,True
+48571,48914,validation,test,2026-05-09,2026-07-22,Customer Success Engineer - GitLab,"Customer Success Engineer, LATAM ( Spanish, Portugese) - GitLab",11,0.8840579710144928,0.8676318510858325,0.8,True
+48597,48857,validation,test,2026-05-14,2026-07-05,"Commercial Account Executive - Mid Market, Greece - GitLab",Enterprise Account Executive - CIS ( Russian Speaker) - GitLab,7,0.8267148014440433,0.9497326203208556,0.8,True
+48621,32746,validation,test,2026-05-16,2026-07-30,Senior Solutions Architect - CEUR - GitLab,Solutions Architect - France - GitLab,11,0.831081081081081,0.9475890985324947,0.8,True
+170411,170464,validation,test,2026-05-23,2026-07-14,google/gemma-4-12B · Hugging Face,unsloth/gemma-4-12b-it-NVFP4 · Hugging Face,1,0.9207119741100324,0.9802130898021308,0.8,True
+48726,48902,validation,test,2026-05-26,2026-07-16,Commercial Account Executive - Greece/Malta - GitLab,Commercial Account Executive - Balkans - GitLab,1,0.9661458333333334,0.9805825242718447,0.8,True
+85499,85500,validation,test,2026-05-27,2026-06-15,LLM-as-Judge: How to Calibrate with Human Corrections,How to Calibrate LLM-as-Judge with Human Corrections,0,1.0,0.9943560800410467,0.8,True
+170420,170464,validation,test,2026-05-29,2026-07-14,unsloth/gemma-4-12b-it-GGUF · Hugging Face,unsloth/gemma-4-12b-it-NVFP4 · Hugging Face,2,0.93042071197411,0.9410909090909091,0.8,True
+48778,48933,validation,test,2026-05-29,2026-08-01,"Staff Program Manager, Enterprise Technology & AI - GitLab","Senior Program Manager, Enterprise Technology & AI - GitLab",5,0.9576923076923077,0.9890829694323144,0.8,True

@@ -1,0 +1,14 @@
+# Install in a CUDA-enabled Colab runtime after its compatible PyTorch is present.
+# Keep notebook tooling (ipykernel, nbformat, nbclient) managed by Colab.
+# Do not reinstall or replace Colab's CUDA-matched torch package.
+numpy==2.3.3
+pandas==3.0.5
+pyarrow==24.0.0
+scikit-learn==1.7.2
+scipy==1.16.2
+gensim==4.4.0
+matplotlib==3.10.6
+transformers==4.57.1
+peft==0.18.0
+bitsandbytes==0.48.1
+accelerate==1.11.0

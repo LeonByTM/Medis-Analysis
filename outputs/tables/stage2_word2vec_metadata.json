@@ -1,0 +1,19 @@
+{
+  "dataset_ref": "jannalipenkova/ai-media-dataset",
+  "dataset_version": "2",
+  "training_articles": 38002,
+  "training_ids_sha256": "68fc0cf5d34ffb7973e5966259d227bd7a9529d2666bdf329ec9e4559be43a1e",
+  "config": {
+    "vector_size": 100,
+    "window": 5,
+    "min_count": 5,
+    "sg": 1,
+    "negative": 5,
+    "epochs": 3,
+    "workers": 1,
+    "seed": 20261012
+  },
+  "gensim": "4.4.0",
+  "training_seconds": 1011.6758794009802,
+  "model_path": "outputs/models/stage2_word2vec.model"
+}

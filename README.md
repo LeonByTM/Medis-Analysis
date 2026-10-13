@@ -22,7 +22,7 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 
 ## Status
 - **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). It is an **individual submission by Leon Bytyqi**. Audit evidence: `audits/PROFESSOR_REQUIREMENTS.md` (requirement-by-requirement status) and `audits/STAGE1_IMPROVEMENT_PLAN.md`.
-- **Stage 2 and Stage 3** notebooks have **not** been started.
+- **Stage 2** (`notebooks/stage2_models.ipynb`) has saved results for its local split, Word2Vec, embedding evaluation, and weak-label prediction audit. QLoRA is prepared but **NOT RUN**; rule-flag classification scores measure agreement with Stage 1's heuristic, not independent Agentic Web accuracy. **Stage 3** has not been started.
 - Nothing in Stage 1 is human-validated: the review worksheets in `outputs/evaluations/` are unlabelled (optional; see `outputs/evaluations/REVIEW_GUIDE.md`).
 - **AI use:** see the "AI tools and LLM use" section below.
 
@@ -38,7 +38,14 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 3. Optional, for the LangExtract pilot only: create a git-ignored `.env` file in the project root containing `LANGEXTRACT_API_KEY=<your key>`. Without a key the pilot uses its local cache (`outputs/llm_cache/`) if present, otherwise it is skipped.
 4. Run `notebooks/stage1_analysis.ipynb` top to bottom (about 25 minutes on CPU; entity extraction dominates).
 5. Outputs are written to `data/processed/` and `outputs/` (tables, figures, graph, evaluations), with metadata in `data/processed/stage1_metadata.json`.
-6. Stage 2 and Stage 3 are not started: run them only after Stage 1 is approved.
+6. Stage 2's local embedding workflow and saved outputs are in `notebooks/stage2_models.ipynb` and `outputs/`. Its QLoRA section is blocked by default; a suitable CUDA runtime and deliberate opt-in are required before model download/training. Stage 3 has not been started.
+
+## Quick start (Stage 2)
+1. Stage 2 expects Stage 1's full-corpus `data/processed/articles_clean.parquet` and `data/processed/stage1_metadata.json`. These are local/ignored artifacts; if missing, regenerate them using the Stage 1 quick start above. Stage 2 does not require the private OpenAI key.
+2. Use Python 3.11 and install the pinned local dependencies: `python -m pip install -r requirements-stage2.txt`.
+3. Open `notebooks/stage2_models.ipynb` from the repository root and run top to bottom. The local workflow verifies or loads the cached Word2Vec model, writes the chronological split and evaluation files under `outputs/evaluations/`, and saves tables/figures under `outputs/`.
+4. The rule-label prediction file is diagnostic: its scores compare models with Stage 1's weak rule labels and are not independent accuracy measurements.
+5. QLoRA is GPU-dependent and disabled by default (`ENABLE_QLORA_RUN = False`). For a deliberately authorized run, use a suitable CUDA-enabled Colab or equivalent runtime, install `requirements-stage2-colab.txt` without replacing its CUDA-matched PyTorch, set `AGENTIC_RADAR_ROOT`, inspect GPU memory/cost, and only then opt in. Colab Pro is not assumed to be necessary. Do not run this workload on the local 8-GiB machine.
 
 ## Repository structure
 Items marked *(planned)* do not exist yet.
@@ -54,7 +61,7 @@ Items marked *(planned)* do not exist yet.
 ├── audits/                         # requirement audit and improvement plan
 ├── notebooks/
 │   ├── stage1_analysis.ipynb
-│   ├── stage2_models.ipynb         # (planned)
+│   ├── stage2_models.ipynb         # embeddings complete locally; QLoRA not run
 │   └── stage3_rag.ipynb            # (planned)
 ├── data/processed/                 # cleaned corpus, Agentic Web subset, metadata
 ├── outputs/{figures,tables,graph,evaluations}/
