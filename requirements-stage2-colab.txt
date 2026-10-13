@@ -2,7 +2,10 @@
 # Keep Colab's preinstalled scientific and notebook packages unchanged.
 # Do not reinstall or replace Colab's CUDA-matched torch package.
 gensim==4.4.0
-transformers==4.57.1
-peft==0.18.0
+# Colab's diffusers/gradio stack requires huggingface-hub 1.x; Transformers 4
+# pins hub below 1.0, so use the compatible Transformers 5 / PEFT releases.
+transformers==5.19.0
+peft==0.21.2
+huggingface-hub>=1.31.0,<2.0
 bitsandbytes==0.48.1
 accelerate==1.11.0
