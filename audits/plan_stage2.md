@@ -243,6 +243,6 @@ Start by auditing the actual repository and official Stage 2 brief. Then impleme
 
 NEVER TOUCH STAEGE 1
 
-After finishing the work in this plan, read `STAGE2_SELF_AUDIT.md` and immediately begin the audit and improvement loops described there. Do not wait for me to ask.
+After finishing the work in this plan, read `Stage2_self_audit.md` and immediately begin the audit and improvement loops described there. Do not wait for me to ask.
 
 YOU NEED TO MAKE SURE OUR WORK IS PERFECT, STAGE 2 SHOULD BE PERFECT

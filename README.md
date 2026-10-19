@@ -72,8 +72,8 @@ Items marked *(planned)* do not exist yet.
 ├── .gitignore                      # excludes secrets, local working notes, and LLM caches
 ├── audits/
 │   ├── Stage1_Audit.md             # Stage 1 assignment audit
-│   ├── STAGE2_SELF_AUDIT.md        # Stage 2 self-audit
-│   └── plan2.md                    # Stage 2 implementation plan
+│   ├── Stage2_self_audit.md        # Stage 2 self-audit
+│   └── plan_stage2.md              # Stage 2 implementation plan
 ├── notebooks/
 │   ├── stage1_analysis.ipynb
 │   ├── stage2_models.ipynb         # embeddings complete locally; QLoRA results from Colab pending sync
