@@ -69,7 +69,11 @@ Items marked *(planned)* do not exist yet.
 ├── requirements-stage2.txt         # pinned local Stage 2 environment
 ├── requirements-stage2-colab.txt   # Colab GPU QLoRA environment
 ├── .gitignore                      # excludes secrets, local working notes, and LLM caches
-├── audits/                         # requirement audit and improvement plan
+├── audits/
+│   ├── PROFESSOR_REQUIREMENTS.md    # Stage 1 assignment audit
+│   ├── STAGE1_IMPROVEMENT_PLAN.md   # Stage 1 improvement plan
+│   ├── STAGE2_SELF_AUDIT.md        # Stage 2 self-audit
+│   └── plan2.md                    # Stage 2 implementation plan
 ├── notebooks/
 │   ├── stage1_analysis.ipynb
 │   ├── stage2_models.ipynb         # embeddings complete locally; QLoRA results from Colab pending sync
