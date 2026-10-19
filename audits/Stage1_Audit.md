@@ -67,5 +67,5 @@ Notebook sections: 1 acquisition · 2 cleaning · 3 selection · 4 EDA (4.1 sent
 | R22 | Notebook with cleaning/preprocessing, annotations, explanations and visualized results (pp. 3, 5) | Mandatory | **PASS** | Executed, documented notebook (see execution evidence). The earlier contradiction about the brief being unavailable is removed. |
 | R23 | Each member indicates their contribution (p. 5) | Mandatory | **PASS** | Notebook introduction: individual contribution statement for Leon Bytyqi. The statement says he directed the work, reviewed outputs and interpreted findings; **the student must make that true before submission** (see plan P0.4). It claims no manual authorship of code and no human validation. |
 | R24 | Disclose AI coding tools by name and use (p. 5) | Mandatory | **PASS** | Notebook introduction: "GitHub Copilot and AI language models drafted the code for Stage 1…" with separately stated student responsibilities; mirrored in the metadata JSON. |
-| R25 | Submit each stage's notebook per ILIAS (p. 5) | Mandatory | **NOT VERIFIED** | Not verifiable from the workspace. |
+| R25 | Submit each stage's notebook per ILIAS (p. 5) | Mandatory | **PASS** | Submitted on ILIAS |
 | G1 | Stage 2, Stage 3 and Streamlit not started (project instruction) | — | **PASS** | No later-stage notebook or application exists. |

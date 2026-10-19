@@ -21,7 +21,7 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 > **Verification note:** The authoritative assignment is the professor's official brief, `CLT_AI_Trend_Project.pdf`. This pack is a working specification derived from earlier discussion; where it disagrees with the PDF, the PDF governs. Recheck deadlines and submission guidance (ILIAS) before submitting. Stage 1 is an individual submission by Leon Bytyqi (confirmed by the student).
 
 ## Status
-- **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). It is an **individual submission by Leon Bytyqi**. Audit evidence: `audits/PROFESSOR_REQUIREMENTS.md` (requirement-by-requirement status) and `audits/STAGE1_IMPROVEMENT_PLAN.md`.
+- **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). It is an **individual submission by Leon Bytyqi**. Audit evidence: `audits/Stage1_Audit.md` (requirement-by-requirement status).
 - **Stage 2** (`notebooks/stage2_models.ipynb`) has local results for its split, Word2Vec, embedding evaluation, and weak-label prediction audit. QLoRA training and evaluation completed in Colab; the adapter and results were verified in Drive on 2026-10-19 but have not yet been copied into this local project. Rule-flag classification scores measure agreement with Stage 1's heuristic, not independent Agentic Web accuracy. **Stage 3** has not been started.
 - **AI use:** see the "AI tools and LLM use" section below.
 
@@ -70,8 +70,7 @@ Items marked *(planned)* do not exist yet.
 ├── requirements-stage2-colab.txt   # Colab GPU QLoRA environment
 ├── .gitignore                      # excludes secrets, local working notes, and LLM caches
 ├── audits/
-│   ├── PROFESSOR_REQUIREMENTS.md    # Stage 1 assignment audit
-│   ├── STAGE1_IMPROVEMENT_PLAN.md   # Stage 1 improvement plan
+│   ├── Stage1_Audit.md             # Stage 1 assignment audit
 │   ├── STAGE2_SELF_AUDIT.md        # Stage 2 self-audit
 │   └── plan2.md                    # Stage 2 implementation plan
 ├── notebooks/

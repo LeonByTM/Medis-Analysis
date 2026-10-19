@@ -11,6 +11,7 @@ __pycache__/
 
 # Large regenerable data files (the notebook recreates them; GitHub rejects files over 100 MB)
 data/processed/*.parquet
+audits/STAGE1_IMPROVEMENT_PLAN.md
 
 # Working notes and AI-assistant instruction files: kept locally, not part of the submission
 claude.md
