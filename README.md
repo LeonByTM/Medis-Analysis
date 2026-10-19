@@ -18,18 +18,19 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 
 **Scope guardrails:** Use the assigned Kaggle dataset. Stage 1 and Stage 3 may emphasize Agentic Web articles, but Stage 2 should use the **full assigned dataset**, based on the previously discussed assignment instructions. Do not substitute a finance-news dataset or introduce live data as the primary source. There is **no Streamlit scope in this plan**.
 
-> **Verification note:** The authoritative assignment is the professor's official brief, `CLT_AI_Trend_Project.pdf`. This pack is a working specification derived from earlier discussion; where it disagrees with the PDF, the PDF governs. Recheck deadlines and submission guidance (ILIAS) before submitting. Stage 1 is an individual submission by Leon Bytyqi (confirmed by the student).
+> **Verification note:** The authoritative assignment is the professor's official brief, `CLT_AI_Trend_Project.pdf`. This pack is a working specification derived from earlier discussion; where it disagrees with the PDF, the PDF governs. Recheck deadlines and submission guidance (ILIAS) before submitting. The full three-stage project is an individual submission by Leon Bytyqi (confirmed by the student).
 
 ## Status
-- **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). It is an **individual submission by Leon Bytyqi**. Audit evidence: `audits/Stage1_Audit.md` (requirement-by-requirement status).
-- **Stage 2** (`notebooks/stage2_models.ipynb`) has local results for its split, Word2Vec, embedding evaluation, and weak-label prediction audit. QLoRA training and evaluation completed in Colab; the adapter and results were verified in Drive on 2026-10-19 but have not yet been copied into this local project. Rule-flag classification scores measure agreement with Stage 1's heuristic, not independent Agentic Web accuracy. **Stage 3** has not been started.
+- **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). Audit evidence: `audits/Stage1_Audit.md` (requirement-by-requirement status).
+- **Stage 2** (`notebooks/stage2_models.ipynb`) has local results for its split, Word2Vec, embedding evaluation, and weak-label prediction audit. QLoRA training and evaluation completed in Colab; the adapter and results were verified in Drive on 2026-10-19 but have not yet been copied into this local project. Rule-flag classification scores measure agreement with Stage 1's heuristic, not independent Agentic Web accuracy.
+- **Stage 3** AI-assisted code drafting has begun, but its notebook and results have not yet been added to this local project.
 - **AI use:** see the "AI tools and LLM use" section below.
 
 ## AI tools and LLM use (disclosure)
-- **Code drafting:** GitHub Copilot and AI language models drafted the code for Stage 1. Leon Bytyqi directed the project, specified the analytical objectives, oversaw implementation, and is responsible for reviewing the results, interpreting the findings and documenting limitations. AI tools were also used for debugging and documentation.
+- **Code drafting:** GitHub Copilot and AI language models assisted with code drafting across Stages 1–3, as well as debugging and documentation. Leon Bytyqi directed the project, specified the analytical objectives, oversaw implementation, and is responsible for reviewing the results, interpreting the findings and documenting limitations.
 - **OpenAI LLM in the analysis:** the OpenAI model `gpt-4o-mini` (temperature 0), called through the LangExtract library, was used for a structured entity and relation extraction **pilot on 50 articles** (notebook section 7.1). Text from those 50 public-dataset articles was sent to OpenAI. The outputs are unreviewed candidates and are compared with the rule-based extractor by overlap only; **no accuracy is claimed**, because no human labels exist.
 - **API key:** stored only in a git-ignored `.env` file (`LANGEXTRACT_API_KEY`); it is never part of the notebook, outputs or repository. Raw LLM responses are cached locally in `outputs/llm_cache/` (also git-ignored).
-- The full disclosure is in the introduction of `notebooks/stage1_analysis.ipynb`.
+- The Stage 1 notebook introduction records its analysis-specific disclosure; this README summarizes AI assistance across the project.
 
 ## Dependency files
 The four files serve different purposes; they are not meant to be installed together. Use only the file for the environment and workflow you are running.
@@ -49,7 +50,7 @@ The Stage 1 and local Stage 2 quick starts below show which pinned file to insta
 3. Optional, for the LangExtract pilot only: create a git-ignored `.env` file in the project root containing `LANGEXTRACT_API_KEY=<your key>`. Without a key the pilot uses its local cache (`outputs/llm_cache/`) if present, otherwise it is skipped.
 4. Run `notebooks/stage1_analysis.ipynb` top to bottom (about 25 minutes on CPU; entity extraction dominates).
 5. Outputs are written to `data/processed/` and `outputs/` (tables, figures, graph, evaluations), with metadata in `data/processed/stage1_metadata.json`.
-6. Stage 2's local embedding workflow and saved outputs are in `notebooks/stage2_models.ipynb` and `outputs/`. Its QLoRA section is blocked by default in the local notebook; the QLoRA run was completed in Colab, and its artifacts still need to be copied from Drive into this project. Stage 3 has not been started.
+6. Stage 2's local embedding workflow and saved outputs are in `notebooks/stage2_models.ipynb` and `outputs/`. Its QLoRA section is blocked by default in the local notebook; the QLoRA run was completed in Colab, and its artifacts still need to be copied from Drive into this project. Stage 3 code drafting has begun, but its notebook and results are not yet in this local project.
 
 ## Quick start (Stage 2)
 1. Stage 2 expects Stage 1's full-corpus `data/processed/articles_clean.parquet` and `data/processed/stage1_metadata.json`. These are local/ignored artifacts; if missing, regenerate them using the Stage 1 quick start above. Stage 2 does not require the private OpenAI key.
@@ -76,7 +77,7 @@ Items marked *(planned)* do not exist yet.
 ├── notebooks/
 │   ├── stage1_analysis.ipynb
 │   ├── stage2_models.ipynb         # embeddings complete locally; QLoRA results from Colab pending sync
-│   └── stage3_rag.ipynb            # (planned)
+│   └── stage3_rag.ipynb            # (draft not yet added to this local project)
 ├── data/processed/                 # cleaned corpus, Agentic Web subset, metadata
 ├── outputs/{figures,tables,graph,evaluations}/
 ├── src/                            # (planned, optional support code)
