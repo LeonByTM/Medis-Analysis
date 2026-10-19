@@ -28,7 +28,7 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 
 ## AI tools and LLM use (disclosure)
 - **Code drafting:** GitHub Copilot and AI language models assisted with code drafting across Stages 1–3, as well as debugging and documentation. Leon Bytyqi directed the project, specified the analytical objectives, oversaw implementation, and is responsible for reviewing the results, interpreting the findings and documenting limitations.
-- **OpenAI LLM in the analysis:** the OpenAI model `gpt-4o-mini` (temperature 0), called through the LangExtract library, was used for a structured entity and relation extraction **pilot on 50 articles** (notebook section 7.1). Text from those 50 public-dataset articles was sent to OpenAI. The outputs are unreviewed candidates and are compared with the rule-based extractor by overlap only; **no accuracy is claimed**, because no human labels exist.
+- **OpenAI LLM in the analysis:** the OpenAI model `gpt-4o-mini` (temperature 0), called through the LangExtract library, was used for a structured entity and relation extraction **pilot on 50 articles** (notebook section 7.1). Text from those 50 public-dataset articles was sent to OpenAI. The outputs are unreviewed candidates and are compared with the rule-based extractor.
 - **API key:** stored only in a git-ignored `.env` file (`LANGEXTRACT_API_KEY`); it is never part of the notebook, outputs or repository. Raw LLM responses are cached locally in `outputs/llm_cache/` (also git-ignored).
 - The Stage 1 notebook introduction records its analysis-specific disclosure; this README summarizes AI assistance across the project.
 
