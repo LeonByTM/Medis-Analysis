@@ -2,7 +2,9 @@
 
 **Authority:** [CLT_AI_Trend_Project.pdf](../CLT_AI_Trend_Project.pdf), especially pp. 2–3 (Stage 1) and p. 5 (contribution and AI-disclosure rules). The project Markdown files are working specifications; where they differ from the PDF, the PDF governs.
 
-**Object assessed:** the current [Stage 1 notebook](../notebooks/stage1_analysis.ipynb), executed top to bottom, and its exported artifacts. **Submission:** individual, by Leon Bytyqi (permitted; confirmed by the student). Status describes evidence in the workspace; it is not a statement that an NLP output is factually correct.
+**Object assessed:** the current [Stage 1 notebook](../notebooks/stage1_analysis.ipynb) and its exported artifacts. **Submission:** individual, by Leon Bytyqi (permitted; confirmed by the student). Status describes evidence in the workspace; it is not a statement that an NLP output is factually correct.
+
+> **Current-checkout re-audit (12 October 2026):** The notebook had been reduced to an older implementation that did not match the saved artifacts. It was restored from the prior executed repository version, which uses selection rule v2, NMF K=3, and a 2,500-character NER limit. The restored notebook has 46 cells, 30 executed code cells, and saved outputs. A fresh isolated run also completed all 30 code cells without errors, selected 11,867 of 47,443 cleaned articles, extracted 137,715 entity mentions, reused all 50 LangExtract cache entries with zero API calls, and passed both artifact round-trip check cells. No repository data or outputs were overwritten. The saved artifacts independently reload: `articles_clean.parquet` has 47,443 rows and 14 columns; `agentic_subset.parquet` has 11,867 rows and 16 columns; GraphML files have 8,183 nodes / 31,817 co-occurrence edges and 8,183 nodes / 496 directed candidate edges. The 40 article, 56 entity, and 51 relation review rows remain blank; all 496 relation claims remain `unreviewed_candidate`; event time is unextracted. Use the current Stage 1 review-gate table below, not the historical status table later in this file.
 
 ## Status key
 
@@ -14,12 +16,26 @@
 
 Classes follow the brief's own wording: **Mandatory** (stated without qualification), **Conditional** (qualified by "where appropriate / where meaningful / where useful"), **Optional** (not required by the brief; quality improvements I identified).
 
-## Execution evidence (verified, not assumed)
+## Execution and artifact evidence
 
-- The notebook was executed top to bottom in a fresh kernel: **30 of 30 code cells executed, consecutive execution counts, 0 error outputs.** The only stderr text is the known NumPy 2.3.3 / PyTorch ABI import warning from the local environment, which does not affect results.
-- **28 of 28 structural checks passed** ([stage1_structural_checks.csv](../outputs/evaluations/stage1_structural_checks.csv)), including exact entity-span and evidence-span equality with the source text, normalization invariants, and a check that the required contribution/AI-disclosure text is present and no placeholder/stale text remains. All artifact round-trip checks passed (tables, both GraphML files, schema JSON, figures present).
-- Independent check outside the notebook: 496 claim evidence spans and 137,715 entity spans were compared with the NER source text (0 mismatches); both GraphML files reloaded (`Graph` 8,183 nodes / 31,817 edges; `MultiDiGraph` 8,183 nodes / 496 edges); the co-occurrence matrix is 35 × 35, symmetric, zero diagonal.
-- **Not done:** no human labels exist for any worksheet; no precision, recall, F1 or agreement figure is reported or claimed. This is an **optional** improvement (see O1–O3).
+- **Current notebook execution:** all 30 code cells completed in an isolated temporary workspace in about 18 minutes on CPU. The run used the 50 cached LangExtract responses and made zero API calls. The notebook's structural and artifact round-trip checks passed; the generated counts match the saved artifacts. An earlier diagnostic run of the reduced notebook version produced different counts (7,672 selected articles) and was discarded; that version is no longer in the worktree.
+- **Independently reloaded artifacts:** the full and Agentic Web Parquet files load with unique article IDs and expected dimensions; the co-occurrence and directed candidate GraphML files load with the node/edge counts stated above. CSV review worksheets and relation-claim tables load.
+- **Notebook/artifact alignment:** the restored notebook's cells 2, 18, 26, 29, 31, 41, and 42 now match the saved selection, topic, NER, claim, and export configuration. An independent check confirmed that all 496 claim article IDs exist in the Agentic Web subset, all 496 evidence spans match their recorded offsets, and no claim uses a fabricated event time.
+- **Human evaluation:** not done. No review worksheet has a manual label, so no precision, recall, F1, or annotator-agreement figure is supported. Relation candidates are not human-validated facts.
+
+## Current Stage 1 review gate
+
+Cell references below are zero-based JSON cell indices in the current notebook. Formal assignment requirements and lecture recommendations are distinguished: Course 3–6 guidance informs the evidence/provenance assessment but is not represented as additional professor-mandated grading criteria.
+
+| Gate | Status | Notebook evidence | Artifact evidence and remaining gap |
+|---|---|---|---|
+| 1. Kaggle schema/version/counts and documented Agentic Web selection | **PASS** | Cells 2–4, 6, and 8–9 (§§1–3) inspect the actual schema, clean the corpus, define selection rule v2, and report 11,867 selected articles. | [stage1_metadata.json](../data/processed/stage1_metadata.json) and the Parquet files report the Kaggle v2 source, 47,443 cleaned rows, and 11,867 selected rows. The locally cached raw CSV was checked for filename, 7 columns, and field types. The separate selection review worksheet remains unlabelled; see gate 5. |
+| 2. Supported directed relations separated from co-occurrence | **PARTIAL** | Cells 28–29 and 31, 33–35 (§§7–8) separate co-occurrence from typed directed claim candidates and construct distinct graph layers. | [relations.csv](../outputs/tables/relations.csv) contains 64,971 `cooccurrence` rows; [relation_claims.csv](../outputs/tables/relation_claims.csv) has 496 directed candidates; [agentic_semantic_claims.graphml](../outputs/graph/agentic_semantic_claims.graphml) reloads with 496 edges. All directed candidates remain `unreviewed_candidate`; none is established as a human-validated fact. Directed evidence/abstention is a Course 3–4 recommendation; the formal brief permits co-mentions or extracted relations. |
+| 3. Mention offsets, canonicalization/aliases/NIL, source-linked claims | **PARTIAL** | Cells 25–26, 29, 31, and 41 (§§6–7, 10) extract mention offsets, normalize lexicon aliases, and export source-linked claims. | [entities.csv](../outputs/tables/entities.csv) has 137,715 mention rows with offsets; [entity_aliases.csv](../outputs/tables/entity_aliases.csv) has 8,980 alias rows; [relation_claims.csv](../outputs/tables/relation_claims.csv) and [claim_evidence_passages.csv](../outputs/tables/claim_evidence_passages.csv) preserve source/article/evidence references. spaCy-only mentions retain surface-form IDs without disambiguation or NIL assignment; identity linking is not human-reviewed (Course 3 recommendation). |
+| 4. Publication/event time, modality, and evidence validation | **PARTIAL** | Cells 29, 31, and 38–42 (§§7, 9–10) store publication time, evidence spans, modality/status fields, and validate source offsets. | All 496 [relation_claims.csv](../outputs/tables/relation_claims.csv) rows have publication dates and evidence; independent checks found all 496 article IDs in the selected subset and all evidence offsets exact. Event time is null/not extracted for all claims, and every candidate remains unreviewed. Modality/status are heuristic. |
+| 5. Real manually reviewed extraction/error assessment | **FAIL** | Cells 37–39 (§9) prepare review samples and count labelled rows; they do not supply human labels. | [stage1_review.csv](../outputs/evaluations/stage1_review.csv) (40 rows), [entity_review.csv](../outputs/evaluations/entity_review.csv) (56 rows), and [relation_review.csv](../outputs/evaluations/relation_review.csv) (51 rows) have zero manual labels. No extraction precision/recall/F1 or error-rate result is available. This fails the project review gate; the professor's formal brief requires structured extraction but does not explicitly require human annotation or P/R/F1. Course 3's annotation metrics are methodological recommendations, not additional formal grading criteria. |
+| 6. Reusable graph/claims/passages with ID-consistent exports tested by reload | **PASS** | Cells 41–42 (§10) perform GraphML, table, schema, claim, and evidence round-trip checks. | The saved [articles_clean.parquet](../data/processed/articles_clean.parquet), [agentic_subset.parquet](../data/processed/agentic_subset.parquet), [agentic_web.graphml](../outputs/graph/agentic_web.graphml), and [agentic_semantic_claims.graphml](../outputs/graph/agentic_semantic_claims.graphml) reload. Notebook round-trip checks are all true; claim IDs/evidence and article IDs are consistent with the selected corpus. |
+| 7. Executable notebook and clear limitations | **PASS** | All 30 code cells executed successfully in the isolated run; markdown cells 0–45 document objective, methods, limitations, and disclosure. | The restored [stage1_analysis.ipynb](../notebooks/stage1_analysis.ipynb) contains executed outputs; the fresh isolated run also completed with zero cell errors and passed the artifact round-trip checks. |
 
 ## Requirement-by-requirement assessment
 
@@ -53,28 +69,3 @@ Notebook sections: 1 acquisition · 2 cleaning · 3 selection · 4 EDA (4.1 sent
 | R24 | Disclose AI coding tools by name and use (p. 5) | Mandatory | **PASS** | Notebook introduction: "GitHub Copilot and AI language models drafted the code for Stage 1…" with separately stated student responsibilities; mirrored in the metadata JSON. |
 | R25 | Submit each stage's notebook per ILIAS (p. 5) | Mandatory | **NOT VERIFIED** | Not verifiable from the workspace. |
 | G1 | Stage 2, Stage 3 and Streamlit not started (project instruction) | — | **PASS** | No later-stage notebook or application exists. |
-
-## Optional improvements (not required by the brief)
-
-| ID | Improvement | Status | Note |
-|---|---|---|---|
-| O1 | Human-labelled article-selection precision/recall | **NOT VERIFIED** | 40-row stratified worksheet, unlabelled. Stratum-weighted estimator with Wilson intervals is implemented but receives no labels. |
-| O2 | Human-labelled NER and relation precision | **NOT VERIFIED** | 56 entity and 51 relation rows, unlabelled. |
-| O3 | Event-time extraction for relation candidates | **NOT VERIFIED** | Event time is null by design; modality/polarity are lexical heuristics. |
-| O4 | Human review of the LangExtract pilot relations | **NOT VERIFIED** | 41 accepted LLM relations in `llm_relation_review.csv`, unlabelled. |
-
-Instructions for O1–O4 are in [REVIEW_GUIDE.md](../outputs/evaluations/REVIEW_GUIDE.md). The notebook now preserves and uses a worksheet once any label is entered (it never overwrites labelled files).
-
-## Decisions that still require the student
-
-1. **R23** — confirm the contribution statement is accurate once you have actually reviewed the outputs and interpretations.
-2. **R25** — submit via ILIAS.
-3. **Optional** — whether to label any of the review worksheets (147 rows plus 41 LLM-pilot relations); nothing is required.
-
-## Changes since the previous audit
-
-R23 FAIL → PASS (individual statement); R22 PARTIAL → PASS (stale statement removed); R20/R21 PARTIAL → PASS; R5/R6 PARTIAL → PASS; R8 PARTIAL → NOT APPLICABLE (decision documented); R11 PASS → PARTIAL → **PASS** (an earlier PASS rested on templates alone and was not supported; a real LangExtract pilot has now been run and validated for grounding); R15 PASS with new evidence (the earlier mark rested on degree centrality only); R19 stays PARTIAL.
-
-## Overall
-
-All mandatory requirements that can be satisfied from the workspace now pass; **R25** (ILIAS submission) can only be completed by the student, and **R19** (conditional) is PARTIAL. The optional human review is unperformed and no quality metric exists for either extraction method, which limits how strongly any finding can be stated. Stage 1 should not be described as fully verified: its outputs are unvalidated model outputs, and the AI use (code drafting by GitHub Copilot/AI models, and OpenAI `gpt-4o-mini` via LangExtract for the pilot) is disclosed in the notebook introduction.
