@@ -19,9 +19,15 @@
     "not_relevant",
     "uncertain"
   ],
-  "labels_written": 0,
+  "labels_written": 200,
+  "label_counts": {
+    "not_relevant": 139,
+    "relevant": 50,
+    "uncertain": 11
+  },
   "worksheet": "outputs/evaluations/stage2_representation_review_200.csv",
   "guide": "outputs/evaluations/stage2_representation_review_guide.md",
-  "article_text_copied_to_worksheet": false,
-  "review_evidence": "Use the source URL or load the full local record by article_id; no article text is duplicated in the worksheet."
+  "article_text_copied_to_worksheet": true,
+  "full_article_bodies_copied_to_worksheet": false,
+  "review_evidence": "A normalized exact 10-token source-text phrase was found in 125 reviewer notes. Notes contain selected excerpts, not full article bodies; verify context using the source URL or local article_id record."
 }

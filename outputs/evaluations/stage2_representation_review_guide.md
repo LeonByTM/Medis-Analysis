@@ -6,13 +6,13 @@ This worksheet supports an independent human check of the existing Stage 2 extri
 
 ## Label each article
 
-Use the supplied URL or consult the full local article by `article_id` in `data/processed/articles_clean.parquet`. The worksheet intentionally omits article text to avoid duplicating the source corpus. Do not guess; use `uncertain` if the article cannot be judged from the available evidence.
+Use the supplied URL or consult the full local article by `article_id` in `data/processed/articles_clean.parquet`. The worksheet does not include full article bodies, but some `review_notes` contain short verbatim source excerpts used as evidence. Do not guess; use `uncertain` if the article cannot be judged from the available evidence.
 
 - `relevant`: the article substantively focuses on AI agents or agentic systems, including their development, capabilities, deployment, protocols, frameworks, or tools.
 - `not_relevant`: AI agents/agentic systems are absent or only mentioned incidentally; they are not a substantive topic of the article.
 - `uncertain`: the available evidence is insufficient or the article's focus is genuinely ambiguous.
 
-Fill `manual_agentic_web_label` with exactly one allowed value and enter a stable `reviewer_id`. Add a short rationale for `uncertain` labels. Do not change article IDs or source excerpts, and do not consult model predictions or keyword-rule labels while assigning the human labels.
+Fill `manual_agentic_web_label` with exactly one allowed value and enter a stable `reviewer_id`. Add a short rationale for `uncertain` labels. Keep notes concise and quote only the source text needed to support the decision; do not paste full article bodies. Do not change article IDs or source metadata, and do not consult model predictions or keyword-rule labels while assigning human labels.
 
 ## Sampling and interpretation
 
