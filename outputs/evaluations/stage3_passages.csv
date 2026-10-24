@@ -1,0 +1,101 @@
+passage_id,article_id,title,published_at,source,quarter,topic_id,excerpt_start_char,excerpt_end_char
+p_1a217df84169e8bc,110290,KPMG KymChat â changing the game with Trusted AI,2024-09-20 00:00:00+00:00,kpmg,2024Q3,0,0,2400
+p_59c6332957d0e678,88316,AIs generate more novel and exciting research ideas than human experts,2024-09-11 00:00:00+00:00,newatlas,2024Q3,2,0,2400
+p_db1c3fd008a10201,129298,Naptha AI Raises $ 6 Million to Lead the Evolution of AGI Towards a Web of Trillions of Cooperating Agents,2024-10-31 00:00:00+00:00,siliconcanals,2024Q4,0,0,2400
+p_4dd73c65febe2923,165346,Democratizing finance: Spectral Labs and the autonomous finance movement,2024-11-12 00:00:00+00:00,venturebeat,2024Q4,2,0,2400
+p_be0f07eb036c235b,53724,Media Briefing: The top trends in the media industry in 2024,2024-12-19 00:00:00+00:00,digiday,2024Q4,2,0,2400
+p_8c5f438688a9b122,63252,Pipelines & Prompt Optimization with DSPy,2024-12-12 00:00:00+00:00,dbreunig,2024Q4,1,0,2400
+p_237d576dd13e4855,86281,Case study: How EY transformed itself with AI,2024-12-06 00:00:00+00:00,ey,2024Q4,0,0,2400
+p_beb623077ca75793,130353,NBIS Q4 2024 Earnings Report on 2/20/2025,2025-02-20 00:00:00+00:00,marketbeat,2025Q1,2,0,2400
+p_8ff4e7ad3e10d7ec,153503,"Oracle, NVIDIA Partner to Accelerate AI Inference for Enterprises",2025-03-19 00:00:00+00:00,thefastmode,2025Q1,0,0,2400
+p_c06a3d3379cc153d,164088,Understanding Emergent Capabilities in LLMs: Lessons from Biological Systems,2025-01-22 00:00:00+00:00,towardsdatascience,2025Q1,1,0,2400
+p_33b3201041fd8a3b,165532,"Ex-OpenAI CTO Mira Murati unveils Thinking Machines: A startup focused on multimodality, human-AI collaboration",2025-02-19 00:00:00+00:00,venturebeat,2025Q1,2,0,2400
+p_2775d070b799685c,171087,Beyond Human: The Next Frontier of Identity Security,2025-02-12 00:00:00+00:00,menlovc,2025Q1,0,0,2400
+p_4f762a3bbaf86e71,178686,5 Must-Watch AI Stocks Ahead of Earnings After DeepSeek Storm,2025-01-29 00:00:00+00:00,zacks,2025Q1,2,0,2400
+p_087c4c23e90e4e49,179671,Data Privacy Compliance Agent,2025-01-29 00:00:00+00:00,zbrain,2025Q1,0,0,2400
+p_6fb450596fb26b87,179813,Benefits Compliance Monitoring Agent,2025-01-29 00:00:00+00:00,zbrain,2025Q1,0,0,2400
+p_d4d585749b6de3d0,45049,5 Ways to Protect Your Organization Against Evolving Digital Threats,2025-03-30 00:00:00+00:00,aijourn,2025Q1,0,0,2400
+p_28807164fe05b01d,72869,Weekly AI Insights: AiThority’ s Top Trends and Essential Reads,2025-03-09 00:00:00+00:00,aithority,2025Q1,0,0,2400
+p_d0db8256a9052881,85620,Cosmos World Foundation Models Openly Available to Physical AI Developers,2025-01-07 00:00:00+00:00,blogs.nvidia,2025Q1,1,0,2400
+p_d9498b6e03050083,147465,Agentic AI Is the Next Frontier in Enterprise Operations,2025-04-08 00:00:00+00:00,thenewstack,2025Q2,0,0,2400
+p_84f91061fcf75a5d,147701,Chasing AI Autonomy Misses Near-Term Agentic Returns,2025-06-19 00:00:00+00:00,thenewstack,2025Q2,1,0,2400
+p_6c0babf5b55abec7,150781,How a 1980s toy robot arm inspired modern robotics,2025-04-17 00:00:00+00:00,technologyreview,2025Q2,2,0,2400
+p_0d25ade5b122c64a,153575,"Google, Alphabet, NVIDIA Partner on AI-Powered Robots, Drug Design, and Grid Modernization",2025-04-08 00:00:00+00:00,thefastmode,2025Q2,0,0,2400
+p_e847a4a209887bfe,177205,National Technology Day 2025: Empowering Indian Youth for Innovation & Viksit Bharat Vision,2025-05-11 00:00:00+00:00,tataelxsi,2025Q2,0,0,2400
+p_5eb2b9a9e8ef47cf,46657,24 NYC Artificial Intelligence Startups on the Cutting Edge,2025-04-25 00:00:00+00:00,builtin,2025Q2,0,0,2400
+p_a3719f890fb49784,57072,Marketing’ s New Middleman: AI Agents,2025-04-14 00:00:00+00:00,bain,2025Q2,2,0,2400
+p_f960a198961e761d,66797,Salesforce Launches Nature-Focused AI to Help NGOs Tackle Climate and Biodiversity Crises,2025-04-16 00:00:00+00:00,esgnews,2025Q2,0,0,2400
+p_6d461d7e0ea856af,74501,Chatting with Tables: Query Data with Agentic AI,2025-04-15 00:00:00+00:00,alexanderthamm,2025Q2,1,0,2400
+p_9f34752e3e5a96e5,74502,Why the Future is Agentic: An Overview of Multi-Agent LLM Systems,2025-04-15 00:00:00+00:00,alexanderthamm,2025Q2,1,0,2400
+p_e2ae96bce8ce3871,87741,Meta Eyes Historic $ 10B Investment in Scale AI,2025-06-09 00:00:00+00:00,fintechweekly,2025Q2,2,0,2400
+p_4872f082b6a4bdbb,97941,"The future is now: Miami AI Agent Summit offered up knowledge, conversation and inspiration – and a bigger event is in the plans",2025-04-06 00:00:00+00:00,refreshmiami,2025Q2,2,0,2400
+p_d8dc837075f1d926,128219,When Agents Replace Websites,2025-09-25 00:00:00+00:00,searchenginejournal,2025Q3,2,0,2400
+p_e0016063564586cd,140322,"For Now, AI Helps IBM’ s Bottom Line More Than Its Top Line",2025-07-24 00:00:00+00:00,nextplatform,2025Q3,2,0,2400
+p_becf3d8e681941a5,147717,Using Java for Developing Agentic AI Apps,2025-07-01 00:00:00+00:00,thenewstack,2025Q3,1,0,2400
+p_037ec6cd59e8ed20,147731,Let AI Hustle So Employees Can Lead,2025-07-07 00:00:00+00:00,thenewstack,2025Q3,0,0,2400
+p_000d0300cab30ed2,152199,AI systems can easily lie and deceive us – a fact researchers are painfully aware of,2025-09-25 00:00:00+00:00,theconversation,2025Q3,2,0,2400
+p_5120b4ab1df37d77,154485,"Amazon DocumentDB Serverless database looks to accelerate agentic AI, cut costs",2025-07-31 00:00:00+00:00,venturebeat,2025Q3,1,0,2400
+p_3c684e3436a429d1,40429,30 Notable IT Executive Moves: August 2025,2025-09-12 00:00:00+00:00,crn,2025Q3,2,0,2400
+p_6dab40970398e515,57115,"The Store Is Striking Back as a Tech-Enabled Space Driving Efficiency, Experience, and Monetization",2025-09-15 00:00:00+00:00,bain,2025Q3,0,0,2400
+p_b7ff9f32c95e0115,64054,"Power Moves in AI Coding, Moonshot’ s Agentic LLM, How to Comply with EU AI Regs, AI Agents Evolve",2025-07-23 00:00:00+00:00,deeplearning,2025Q3,1,0,2400
+p_f6d6a2cd1e97f19e,87037,How to embed responsible AI into multi-agent systems,2025-09-25 00:00:00+00:00,ey,2025Q3,0,0,2400
+p_b0a8c6ce7bb9a942,119791,Stop Learning AI. Start Doing AI. The 20+ Agents Running SaaStr,2025-11-07 00:00:00+00:00,saastr,2025Q4,2,0,2400
+p_9dcb726538d091c5,140633,Tech Tracker: The great technology integration boom continues,2025-12-15 00:00:00+00:00,nrn,2025Q4,2,0,2400
+p_ef8db8312fe99f68,143910,Anthropic's AI espionage disclosure: Separating the signal from the noise,2025-11-18 00:00:00+00:00,thoughtworks,2025Q4,1,0,2400
+p_6d1c7b527ac452ad,145386,From Systems of Record to Systems of Action: Enabling AI for your OSS/BSS,2025-11-20 00:00:00+00:00,thefastmode,2025Q4,0,0,2400
+p_c80e5b15295bf5fb,156284,Google Cloud's TPU Strategy Powers AI Dominance and Sustainability,2025-12-27 00:00:00+00:00,webpronews,2025Q4,0,0,2400
+p_6f8ec9b6b0abd18f,180440,Life on the Edge with Web AI: The history & future of smarter digital experiences in an agentic internet,2025-12-03 00:00:00+00:00,linkedin,2025Q4,1,0,2400
+p_69548d61151cfa4f,40581,"Snowflake Strikes $ 200M Anthropic Partnership, Expands Accenture Alliance",2025-12-03 00:00:00+00:00,crn,2025Q4,2,0,2400
+p_924fd16bdcdfff9b,49045,"US visa curbs, AI surge shape cautious outlook for Indian IT in 2026",2025-12-23 00:00:00+00:00,business-standard,2025Q4,2,0,2400
+p_ffacdac07ec2bbdf,54023,Pandora is betting on AI agents to scale service and emotional selling,2025-12-25 00:00:00+00:00,digiday,2025Q4,2,0,2400
+p_01fdcdae463227f6,57132,What AI Means for Consumer Products Companies’ Margins,2025-10-17 00:00:00+00:00,bain,2025Q4,0,0,2400
+p_b70f7f99020c50db,57145,Microsoft Ignite 2025: How Data-Driven Intelligence Powers the Age of AI Agents,2025-11-24 00:00:00+00:00,bain,2025Q4,0,0,2400
+p_5660eb5a9f5289a9,69074,AI and ML perspective: Security,2025-11-26 00:00:00+00:00,cloud.google,2025Q4,1,0,2400
+p_2d5054b81d86849e,119876,The Future of B2B Marketing is AI Agent Recommendations. And AI Agents Play Favorites.,2026-02-16 00:00:00+00:00,saastr,2026Q1,2,0,2400
+p_baef2b1c663f2ad4,145631,Cisco Intros DefenseClaw and AI Defense Tools to Protect Agentic Workflows,2026-03-23 00:00:00+00:00,thefastmode,2026Q1,0,0,2400
+p_2cee1bbc53430671,148093,"Data in 2026: Interchangeable Models, Clouds, and Specialization",2026-01-06 00:00:00+00:00,thenewstack,2026Q1,1,0,2400
+p_ec3283273584cdb0,148173,"AI coding agents can write code, Crafting wants to help them ship it",2026-03-09 00:00:00+00:00,thenewstack,2026Q1,1,0,2400
+p_e4ee5f14526109d6,171406,Welcome to Moltbook – where AI bots are plotting 'total human extinction ',2026-02-02 00:00:00+00:00,metro.co,2026Q1,2,0,2400
+p_4646ffa1805a6d94,172055,Meet Lenny’ s Memory: Building Context Graphs for AI Agents - Graph Database & Analytics,2026-02-02 00:00:00+00:00,neo4j,2026Q1,1,0,2400
+p_07794947bffca26b,40629,Snowflake To Buy Observe: 5 Things To Know,2026-01-12 00:00:00+00:00,crn,2026Q1,2,0,2400
+p_adffbd63438a9b57,50501,Empowered Sales - Salesforce Efficiency & Customer Engagement,2026-01-22 00:00:00+00:00,capgemini,2026Q1,0,0,2400
+p_e58214363ac1c244,52788,Microsoft at DevNexus 2026: Practical AI for Real-World Java Development - Microsoft for Java Developers,2026-02-12 00:00:00+00:00,devblogs.microsoft,2026Q1,1,0,2400
+p_9dc05b6aefb8bcb8,55379,Why Context-Rich Data is the Future of Construction,2026-01-28 00:00:00+00:00,archdesk,2026Q1,0,0,2400
+p_a8f16377bf6b5bae,55719,Intelligent Audio for AI — and More from Crestron,2026-03-09 00:00:00+00:00,avinteractive,2026Q1,2,0,2400
+p_0ebe08863d00210d,60278,What’ s essential for AI shopping assistant success,2026-03-04 00:00:00+00:00,customerexperiencedive,2026Q1,2,0,2400
+p_dcca9e00f8fb46da,71686,The Agentic Frontier: How AI is Redefining the Coastal Travel Narrative in 2026,2026-02-04 00:00:00+00:00,aijourn,2026Q1,0,0,2400
+p_ea7ba013837f1244,97438,"Red Hat and Telenor AI Factory Bring Scale, Sovereignty and Control to Production AI",2026-02-25 00:00:00+00:00,redhat,2026Q1,0,0,2400
+p_d6764a174073066b,119036,AI hallucinations and identity – the weakest link in modern robotics stacks,2026-04-22 00:00:00+00:00,roboticsandautomationnews,2026Q2,1,0,2400
+p_d2669647abff01fb,119923,We’ ve Deployed 20+ AI Agents. Here Are the 10 Mistakes Almost Everyone Makes,2026-04-08 00:00:00+00:00,saastr,2026Q2,2,0,2400
+p_6b780e010274b02b,148404,Replit shows how vibe coding is getting its own financial stack — and a path to profit,2026-06-05 00:00:00+00:00,thenewstack,2026Q2,2,0,2400
+p_d88e82eebd17c74e,154566,Vercel AI SDK vs TanStack AI,2026-04-07 00:00:00+00:00,vercel,2026Q2,1,0,2400
+p_c4f4b4c169fe79c3,155425,HR Workshop - Vibe: athon: Where HR Goes to Build 3/4 Â· WeAreDevelopers World Congress,2026-06-28 00:00:00+00:00,wearedevelopers,2026Q2,1,0,2400
+p_6c5e21b4401df5d5,164554,"Enterprise MCP access control: managing tools, servers, and agents",2026-06-04 00:00:00+00:00,truefoundry,2026Q2,1,0,2400
+p_282956d80ccf8df0,171789,Training developers as an investment: How technical leaders can identify real ROI,2026-04-15 00:00:00+00:00,mindtheproduct,2026Q2,2,0,2400
+p_65cfd68c20b6e64f,174690,What is System Simulation?,2026-06-16 00:00:00+00:00,synopsys,2026Q2,0,0,2400
+p_de59e28474552441,23446,Microsoft 365 and Office SharePoint Development,2026-05-24 00:00:00+00:00,learn.microsoft,2026Q2,1,0,2400
+p_35f960f7b978c8d4,32843,Microsoft Foundry Blog,2026-06-06 00:00:00+00:00,devblogs.microsoft,2026Q2,1,0,2400
+p_335cb736e3927d72,40906,"AWS AI Partner Caylent CEO On Surging Anthropic Claude Demand, Amazon Connect Deal Wins And A ‘ New Class’ Of Managed Services",2026-06-23 00:00:00+00:00,crn,2026Q2,2,0,2400
+p_038888bf3720453f,48480,"Staff Product Designer, Security & Compliance - GitLab",2026-04-12 00:00:00+00:00,builtin,2026Q2,0,0,2400
+p_3a0c37343ae3030f,48772,"Account Executive, Strategic ( Central) - Docker, Inc",2026-05-29 00:00:00+00:00,builtin,2026Q2,0,0,2400
+p_73a446ecad55d35f,49522,Agentic commerce: The rise of the delegated buyer,2026-05-21 00:00:00+00:00,bvp,2026Q2,2,0,2400
+p_8340bb8ed8ffeeb8,51387,I Built an XAI Agent with Hermes Agent That Explains Any ML Model in Plain English — Here's Everything I Learned,2026-05-29 00:00:00+00:00,dev,2026Q2,1,0,2400
+p_4c78b41bed2df4d5,54213,Future of TV Briefing: How TV-streaming ad sellers are pitching fluidity in this year’ s upfront market,2026-06-03 00:00:00+00:00,digiday,2026Q2,2,0,2400
+p_056b00557e46df3d,54230,Publishers push premium video to the paywall to sell subscriptions,2026-06-11 00:00:00+00:00,digiday,2026Q2,2,0,2400
+p_e82e403182658e8d,57231,Asia-Pacific Front Line of Healthcare 2026,2026-06-17 00:00:00+00:00,bain,2026Q2,0,0,2400
+p_b472ef8be38928d6,65104,I Run 10+ AI Agents Daily,2026-04-04 00:00:00+00:00,dev,2026Q2,1,0,2400
+p_59eefd887fee3dd3,65169,Self-Evolving AI Agents Are Here. Your Harness Just Became the Product.,2026-04-04 00:00:00+00:00,dev,2026Q2,1,0,2400
+p_f5296d7c2ddc1fa8,69154,What’ s new for Google Cloud databases at Next’ 26,2026-04-22 00:00:00+00:00,cloud.google,2026Q2,1,0,2400
+p_f549650990eb30b3,69466,Five guides to building and scaling production-ready AI agents,2026-05-05 00:00:00+00:00,cloud.google,2026Q2,1,0,2400
+p_1c722e4c7af21691,69703,Set up Agent Gateway,2026-06-01 00:00:00+00:00,cloud.google,2026Q2,1,0,2400
+p_fc96a955e9f676df,69769,Cloud CISO Perspectives: The 4 lessons that guided AI Threat Defense,2026-06-15 00:00:00+00:00,cloud.google,2026Q2,1,0,2400
+p_7f134cc839afdd31,87209,5 Steps to match AI cyber defense with agentic threat,2026-06-15 00:00:00+00:00,ey,2026Q2,0,0,2400
+p_1f35fe6071ef7cee,145071,Exclusive: Claude Was Put in Charge of Human Workers—and Fired One,2026-08-14 00:00:00+00:00,time,2026Q3,2,0,2400
+p_3e1ed198d4b6a70a,148469,Krumware just gave Kubernetes an MCP server. Here's why it matters for developers.,2026-07-09 00:00:00+00:00,thenewstack,2026Q3,1,0,2400
+p_5b98c807c7e8e586,148528,Forget humans “ in ” the loop. Harness engineering puts humans “ on ” the loop.,2026-07-31 00:00:00+00:00,thenewstack,2026Q3,1,0,2400
+p_c9bbd76e9df89d2b,150548,"Simile bags $ 200M at $ 2B, five months after $ 100M Series A, to predict what humans will do before AI gets it wrong — TFN",2026-07-31 00:00:00+00:00,techfundingnews,2026Q3,2,0,2400
+p_a0c9cec23d8bfea4,32772,MCP Tools Reference: aiplatform.googleapis.com,2026-07-30 00:00:00+00:00,cloud.google,2026Q3,1,0,2400
+p_aa360ae7009ce03c,40932,The 10 Coolest AI Observability And Governance Tools Of 2026 ( So Far),2026-07-17 00:00:00+00:00,crn,2026Q3,1,0,2400
+p_f8dbb5567e3d5dff,48950,"Principal Program Manager, Go-To-Market - GitLab",2026-08-11 00:00:00+00:00,builtin,2026Q3,0,0,2400
+p_48291ae3921cbb26,54280,Media buyers are skeptical of specialised AI markdown ads,2026-08-07 00:00:00+00:00,digiday,2026Q3,2,0,2400
+p_4ed07d207368b96b,72265,The Hybrid Law Firm: How AI Is Reshaping Legal Services Without Replacing Judgement,2026-08-11 00:00:00+00:00,aijourn,2026Q3,0,0,2400

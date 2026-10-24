@@ -1,0 +1,27 @@
+{
+  "purpose": "Blinded independent human review of Stage 2 held-out classification predictions",
+  "sample_size": 200,
+  "source_partition": "test",
+  "source_manifest": "outputs/evaluations/stage2_split_ids.csv",
+  "text_source": "data/processed/articles_clean.parquet",
+  "selection_seed": 20261023,
+  "stratification": "Proportional by publication month and existing Stage 1 weak-rule flag; flag omitted from review worksheet; rows shuffled after sampling.",
+  "stratum_sample_counts": {
+    "2026-06|rule=False": 40,
+    "2026-06|rule=True": 28,
+    "2026-07|rule=False": 53,
+    "2026-07|rule=True": 31,
+    "2026-08|rule=False": 32,
+    "2026-08|rule=True": 16
+  },
+  "review_labels": [
+    "relevant",
+    "not_relevant",
+    "uncertain"
+  ],
+  "labels_written": 0,
+  "worksheet": "outputs/evaluations/stage2_representation_review_200.csv",
+  "guide": "outputs/evaluations/stage2_representation_review_guide.md",
+  "article_text_copied_to_worksheet": false,
+  "review_evidence": "Use the source URL or load the full local record by article_id; no article text is duplicated in the worksheet."
+}

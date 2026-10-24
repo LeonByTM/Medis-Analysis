@@ -22,7 +22,8 @@ The project is organized into **three documented Jupyter notebooks**. These are 
 
 ## Status
 - **Stage 1** (`notebooks/stage1_analysis.ipynb`) is implemented and was executed top to bottom (30/30 code cells, 0 errors, 28/28 structural checks). Audit evidence: `audits/Stage1_Audit.md` (requirement-by-requirement status).
-- **Stage 2** (`notebooks/stage2_models.ipynb`) has local results for its split, Word2Vec, embedding evaluation, and weak-label prediction audit. QLoRA training and evaluation completed in Colab; the adapter and results were verified in Drive on 2026-10-19 but have not yet been copied into this local project. Rule-flag classification scores measure agreement with Stage 1's heuristic, not independent Agentic Web accuracy.
+- **Stage 2** (`notebooks/stage2_models.ipynb`) has local split, Word2Vec, embedding, and weak-label results. The local environment did not have a CUDA GPU available for QLoRA, so the training and evaluation were run in **Google Colab** on a Tesla T4 ([Colab notebook](https://colab.research.google.com/drive/1qDJkr9GExcs_2rskXdb2aoeB3KvzywOS)). The resulting adapter and run artifacts were exported from Colab into this project; the downloaded source notebook is retained as `notebooks/Copy_of_stage2_models.ipynb`. The imported artifacts report pretrained/adapted test mean token loss of 3.3533/2.7155 and perplexity of 28.598/15.113 on the same 256 test excerpts; the paired loss delta is -0.6378 (95% CI [-0.6951, -0.5880], independently recomputed from the per-excerpt losses). These are next-token prediction metrics, not semantic or factual accuracy. The exported adapter is in the local, git-ignored `outputs/models/qwen3_1.7b_agentic_media_qlora/`; base-model weights are not included. The downloaded Colab notebook contains mixed saved outputs, including an interrupted training-cell execution. A later artifact check confirms the adapter files and training metadata exist; the metadata reports 6,009 steps and 96,158 chunks. The exact model revision, `70d244cc86ccca08cf5af4e1e306ecf908b1ad5e`, was recovered from the active Colab cache, where `refs/main` matched the sole cached snapshot. The reported comparison is supported by the matching test manifest, per-excerpt losses, and revision-pinned model metadata; limitations are documented in the Stage 2 audit.
+- **Stage 2 independent evaluation (24 October 2026):** a reviewer-labeled sample of 200 held-out test articles was completed (189 determinate labels; 11 `uncertain`). Against the reviewer labels, TF-IDF accuracy/macro-F1 are 0.862/0.840, mean-Word2Vec 0.783/0.757, the majority baseline 0.735/0.424, and the Stage 1 keyword-rule reference 0.873/0.851. The evaluation requirement is marked PASS in `audits/Stage2_self_audit.md`. These are single-reviewer sample results, not population estimates or general real-world accuracy.
 - **Stage 3** AI-assisted code drafting has begun, but its notebook and results have not yet been added to this local project.
 - **AI use:** see the "AI tools and LLM use" section below.
 
@@ -50,14 +51,14 @@ The Stage 1 and local Stage 2 quick starts below show which pinned file to insta
 3. Optional, for the LangExtract pilot only: create a git-ignored `.env` file in the project root containing `LANGEXTRACT_API_KEY=<your key>`. Without a key the pilot uses its local cache (`outputs/llm_cache/`) if present, otherwise it is skipped.
 4. Run `notebooks/stage1_analysis.ipynb` top to bottom (about 25 minutes on CPU; entity extraction dominates).
 5. Outputs are written to `data/processed/` and `outputs/` (tables, figures, graph, evaluations), with metadata in `data/processed/stage1_metadata.json`.
-6. Stage 2's local embedding workflow and saved outputs are in `notebooks/stage2_models.ipynb` and `outputs/`. Its QLoRA section is blocked by default in the local notebook; the QLoRA run was completed in Colab, and its artifacts still need to be copied from Drive into this project. Stage 3 code drafting has begun, but its notebook and results are not yet in this local project.
+6. Stage 2's local embedding workflow and imported Colab QLoRA results are in `notebooks/stage2_models.ipynb` and `outputs/`. The local QLoRA training cells remain disabled by default and their saved `BLOCKED` outputs describe only the local run; the separate Colab results are summarized in the notebook's artifact-backed results section. The adapter is ignored by Git and must be downloaded separately if needed. Stage 3 code drafting has begun, but its notebook and results are not yet in this local project.
 
 ## Quick start (Stage 2)
 1. Stage 2 expects Stage 1's full-corpus `data/processed/articles_clean.parquet` and `data/processed/stage1_metadata.json`. These are local/ignored artifacts; if missing, regenerate them using the Stage 1 quick start above. Stage 2 does not require the private OpenAI key.
 2. Use Python 3.11 and install the pinned local dependencies: `python -m pip install -r requirements-stage2.txt`.
 3. Open `notebooks/stage2_models.ipynb` from the repository root and run top to bottom. The local workflow verifies or loads the cached Word2Vec model, writes the chronological split and evaluation files under `outputs/evaluations/`, and saves tables/figures under `outputs/`.
 4. The rule-label prediction file is diagnostic: its scores compare models with Stage 1's weak rule labels and are not independent accuracy measurements.
-5. QLoRA is GPU-dependent and disabled by default (`ENABLE_QLORA_RUN = False`). For a deliberately authorized run, use a suitable CUDA-enabled Colab or equivalent runtime, install `requirements-stage2-colab.txt` without replacing its CUDA-matched PyTorch, set `AGENTIC_RADAR_ROOT`, inspect GPU memory/cost, and only then opt in. Colab Pro is not assumed to be necessary. Do not run this workload on the local 8-GiB machine.
+5. The exported Colab QLoRA metrics, evaluation manifest, per-excerpt loss file, training curve, plots, and metadata are under `outputs/`; the adapter is under `outputs/models/qwen3_1.7b_agentic_media_qlora/` and is git-ignored. The base model is not bundled. The downloaded Colab notebook/source is `notebooks/Copy_of_stage2_models.ipynb`; although one saved training-cell execution is interrupted, an artifact-check cell confirms the adapter files and metadata, which reports 6,009 steps and 96,158 chunks (see the Stage 2 audit). The paired confidence interval was independently recomputed from the 256 per-excerpt losses, and the model revision is pinned in metadata. `ENABLE_QLORA_RUN = False` remains the safe default: do not start another training run merely to view the saved results. Do not run this workload on the local 8-GiB machine.
 
 ## Repository structure
 Items marked *(planned)* do not exist yet.
@@ -76,10 +77,12 @@ Items marked *(planned)* do not exist yet.
 │   └── plan_stage2.md              # Stage 2 implementation plan
 ├── notebooks/
 │   ├── stage1_analysis.ipynb
-│   ├── stage2_models.ipynb         # embeddings complete locally; QLoRA results from Colab pending sync
+│   ├── Copy_of_stage2_models.ipynb # downloaded Colab source and saved execution outputs
+│   ├── stage2_models.ipynb         # embeddings and imported Colab QLoRA results
 │   └── stage3_rag.ipynb            # (draft not yet added to this local project)
 ├── data/processed/                 # cleaned corpus, Agentic Web subset, metadata
 ├── outputs/{figures,tables,graph,evaluations}/
+├── outputs/models/                 # local ignored model weights; not included in Git
 ├── src/                            # (planned, optional support code)
 └── tests/                          # (planned)
 ```

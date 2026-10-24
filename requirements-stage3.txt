@@ -1,0 +1,11 @@
+# Local Stage 3 retrieval, graph expansion, notebook, and OpenAI API workflow.
+numpy==2.3.3
+pandas==3.0.5
+pyarrow==24.0.0
+scikit-learn==1.7.2
+networkx==3.5
+matplotlib==3.10.6
+openai==3.29.0
+python-dotenv==1.2.3
+ipykernel==7.4.0
+nbformat==5.11.1

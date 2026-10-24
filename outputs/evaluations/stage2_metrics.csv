@@ -1,33 +1,40 @@
-stage,model,metric,value,n,notes
-embeddings,word2vec_sg_ns,heldout_context_pair_roc_auc,0.6774604799999999,10000,Held-out content-word context pairs; random negatives matched by training-frequency bins; not independently verified labels.
-embeddings,majority_rule_flag,macro_f1,0.38452380952380955,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=1.
-embeddings,majority_rule_flag,accuracy,0.6247582205029013,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=1.
-embeddings,majority_rule_flag,precision_weak_negative,0.6247582205029013,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,majority_rule_flag,recall_weak_negative,1.0,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,majority_rule_flag,precision_weak_positive,0.0,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,majority_rule_flag,recall_weak_positive,0.0,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,majority_rule_flag,true_negative_count,2907.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,majority_rule_flag,false_positive_count,0.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,majority_rule_flag,false_negative_count,1746.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,majority_rule_flag,true_positive_count,0.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,tfidf_logistic_regression,macro_f1,0.9105675962043174,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=50000.
-embeddings,tfidf_logistic_regression,accuracy,0.9153234472383408,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=50000.
-embeddings,tfidf_logistic_regression,precision_weak_negative,0.9457254345512593,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,tfidf_logistic_regression,recall_weak_negative,0.9170966632266941,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,tfidf_logistic_regression,precision_weak_positive,0.8685932388222465,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,tfidf_logistic_regression,recall_weak_positive,0.9123711340206185,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,tfidf_logistic_regression,true_negative_count,2666.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,tfidf_logistic_regression,false_positive_count,241.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,tfidf_logistic_regression,false_negative_count,153.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,tfidf_logistic_regression,true_positive_count,1593.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,mean_word2vec_logistic_regression,macro_f1,0.8037867177327396,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=100.
-embeddings,mean_word2vec_logistic_regression,accuracy,0.8100150440575973,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=100.
-embeddings,mean_word2vec_logistic_regression,precision_weak_negative,0.8928155339805826,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,mean_word2vec_logistic_regression,recall_weak_negative,0.7908496732026143,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,mean_word2vec_logistic_regression,precision_weak_positive,0.7074109720885466,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,mean_word2vec_logistic_regression,recall_weak_positive,0.8419243986254296,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.
-embeddings,mean_word2vec_logistic_regression,true_negative_count,2299.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,mean_word2vec_logistic_regression,false_positive_count,608.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,mean_word2vec_logistic_regression,false_negative_count,276.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,mean_word2vec_logistic_regression,true_positive_count,1470.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.
-embeddings,word2vec_sg_ns,training_seconds,1011.6758794009802,38002,Python=3.11.9; gensim=4.4.0; workers=1.
+stage,model,metric,value,n,notes,ci_lower,ci_upper
+embeddings,word2vec_sg_ns,heldout_context_pair_roc_auc,0.6774604799999999,10000,Held-out content-word context pairs; random negatives matched by training-frequency bins; not independently verified labels.,,
+embeddings,majority_rule_flag,macro_f1,0.38452380952380955,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=1.,,
+embeddings,majority_rule_flag,accuracy,0.6247582205029013,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=1.,,
+embeddings,majority_rule_flag,precision_weak_negative,0.6247582205029013,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,majority_rule_flag,recall_weak_negative,1.0,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,majority_rule_flag,precision_weak_positive,0.0,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,majority_rule_flag,recall_weak_positive,0.0,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,majority_rule_flag,true_negative_count,2907.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,majority_rule_flag,false_positive_count,0.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,majority_rule_flag,false_negative_count,1746.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,majority_rule_flag,true_positive_count,0.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,tfidf_logistic_regression,macro_f1,0.9105675962043174,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=50000.,,
+embeddings,tfidf_logistic_regression,accuracy,0.9153234472383408,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=50000.,,
+embeddings,tfidf_logistic_regression,precision_weak_negative,0.9457254345512593,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,tfidf_logistic_regression,recall_weak_negative,0.9170966632266941,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,tfidf_logistic_regression,precision_weak_positive,0.8685932388222465,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,tfidf_logistic_regression,recall_weak_positive,0.9123711340206185,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,tfidf_logistic_regression,true_negative_count,2666.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,tfidf_logistic_regression,false_positive_count,241.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,tfidf_logistic_regression,false_negative_count,153.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,tfidf_logistic_regression,true_positive_count,1593.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,mean_word2vec_logistic_regression,macro_f1,0.8037867177327396,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=100.,,
+embeddings,mean_word2vec_logistic_regression,accuracy,0.8100150440575973,4653,Chronological held-out agreement with Stage 1 keyword-rule flag; not gold annotation. Features=100.,,
+embeddings,mean_word2vec_logistic_regression,precision_weak_negative,0.8928155339805826,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,mean_word2vec_logistic_regression,recall_weak_negative,0.7908496732026143,2907,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,mean_word2vec_logistic_regression,precision_weak_positive,0.7074109720885466,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,mean_word2vec_logistic_regression,recall_weak_positive,0.8419243986254296,1746,Per-class agreement with the weak Stage 1 keyword-rule label; not gold annotation.,,
+embeddings,mean_word2vec_logistic_regression,true_negative_count,2299.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,mean_word2vec_logistic_regression,false_positive_count,608.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,mean_word2vec_logistic_regression,false_negative_count,276.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,mean_word2vec_logistic_regression,true_positive_count,1470.0,4653,Confusion count against weak Stage 1 keyword-rule labels; not semantic errors.,,
+embeddings,word2vec_sg_ns,training_seconds,1011.6758794009802,38002,Python=3.11.9; gensim=4.4.0; workers=1.,,
+language_model,pretrained,test_mean_token_loss,3.3533359630964696,130816,"Same stratified, seeded test excerpts; causal next-token objective.",,
+language_model,pretrained,test_perplexity,28.597976486328378,130816,"Same stratified, seeded test excerpts; causal next-token objective.",,
+language_model,qlora_adapted,test_mean_token_loss,2.715524592960719,130816,"Same stratified, seeded test excerpts; causal next-token objective.",,
+language_model,qlora_adapted,test_perplexity,15.112535922754542,130816,"Same stratified, seeded test excerpts; causal next-token objective.",,
+language_model,qlora_vs_pretrained,paired_mean_excerpt_loss_delta_adapted_minus_pretrained,-0.6378113701357506,256,Paired article-bootstrap 95% interval; negative favors adapted model.,-0.6950674792722566,-0.5879510110476986
+language_model,qlora_adapted,training_seconds,25016.487750612,38002,GPU=Tesla T4; chunks=96158; optimizer_steps=6009; epochs=1.,,
+language_model,qlora_adapted,validation_mean_token_loss,2.6230733968841378,130816,Validation excerpts only; test set reserved for final comparison.,,

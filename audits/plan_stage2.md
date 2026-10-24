@@ -10,6 +10,19 @@ Do not optimize for superficial complexity, impressive-looking metrics, or a lar
 
 I am completing the project individually with instructor permission. Clearly disclose AI-assisted coding and my own contribution. Never fabricate experiments, human evaluations, metrics, or completed work.
 
+## Current verified outcome (24 October 2026)
+
+The Stage 2 representation-evaluation requirement is now marked **PASS** in `audits/Stage2_self_audit.md`. A reviewer-labeled sample of 200 unique held-out test articles was matched one-to-one with the saved predictions. The reviewer confirmed that labels were assigned independently before consulting AI suggestions. There are 139 `not_relevant`, 50 `relevant`, and 11 `uncertain` labels; binary metrics exclude the 11 uncertain cases, leaving 189 scored articles.
+
+| System | Accuracy | Macro-F1 |
+| --- | ---: | ---: |
+| TF-IDF logistic regression | 0.862 | 0.840 |
+| Mean-Word2Vec logistic regression | 0.783 | 0.757 |
+| Majority baseline | 0.735 | 0.424 |
+| Stage 1 keyword-rule reference | 0.873 | 0.851 |
+
+The full per-class metrics and confusion counts are in `outputs/evaluations/stage2_human_review_metrics.csv`; per-article predictions and correctness flags are in `outputs/evaluations/stage2_human_review_predictions.csv`. The final evaluation cell in `notebooks/stage2_models.ipynb` validates the test IDs and regenerates both files. Results describe this one-reviewer, proportionally stratified sample only; they are not population estimates or general real-world accuracy. The Stage 1 keyword-rule labels remain weak labels, so the prior 0.911 TF-IDF and 0.804 Word2Vec macro-F1 scores measure agreement with those rules, not human-validated accuracy.
+
 ## STEP 1 — READ AND AUDIT BEFORE CODING
 
 Inspect the entire repository, including:
@@ -41,7 +54,7 @@ The previous local run reported:
 - Word2Vec held-out context-pair AUC: 0.677.
 - TF-IDF macro-F1: 0.911.
 - Mean Word2Vec macro-F1: 0.804.
-- Qwen3-1.7B QLoRA not yet executed because this computer has no CUDA GPU.
+- The Colab export reports Qwen3-1.7B QLoRA, and its adapter, metadata, training curve, metrics, and per-excerpt loss file have been imported into `outputs/`; the artifact check confirms adapter files and metadata exist, with metadata reporting 6,009 steps and 96,158 chunks. The downloaded source/output notebook is `notebooks/Copy_of_stage2_models.ipynb` and has mixed saved outputs: cell 22 ends with `KeyboardInterrupt`, while cell 29's directory check alone is not proof of completion. Treat that cell history as a caveat, not as evidence that the separate export failed. The paired interval has been independently reproduced from 256 test losses that match the manifest exactly. Revision `70d244cc86ccca08cf5af4e1e306ecf908b1ad5e` was recovered from the sole matching Colab cache snapshot and recorded with its source. Fine-tuning and matched-model comparison are now PASS; document the interrupted historical output and unrecorded peak GPU memory as limitations.
 
 These are prior reported results, not automatically verified facts. Check them against the actual saved artifacts and notebook outputs.
 

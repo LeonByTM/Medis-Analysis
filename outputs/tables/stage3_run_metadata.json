@@ -1,0 +1,18 @@
+{
+  "track": "Agentic Web",
+  "corpus_path": "data/processed/agentic_subset.parquet",
+  "corpus_articles": 11867,
+  "passage_count": 100,
+  "passage_seed": 20261020,
+  "passage_id_set_sha256": "d8ee76a3774c1bd447ae3620bb04f1b4903db1d1ef6e70ee5170c60c3f4a41e5",
+  "question_authoring_model": "gpt-4o-mini",
+  "rag_answer_model": "gpt-4o",
+  "api_budget_usd": 10.0,
+  "api_usage_ledger": "outputs/evaluations/stage3_api_usage.csv",
+  "graph_path": "outputs/graph/agentic_web.graphml",
+  "graph_method": "bounded MENTIONED_WITH co-occurrence article expansion; source text is authoritative",
+  "graph_expansion_weight": 0.05,
+  "top_k": 5,
+  "semantic_claim_graph_excluded_reason": "all exported edges are unreviewed candidates",
+  "human_question_review_complete": false
+}
