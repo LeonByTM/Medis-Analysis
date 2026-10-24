@@ -11,6 +11,7 @@ from stage3_rag import (
     answer_reviews_complete,
     answer_quality_metrics,
     approved_questions,
+    cooccurrence_reviews_complete,
     freeze_question_splits,
     sample_passages,
     TfidfGraphRetriever,
@@ -159,6 +160,33 @@ class Stage3RagTests(unittest.TestCase):
         incomplete["answer_faithfulness_review"] = ""
         self.assertFalse(answer_reviews_complete(incomplete))
         self.assertFalse(answer_reviews_complete(pd.DataFrame()))
+
+    def test_cooccurrence_review_gate_requires_attributable_decisions(self) -> None:
+        reviews = pd.DataFrame(
+            [
+                {
+                    "entity_a_review": "correct",
+                    "entity_b_review": "correct",
+                    "source_cooccurrence_review": "both_mentioned",
+                    "reviewer_id": "reviewer",
+                    "review_notes": "",
+                }
+            ]
+        )
+        self.assertTrue(cooccurrence_reviews_complete(reviews))
+        self.assertFalse(
+            cooccurrence_reviews_complete(
+                reviews.assign(entity_b_review="pending")
+            )
+        )
+        self.assertFalse(
+            cooccurrence_reviews_complete(
+                reviews.assign(
+                    entity_b_review="incorrect",
+                    review_notes="",
+                )
+            )
+        )
 
     def test_api_cost_estimates_match_configured_standard_rates(self) -> None:
         self.assertAlmostEqual(_cost_usd("gpt-4o-mini", 1_000_000, 0), 0.15)

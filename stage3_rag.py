@@ -987,3 +987,43 @@ def answer_reviews_complete(results: pd.DataFrame) -> bool:
         if values.eq("").any() or not set(values).issubset(allowed):
             return False
     return not results["reviewer_id"].fillna("").astype(str).str.strip().eq("").any()
+
+
+def cooccurrence_reviews_complete(reviews: pd.DataFrame) -> bool:
+    """Return whether every sampled undirected co-occurrence edge was reviewed."""
+    review_columns = {
+        "entity_a_review": {"correct", "incorrect", "uncertain"},
+        "entity_b_review": {"correct", "incorrect", "uncertain"},
+        "source_cooccurrence_review": {
+            "both_mentioned",
+            "one_or_both_missing",
+            "unclear",
+        },
+    }
+    required = {"reviewer_id", "review_notes", *review_columns}
+    if reviews.empty or not required.issubset(reviews.columns):
+        return False
+
+    normalized = reviews.copy()
+    for column, allowed in review_columns.items():
+        normalized[column] = normalized[column].fillna("").astype(str).str.strip()
+        values = set(normalized[column])
+        if not values.issubset(allowed):
+            return False
+    normalized["reviewer_id"] = (
+        normalized["reviewer_id"].fillna("").astype(str).str.strip()
+    )
+    normalized["review_notes"] = (
+        normalized["review_notes"].fillna("").astype(str).str.strip()
+    )
+    if normalized["reviewer_id"].eq("").any():
+        return False
+
+    unsupported = (
+        normalized["entity_a_review"].ne("correct")
+        | normalized["entity_b_review"].ne("correct")
+        | normalized["source_cooccurrence_review"].ne("both_mentioned")
+    )
+    return not (
+        unsupported & normalized["review_notes"].eq("")
+    ).any()

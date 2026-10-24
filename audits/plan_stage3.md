@@ -2,9 +2,9 @@
 
 ## Status and sequencing
 
-Stage 3 retrieval and candidate-generation implementation is in place. The notebook has run top-to-bottom with both API flags disabled, and all nine code cells executed. It saved a metadata-only 100-passage manifest, a deterministic grouped split for 200 question candidates, and 400 provisional retrieval-diagnostic rows (200 per variant). Eight focused unit tests pass.
+Stage 3 retrieval and candidate-generation implementation is in place. The notebook has run top-to-bottom with both API flags disabled, and all nine code cells executed. It saved a metadata-only 100-passage manifest, a deterministic grouped split for 200 question candidates, and 400 provisional retrieval-diagnostic rows (200 per variant). A 15-question test review worksheet (three per formal question type, unique passages) and a 10-edge source-linked co-occurrence review worksheet are prepared with blank review fields. Nine focused unit tests pass.
 
-The authorized question-authoring batch made 100 `gpt-4o-mini` requests at a recorded total of USD 0.0214509, well below the USD 10 cap. All 200 candidates remain `pending`. The automated whitespace-normalized evidence-quote check matched 115/200 candidates; the other 85 require human correction or rejection. No RAG answer calls, human answer ratings, or confirmatory metrics are available yet.
+The authorized question-authoring batch made 100 `gpt-4o-mini` requests at a recorded total of USD 0.0214509, well below the USD 10 cap. All 200 candidates remain `pending`. The automated whitespace-normalized evidence-quote check matched 115/200 candidates; the other 85 need human correction or rejection if selected. The 15-question review subset has 10/15 automated quote matches. No RAG answer calls, human answer ratings, or confirmatory metrics are available yet.
 
 Stage 2 remains open: its annotated-notebook/output-package row is still PARTIAL, and the user plans to address it tomorrow. Stage 3 can proceed independently from Stage 1 inputs; keep the Stage 2 status separate and do not describe the whole project as complete.
 
