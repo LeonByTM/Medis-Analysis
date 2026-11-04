@@ -64,6 +64,32 @@ The Stage 1 and local Stage 2 quick starts below show which pinned file to insta
 4. The rule-label prediction file is diagnostic: its scores compare models with Stage 1's weak rule labels and are not independent accuracy measurements.
 5. The exported Colab QLoRA metrics, evaluation manifest, per-excerpt loss file, training curve, plots, and metadata are under `outputs/`; the adapter is under `outputs/models/qwen3_1.7b_agentic_media_qlora/` and is git-ignored. The base model is not bundled. The downloaded Colab notebook/source is `notebooks/Copy_of_stage2_models.ipynb`; although one saved training-cell execution is interrupted, an artifact-check cell confirms the adapter files and metadata, which reports 6,009 steps and 96,158 chunks (see the Stage 2 audit). The paired confidence interval was independently recomputed from the 256 per-excerpt losses, and the model revision is pinned in metadata. `ENABLE_QLORA_RUN = False` remains the safe default: do not start another training run merely to view the saved results. Do not run this workload on the local 8-GiB machine.
 
+## Stage 3 — From Agentic Web stories to grounded answers
+
+Can a knowledge graph help a RAG system answer questions about agentic AI coverage? Stage 3 tests that idea against a text-only baseline instead of assuming graph context is better.
+
+### The experiment
+- The pipeline uses 100 representative passages from the assigned dataset and generated 200 Q&A candidates with a question model distinct from the answer model.
+- Auditor `leon_review` checked all 200 candidates: **174 supported, 25 uncertain, and 1 unsupported**. Uncertain and unsupported items are not approvals; the review outcomes are recorded in [`stage3_human_review_local_audit.csv`](outputs/evaluations/stage3_human_review_local_audit.csv).
+- The frozen baseline is deliberately smaller: a curated worksheet contains 16 decisions (8 approved and 8 rejected), and the 8 approved answerable questions are used for paired baseline metrics. The pool-level audit does not add questions to that frozen benchmark.
+- The text-only system uses TF–IDF retrieval. The graph variant adds bounded article expansion through `MENTIONED_WITH` co-occurrence edges. Graph edges are retrieval cues only; generated answers must be grounded in and cite source article text.
+
+### What the comparison found
+
+| Metric | Text-only | Graph-expanded |
+| --- | ---: | ---: |
+| Recall@5 | 1.00 | 1.00 |
+| MRR@5 | 0.906 | 0.806 |
+| Fully correct answers | 5/8 | 5/8 |
+| Partially correct answers | 2/8 | 2/8 |
+| Incorrect answers | 1/8 | 1/8 |
+
+On this small benchmark, graph expansion did not improve recall or answer ratings, and its MRR was lower. That negative result is part of the finding—not something to hide or overgeneralize.
+
+### Enhancement and limitations
+
+A date-context bug that split `Dec. 15` incorrectly was fixed and regression-tested. Separate prompt-v3 diagnostics improved the affected date answers, but they are reported separately and do not change the frozen baseline scores. A separate addendum tests one multi-hop and one unanswerable question; it also remains outside the baseline metrics. With only 8 approved answerable questions in the paired baseline, all results are exploratory. The notebook and the [Stage 3 self-audit](audits/Stage3_self_audit.md) document the methods, outputs, and caveats.
+
 ## Repository structure
 Items marked *(planned)* do not exist yet.
 ```text
