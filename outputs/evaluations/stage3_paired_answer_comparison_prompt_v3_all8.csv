@@ -1,0 +1,9 @@
+question_id,evaluation_scope,question_type,correctness_text_only,correctness_graph_expanded,correctness_delta,faithfulness_text_only,faithfulness_graph_expanded,faithfulness_delta,relevance_text_only,relevance_graph_expanded,relevance_delta,temporal_grounding_text_only,temporal_grounding_graph_expanded,temporal_grounding_delta,citation_support_text_only,citation_support_graph_expanded,citation_support_delta,context_grounding_text_only,context_grounding_graph_expanded,context_grounding_delta,abstention_text_only,abstention_graph_expanded,abstention_delta
+q_p_59eefd887fee3dd3_1,consistent_prompt_v3_all_8_approved_test_questions,factoid,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_69548d61151cfa4f_1,consistent_prompt_v3_all_8_approved_test_questions,temporal,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_8ff4e7ad3e10d7ec_2,consistent_prompt_v3_all_8_approved_test_questions,analytical,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_9dcb726538d091c5_1,consistent_prompt_v3_all_8_approved_test_questions,temporal,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_a3719f890fb49784_1,consistent_prompt_v3_all_8_approved_test_questions,comparative,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_db1c3fd008a10201_2,consistent_prompt_v3_all_8_approved_test_questions,comparative,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_e2ae96bce8ce3871_2,consistent_prompt_v3_all_8_approved_test_questions,analytical,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_ec3283273584cdb0_2,consistent_prompt_v3_all_8_approved_test_questions,relational,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,

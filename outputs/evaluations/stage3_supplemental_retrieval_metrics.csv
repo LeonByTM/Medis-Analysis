@@ -1,0 +1,2 @@
+question_id,evaluation_scope,question_type,k,n_relevant_articles,n_retrieved_text_only,n_retrieved_graph_expanded,recall_at_k_text_only,recall_at_k_graph_expanded,recall_at_k_delta,mrr_at_k_text_only,mrr_at_k_graph_expanded,mrr_at_k_delta
+supp_multi_hop_001,supplemental_not_in_frozen_baseline,multi_hop,5,2,1,1,0.5,0.5,0.0,0.3333333333333333,0.3333333333333333,0.0

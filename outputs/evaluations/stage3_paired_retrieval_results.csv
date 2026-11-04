@@ -1,0 +1,9 @@
+question_id,question_type,k,n_relevant_articles,n_retrieved_text_only,n_retrieved_graph_expanded,recall_at_k_text_only,recall_at_k_graph_expanded,recall_at_k_delta,mrr_at_k_text_only,mrr_at_k_graph_expanded,mrr_at_k_delta
+q_p_59eefd887fee3dd3_1,factoid,5,1,1,1,1.0,1.0,0.0,0.25,0.2,-0.04999999999999999
+q_p_69548d61151cfa4f_1,temporal,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0
+q_p_8ff4e7ad3e10d7ec_2,analytical,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0
+q_p_9dcb726538d091c5_1,temporal,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0
+q_p_a3719f890fb49784_1,comparative,5,1,1,1,1.0,1.0,0.0,1.0,0.25,-0.75
+q_p_db1c3fd008a10201_2,comparative,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0
+q_p_e2ae96bce8ce3871_2,analytical,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0
+q_p_ec3283273584cdb0_2,relational,5,1,1,1,1.0,1.0,0.0,1.0,1.0,0.0

@@ -1240,8 +1240,35 @@ def retrieval_latency_metrics(
     return pd.DataFrame(rows)
 
 
+def _derive_context_grounding_status(results: pd.DataFrame) -> pd.Series:
+    """Derive answer-level grounding from reviewed faithfulness and citation support."""
+    faithfulness = results["answer_faithfulness_review"].fillna("").astype(str).str.strip()
+    citation_support = results["citation_support_review"].fillna("").astype(str).str.strip()
+    question_type = results["question_type"].fillna("").astype(str).str.strip()
+    abstention = results["abstention_review"].fillna("").astype(str).str.strip()
+
+    correct_abstention = question_type.eq("unanswerable") & abstention.eq(
+        "correct_abstention"
+    )
+    unsupported = (
+        faithfulness.eq("unsupported")
+        | citation_support.eq("no_cited_claim_supported")
+        | (citation_support.eq("no_citations") & ~correct_abstention)
+    )
+    fully_supported = (
+        faithfulness.eq("supported")
+        & citation_support.eq("all_cited_claims_supported")
+    )
+
+    status = pd.Series("partially_supported", index=results.index, dtype="object")
+    status.loc[unsupported] = "unsupported"
+    status.loc[fully_supported & ~unsupported] = "supported"
+    status.loc[correct_abstention] = "not_applicable"
+    return status
+
+
 def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
-    """Aggregate only completed human answer reviews; never infer review labels."""
+    """Aggregate reviewed answers and derive a transparent context-grounding measure."""
     if results.empty:
         raise ValueError("No answer results are available for human review aggregation.")
     normalized_results = results.copy()
@@ -1308,12 +1335,22 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
             "Use abstention labels only for unanswerable questions; mark other types "
             "not_applicable."
         )
+    normalized_results["context_grounding_status"] = (
+        _derive_context_grounding_status(normalized_results)
+    )
 
     rows: list[dict[str, Any]] = []
     for variant, group in normalized_results.groupby("variant", sort=True):
         temporal = group.loc[group["temporal_grounding_review"].ne("not_applicable")]
         cited = group.loc[group["citation_support_review"].ne("no_citations")]
         unanswerable_group = group.loc[group["question_type"].eq("unanswerable")]
+        context_grounding = group.loc[
+            group["context_grounding_status"].ne("not_applicable"),
+            "context_grounding_status",
+        ]
+        context_grounding_scores = context_grounding.map(
+            {"supported": 1.0, "partially_supported": 0.5, "unsupported": 0.0}
+        )
         correctness_scores = group["answer_correctness_review"].map(
             {"correct": 1.0, "partially_correct": 0.5, "incorrect": 0.0}
         )
@@ -1347,6 +1384,27 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
                     if not cited.empty
                     else np.nan
                 ),
+                "n_context_grounding_applicable": len(context_grounding),
+                "context_grounding_fully_supported_rate": (
+                    float(context_grounding.eq("supported").mean())
+                    if not context_grounding.empty
+                    else np.nan
+                ),
+                "context_grounding_partially_supported_rate": (
+                    float(context_grounding.eq("partially_supported").mean())
+                    if not context_grounding.empty
+                    else np.nan
+                ),
+                "context_grounding_unsupported_rate": (
+                    float(context_grounding.eq("unsupported").mean())
+                    if not context_grounding.empty
+                    else np.nan
+                ),
+                "context_grounding_mean_score": (
+                    float(context_grounding_scores.mean())
+                    if not context_grounding_scores.empty
+                    else np.nan
+                ),
                 "n_unanswerable": len(unanswerable_group),
                 "correct_abstention_rate": (
                     float(
@@ -1363,13 +1421,16 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
 
 
 def paired_answer_quality_comparison(results: pd.DataFrame) -> pd.DataFrame:
-    """Return per-question paired human scores for correctness and evidence quality."""
+    """Return paired human scores and derived context-grounding scores per question."""
     if not answer_reviews_complete(results):
         raise RuntimeError(
             "Paired answer comparison requires complete human answer reviews."
         )
     normalized = results.copy()
     normalized["question_id"] = normalized["question_id"].astype(str)
+    normalized["context_grounding_status"] = _derive_context_grounding_status(
+        normalized
+    )
     score_maps = {
         "correctness": {"correct": 1.0, "partially_correct": 0.5, "incorrect": 0.0},
         "faithfulness": {
@@ -1390,6 +1451,12 @@ def paired_answer_quality_comparison(results: pd.DataFrame) -> pd.DataFrame:
             "no_cited_claim_supported": 0.0,
             "no_citations": 0.0,
         },
+        "context_grounding": {
+            "supported": 1.0,
+            "partially_supported": 0.5,
+            "unsupported": 0.0,
+            "not_applicable": np.nan,
+        },
         "abstention": {
             "correct_abstention": 1.0,
             "incorrect_abstention": 0.0,
@@ -1402,6 +1469,7 @@ def paired_answer_quality_comparison(results: pd.DataFrame) -> pd.DataFrame:
         "relevance": "answer_relevance_review",
         "temporal_grounding": "temporal_grounding_review",
         "citation_support": "citation_support_review",
+        "context_grounding": "context_grounding_status",
         "abstention": "abstention_review",
     }
     for metric, column in source_columns.items():

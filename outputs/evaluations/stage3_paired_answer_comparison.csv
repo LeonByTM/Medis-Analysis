@@ -1,0 +1,9 @@
+question_id,question_type,correctness_text_only,correctness_graph_expanded,correctness_delta,faithfulness_text_only,faithfulness_graph_expanded,faithfulness_delta,relevance_text_only,relevance_graph_expanded,relevance_delta,temporal_grounding_text_only,temporal_grounding_graph_expanded,temporal_grounding_delta,citation_support_text_only,citation_support_graph_expanded,citation_support_delta,context_grounding_text_only,context_grounding_graph_expanded,context_grounding_delta,abstention_text_only,abstention_graph_expanded,abstention_delta
+q_p_59eefd887fee3dd3_1,factoid,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_69548d61151cfa4f_1,temporal,0.0,0.0,0.0,0.0,0.0,0.0,1.0,1.0,0.0,0.0,0.0,0.0,0.5,0.5,0.0,0.0,0.0,0.0,,,
+q_p_8ff4e7ad3e10d7ec_2,analytical,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_9dcb726538d091c5_1,temporal,0.5,0.5,0.0,1.0,1.0,0.0,1.0,1.0,0.0,0.5,0.5,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_a3719f890fb49784_1,comparative,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_db1c3fd008a10201_2,comparative,0.5,0.5,0.0,0.5,0.5,0.0,1.0,1.0,0.0,,,,0.5,0.5,0.0,0.5,0.5,0.0,,,
+q_p_e2ae96bce8ce3871_2,analytical,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,
+q_p_ec3283273584cdb0_2,relational,1.0,1.0,0.0,1.0,1.0,0.0,1.0,1.0,0.0,,,,1.0,1.0,0.0,1.0,1.0,0.0,,,

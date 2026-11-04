@@ -1,0 +1,79 @@
+{
+  "created_on": "2026-10-24",
+  "question_source": "outputs/evaluations/stage3_questions.csv",
+  "question_split_source": "outputs/evaluations/stage3_question_splits.csv",
+  "question_split": "test",
+  "question_selection": "Initial deterministic selection: three candidates per formal question type, chosen by SHA-256 order of question_id with unique passage IDs; this initial selection does not use retrieval scores or quote-match results. One supplemental human-approved relational test question was appended from a passage already present in the initial subset; the worksheet now contains 16 reviewed questions across 15 unique passages.",
+  "question_count": 16,
+  "question_types": {
+    "analytical": 3,
+    "comparative": 3,
+    "factoid": 3,
+    "relational": 4,
+    "temporal": 3
+  },
+  "question_passages_unique": 15,
+  "question_auto_quote_matches": 12,
+  "graph_review_source": "outputs/graph/agentic_web.graphml",
+  "graph_review_selection": "Ten deterministic MENTIONED_WITH/cooccurrence edges linked to selected test-question source articles; no full article text copied.",
+  "graph_review_count": 10,
+  "graph_relation_direction": "Not applicable: selected graph is undirected co-occurrence. No semantic relation is asserted.",
+  "semantic_claim_graph_used": false,
+  "human_annotations_added": true,
+  "review_fields_are_blank": false,
+  "question_review_instructions": {
+    "review_status_values": [
+      "approved",
+      "rejected"
+    ],
+    "reviewer_id": "Required on every row.",
+    "rejected_review_notes": "Required for rejected rows.",
+    "editable_final_fields": [
+      "question",
+      "reference_answer",
+      "supporting_article_ids",
+      "evidence_quote"
+    ],
+    "preserved_draft_fields": [
+      "candidate_question",
+      "candidate_reference_answer",
+      "candidate_supporting_article_ids",
+      "candidate_evidence_quote"
+    ],
+    "evidence_quote_matches_passage": "Automated check only; independently check the source URL and correct evidence_quote if needed."
+  },
+  "graph_review_instructions": {
+    "entity_a_review_values": [
+      "correct",
+      "incorrect",
+      "uncertain"
+    ],
+    "entity_b_review_values": [
+      "correct",
+      "incorrect",
+      "uncertain"
+    ],
+    "source_cooccurrence_review_values": [
+      "both_mentioned",
+      "one_or_both_missing",
+      "unclear"
+    ],
+    "reviewer_id": "Required on every row.",
+    "review_notes": "Required if either entity is not correct or source_cooccurrence_review is not both_mentioned.",
+    "directionality": "Not applicable for undirected MENTIONED_WITH co-occurrence; do not interpret it as a directed semantic relation."
+  },
+  "updated_on": "2026-11-04",
+  "source_quote_correction": {
+    "question_id": "q_p_db1c3fd008a10201_2",
+    "performed_by": "coding assistant",
+    "reason": "The stored-source excerpt contains a space after the opening parenthesis in '( AGI)'; the reviewed quote omitted it and failed the exact substring check.",
+    "change": "Restored the exact source spacing in the evidence quote and updated the derived quote-match flag. The approved question, answer, and reviewer decision were not changed; this correction is not a new human review."
+  },
+  "supplemental_human_review": {
+    "question_id": "q_p_ec3283273584cdb0_2",
+    "reviewer_id": "User (identity not provided)",
+    "decision": "approved",
+    "source_article_id": "148173",
+    "note": "User approved the relational question and source-supported answer; the exact quote was extended to include the production-like-dependencies sentence. No answer-quality rating was supplied."
+  }
+}

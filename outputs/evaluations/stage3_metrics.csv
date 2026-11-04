@@ -1,0 +1,3 @@
+variant,n_questions,recall_at_k,mrr_at_k,k
+text_only,8,1.0,0.90625,5
+graph_expanded,8,1.0,0.80625,5

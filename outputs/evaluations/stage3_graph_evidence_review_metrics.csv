@@ -1,0 +1,2 @@
+n_edges_reviewed,n_entity_a_determinate,entity_a_link_correct_rate,n_entity_b_determinate,entity_b_link_correct_rate,n_source_determinate,source_both_mentioned_rate,n_all_fields_determinate,n_fully_supported_edges,fully_supported_rate_all_reviewed,fully_supported_rate_determinate
+10,10,0.7,9,0.7777777777777778,10,1.0,9,6,0.6,0.6666666666666666

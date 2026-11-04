@@ -487,15 +487,28 @@ class Stage3RagTests(unittest.TestCase):
         self.assertEqual(
             summary_by_variant.loc["text_only", "faithfulness_supported_rate"], 1.0
         )
+        self.assertEqual(
+            summary_by_variant.loc[
+                "text_only", "context_grounding_fully_supported_rate"
+            ],
+            1.0,
+        )
         self.assertEqual(summary_by_variant.loc["text_only", "relevance_rate"], 1.0)
         self.assertEqual(summary_by_variant.loc["text_only", "correctness_rate"], 1.0)
         self.assertEqual(
             summary_by_variant.loc["graph_expanded", "mean_correctness_score"], 0.5
         )
+        self.assertEqual(
+            summary_by_variant.loc[
+                "graph_expanded", "context_grounding_partially_supported_rate"
+            ],
+            1.0,
+        )
         self.assertEqual(summary_by_variant.loc["text_only", "n_temporal_applicable"], 0)
         paired = paired_answer_quality_comparison(results).iloc[0]
         self.assertEqual(paired["correctness_delta"], -0.5)
         self.assertEqual(paired["citation_support_delta"], -0.5)
+        self.assertEqual(paired["context_grounding_delta"], -0.5)
         whitespace_results = results.assign(
             answer_faithfulness_review=" supported ",
             answer_relevance_review=" relevant ",
@@ -514,6 +527,16 @@ class Stage3RagTests(unittest.TestCase):
         self.assertEqual(
             whitespace_summary.set_index("variant").loc[
                 "text_only", "all_citations_supported_rate"
+            ],
+            1.0,
+        )
+        missing_citations = results.assign(citation_support_review="no_citations")
+        missing_citation_summary = answer_quality_metrics(missing_citations).set_index(
+            "variant"
+        )
+        self.assertEqual(
+            missing_citation_summary.loc[
+                "text_only", "context_grounding_unsupported_rate"
             ],
             1.0,
         )
@@ -561,6 +584,7 @@ class Stage3RagTests(unittest.TestCase):
         self.assertTrue(answer_reviews_complete(results))
         self.assertEqual(summary.loc[0, "n_unanswerable"], 1)
         self.assertEqual(summary.loc[0, "correct_abstention_rate"], 1.0)
+        self.assertEqual(summary.loc[0, "n_context_grounding_applicable"], 0)
         invalid = results.assign(abstention_review="not_applicable")
         self.assertFalse(answer_reviews_complete(invalid))
         with self.assertRaises(RuntimeError):

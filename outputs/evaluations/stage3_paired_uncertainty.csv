@@ -1,0 +1,8 @@
+metric,n_pairs,mean_delta_graph_minus_text,ci_95_low,ci_95_high,method,bootstrap_samples,seed
+recall_at_k,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
+mrr_at_k,8,-0.1,-0.2875,0.0,paired percentile bootstrap over questions,10000,20261104
+correctness,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
+faithfulness,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
+relevance,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
+citation_support,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
+context_grounding,8,0.0,0.0,0.0,paired percentile bootstrap over questions,10000,20261104
