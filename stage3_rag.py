@@ -10,6 +10,7 @@ import re
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
+from time import perf_counter
 from typing import Any, Iterable
 
 import networkx as nx
@@ -22,9 +23,13 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 
 AUTHORING_MODEL = "gpt-4o-mini"
 ANSWER_MODEL = "gpt-4o"
+ANSWER_PROMPT_VERSION = "source_precise_v3"
 API_BUDGET_USD = 10.0
 QUESTIONS_PER_PASSAGE = 2
 QUESTION_TYPES = ("factoid", "temporal", "relational", "analytical", "comparative")
+ALLOWED_QUESTION_TYPES = frozenset(
+    {*QUESTION_TYPES, "multi_hop", "unanswerable"}
+)
 QUESTION_MODEL_PRICES = {"input": 0.15, "output": 0.60}
 ANSWER_MODEL_PRICES = {"input": 2.50, "output": 10.00}
 OPENAI_PRICING_SOURCE = "https://platform.openai.com/docs/pricing"
@@ -214,8 +219,25 @@ def _article_ids_from_edge(attrs: dict[str, Any]) -> list[str]:
     return [str(article_id) for article_id in value]
 
 
-def _select_context(text: str, title: str, query: str, max_chars: int = 1400) -> str:
-    sentences = [sentence.strip() for sentence in re.split(r"(?<=[.!?])\s+", text) if sentence.strip()]
+def _select_context(
+    text: str,
+    title: str,
+    query: str,
+    max_chars: int = 1400,
+    published_at: str = "",
+) -> str:
+    protected_text = re.sub(
+        r"\b(Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\."
+        r"(?=\s+\d{1,2}\b)",
+        r"\1<MONTH_PERIOD>",
+        text,
+        flags=re.IGNORECASE,
+    )
+    sentences = [
+        sentence.strip().replace("<MONTH_PERIOD>", ".")
+        for sentence in re.split(r"(?<=[.!?])\s+", protected_text)
+        if sentence.strip()
+    ]
     if not sentences:
         excerpt = text[:max_chars]
     else:
@@ -241,7 +263,8 @@ def _select_context(text: str, title: str, query: str, max_chars: int = 1400) ->
         else:
             excerpt = " ".join(sentence for _, sentence in sorted(selected))
 
-    return f"Title: {title}\nEvidence excerpt: {excerpt}"
+    date_line = f"\nArticle publication date: {published_at}" if published_at else ""
+    return f"Title: {title}{date_line}\nEvidence excerpt: {excerpt}"
 
 
 class TfidfGraphRetriever:
@@ -379,7 +402,14 @@ class TfidfGraphRetriever:
                     retrieval_score=retrieval_score,
                     graph_support=normalized_support,
                     context=_select_context(
-                        str(row["text_clean"]), str(row["title"]), query
+                        str(row["text_clean"]),
+                        str(row["title"]),
+                        query,
+                        published_at=(
+                            row["published_at"].isoformat()
+                            if pd.notna(row["published_at"])
+                            else ""
+                        ),
                     ),
                 )
             )
@@ -686,6 +716,78 @@ def approved_questions(questions: pd.DataFrame, split: str | None = None) -> pd.
     return approved.reset_index(drop=True)
 
 
+def question_reviews_complete(questions: pd.DataFrame) -> bool:
+    """Return whether every question has an attributable, complete human review."""
+    required = {"review_status", "reviewer_id", "review_notes"}
+    if questions.empty or not required.issubset(questions.columns):
+        return False
+
+    statuses = questions["review_status"].fillna("").astype(str).str.strip()
+    if not statuses.isin({"approved", "rejected"}).all():
+        return False
+    reviewer_ids = questions["reviewer_id"].fillna("").astype(str).str.strip()
+    if reviewer_ids.eq("").any():
+        return False
+    notes = questions["review_notes"].fillna("").astype(str).str.strip()
+    rejected_without_reason = statuses.eq("rejected") & notes.eq("")
+    return not rejected_without_reason.any()
+
+
+def validate_confirmatory_question_types(questions: pd.DataFrame) -> None:
+    """Validate question types, reference answers, and gold evidence IDs."""
+    if "question_type" not in questions.columns:
+        raise ValueError("Confirmatory questions are missing the question_type column.")
+    observed = set(questions["question_type"].fillna("").astype(str).str.strip())
+    invalid = observed - ALLOWED_QUESTION_TYPES
+    if not observed or "" in observed:
+        raise ValueError("Confirmatory questions need a non-empty question_type.")
+    if invalid:
+        raise RuntimeError(
+            "Confirmatory questions contain unsupported question types: "
+            f"{sorted(invalid)}. Allowed types are {sorted(ALLOWED_QUESTION_TYPES)}."
+        )
+    required_fields = {"question_id", "reference_answer", "supporting_article_ids"}
+    missing_fields = required_fields - set(questions.columns)
+    if missing_fields:
+        raise ValueError(
+            f"Confirmatory questions are missing fields: {sorted(missing_fields)}."
+        )
+    for row in questions.itertuples(index=False):
+        question_type = str(row.question_type).strip()
+        reference_answer = (
+            "" if pd.isna(row.reference_answer) else str(row.reference_answer).strip()
+        )
+        if not reference_answer:
+            raise ValueError(
+                f"Question {row.question_id!r} needs a human-checked reference answer "
+                "or expected abstention."
+            )
+        try:
+            supporting_ids = json.loads(str(row.supporting_article_ids))
+        except json.JSONDecodeError as error:
+            raise ValueError(
+                f"Question {row.question_id!r} has invalid supporting_article_ids JSON."
+            ) from error
+        if not isinstance(supporting_ids, list) or any(
+            not isinstance(article_id, str) or not article_id.strip()
+            for article_id in supporting_ids
+        ):
+            raise ValueError(
+                f"Question {row.question_id!r} supporting_article_ids must be a JSON "
+                "array of non-empty strings."
+            )
+        if question_type == "unanswerable" and supporting_ids:
+            raise ValueError(
+                f"Unanswerable question {row.question_id!r} must have no gold "
+                "supporting article IDs."
+            )
+        if question_type != "unanswerable" and not supporting_ids:
+            raise ValueError(
+                f"Answerable question {row.question_id!r} needs at least one gold "
+                "supporting article ID."
+            )
+
+
 def generate_rag_answer(
     question: str,
     retrieved: Iterable[RetrievedArticle],
@@ -700,24 +802,41 @@ def generate_rag_answer(
     contexts = [
         {
             "article_id": item.article_id,
+            "retrieval_rank": rank,
+            "retrieval_score": item.retrieval_score,
             "title": item.title,
             "published_at": item.published_at or None,
             "source": item.source,
             "evidence_excerpt": item.context,
         }
-        for item in articles
+        for rank, item in enumerate(articles, start=1)
     ]
     system_message = (
-        "Answer the question using only the supplied retrieved passages. If they do not "
-        "support an answer, say 'Insufficient evidence in the retrieved passages.' "
-        "Cite supporting article IDs in a JSON array. Do not treat co-mentions as "
-        "factual relations. Use publication dates only when supplied."
+        "Return a JSON object with answer and citations. Answer concisely using only the "
+        "supplied retrieved passages; do not add background claims or comparisons that "
+        "are not needed to answer the question. If the passages do not support an answer, "
+        "say 'Insufficient evidence in the retrieved passages.' For date questions, use "
+        "the most precise event date explicitly stated in the relevant passage, distinguish "
+        "the event date from the article publication date, and do not infer a day or year. "
+        "Passages are ordered by retrieval rank. Prefer the highest-ranked passage that "
+        "directly supports the specific event and entity pair in the question. Do not "
+        "substitute a different earlier or later event involving the same entities. "
+        "Article publication dates describe when an article was published, not "
+        "automatically when an event occurred. Use an article date to resolve a relative "
+        "weekday such as 'Wednesday' only when the source text makes that link clear. "
+        "If passages conflict, cite the passage that describes the event asked about. "
+        "Cite supporting article IDs as exact strings from the supplied passages, even "
+        "when the IDs contain only digits. Do not treat co-mentions as factual relations."
     )
     user_message = json.dumps(
         {
             "question": question,
             "retrieved_passages": contexts,
-            "output_schema": {"answer": "string", "citations": ["article_id"]},
+            "valid_citation_ids": [str(item.article_id) for item in articles],
+            "output_schema": {
+                "answer": "string",
+                "citations": "array of exact article_id strings",
+            },
         },
         ensure_ascii=False,
     )
@@ -736,13 +855,23 @@ def generate_rag_answer(
     citations = payload.get("citations")
     if not isinstance(answer, str) or not answer.strip():
         raise ValueError("RAG answer response must contain a non-empty answer string.")
-    if not isinstance(citations, list) or any(not isinstance(value, str) for value in citations):
-        raise ValueError("RAG answer citations must be a list of article ID strings.")
+    if not isinstance(citations, list):
+        raise ValueError("RAG answer citations must be a list of article IDs.")
+    normalized_citations: list[str] = []
+    for citation in citations:
+        if isinstance(citation, str):
+            normalized_citations.append(citation)
+        elif isinstance(citation, int) and not isinstance(citation, bool):
+            normalized_citations.append(str(citation))
+        else:
+            raise ValueError(
+                "RAG answer citations must contain only string or integer article IDs."
+            )
     retrieved_ids = {item.article_id for item in articles}
-    invalid = set(citations) - retrieved_ids
+    invalid = set(normalized_citations) - retrieved_ids
     if invalid:
         raise ValueError(f"RAG answer cited articles that were not retrieved: {sorted(invalid)}")
-    return {"answer": answer.strip(), "citations": citations}
+    return {"answer": answer.strip(), "citations": normalized_citations}
 
 
 def run_paired_retrieval(
@@ -754,9 +883,11 @@ def run_paired_retrieval(
     rows: list[dict[str, Any]] = []
     for question in questions.itertuples(index=False):
         for variant, graph_enabled in (("text_only", False), ("graph_expanded", True)):
+            retrieval_started = perf_counter()
             retrieved = retriever.retrieve(
                 str(question.question), k=top_k, graph_enabled=graph_enabled
             )
+            retrieval_latency_ms = (perf_counter() - retrieval_started) * 1000
             rows.append(
                 {
                     "question_id": str(question.question_id),
@@ -770,6 +901,7 @@ def run_paired_retrieval(
                     "graph_supported_in_top_k": sum(
                         item.graph_support > 0 for item in retrieved
                     ),
+                    "retrieval_latency_ms": retrieval_latency_ms,
                     "answer": "",
                     "citations": "[]",
                     "answer_faithfulness_review": "",
@@ -778,6 +910,123 @@ def run_paired_retrieval(
                     "reviewer_notes": "",
                 }
             )
+    return pd.DataFrame(rows)
+
+
+def _validate_paired_variants(results: pd.DataFrame) -> pd.DataFrame:
+    """Require one text-only and one graph result for every evaluated question."""
+    required = {"question_id", "variant"}
+    missing = required - set(results.columns)
+    if missing:
+        raise ValueError(f"Paired results are missing columns: {sorted(missing)}")
+    if results.empty:
+        raise ValueError("No paired results are available.")
+
+    normalized = results.copy()
+    normalized["question_id"] = normalized["question_id"].astype(str)
+    normalized["variant"] = normalized["variant"].astype(str)
+    expected_variants = {"text_only", "graph_expanded"}
+    observed_variants = set(normalized["variant"])
+    if observed_variants != expected_variants:
+        raise ValueError(
+            "Paired comparison requires exactly text_only and graph_expanded results; "
+            f"found {sorted(observed_variants)}."
+        )
+    duplicate_pairs = normalized.duplicated(["question_id", "variant"], keep=False)
+    if duplicate_pairs.any():
+        duplicates = normalized.loc[duplicate_pairs, ["question_id", "variant"]]
+        raise ValueError(
+            "Paired results contain duplicate question/variant rows: "
+            f"{duplicates.to_dict(orient='records')[:5]}"
+        )
+
+    counts = normalized.groupby("question_id")["variant"].agg(set)
+    incomplete = counts[counts.ne(expected_variants)]
+    if not incomplete.empty:
+        raise ValueError(
+            "Every evaluated question must have both retrieval variants; incomplete "
+            f"pairs include {incomplete.index.astype(str).tolist()[:5]}."
+        )
+    return normalized
+
+
+def paired_retrieval_comparison(
+    questions: pd.DataFrame,
+    results: pd.DataFrame,
+) -> pd.DataFrame:
+    """Return per-question Recall@k and reciprocal-rank differences."""
+    reviewed = approved_questions(questions)
+    validate_confirmatory_question_types(reviewed)
+    answerable = reviewed.loc[~reviewed["question_type"].eq("unanswerable")].copy()
+    if answerable.empty:
+        raise ValueError("No answerable reviewed questions are available.")
+
+    result_rows = _validate_paired_variants(results)
+    result_rows = result_rows.loc[
+        result_rows["question_id"].isin(answerable["question_id"].astype(str))
+    ]
+    expected_ids = set(answerable["question_id"].astype(str))
+    actual_ids = set(result_rows["question_id"])
+    if actual_ids != expected_ids:
+        missing_ids = sorted(expected_ids - actual_ids)
+        raise ValueError(
+            "Paired retrieval results must cover every reviewed answerable question; "
+            f"missing results for {missing_ids[:5]}."
+        )
+
+    answerable["question_id"] = answerable["question_id"].astype(str)
+    question_index = answerable.set_index("question_id")
+    rows: list[dict[str, Any]] = []
+    for question_id, group in result_rows.groupby("question_id", sort=True):
+        question = question_index.loc[question_id]
+        supporting_ids = set(json.loads(str(question["supporting_article_ids"])))
+        if not supporting_ids:
+            raise ValueError(
+                f"Answerable question {question_id!r} has no reviewed supporting IDs."
+            )
+        metrics: dict[str, dict[str, float]] = {}
+        for result in group.itertuples(index=False):
+            retrieved_ids = json.loads(str(result.retrieved_article_ids))
+            found = supporting_ids.intersection(retrieved_ids)
+            first_relevant_rank = next(
+                (
+                    rank
+                    for rank, article_id in enumerate(retrieved_ids, start=1)
+                    if article_id in supporting_ids
+                ),
+                None,
+            )
+            metrics[str(result.variant)] = {
+                "recall_at_k": len(found) / len(supporting_ids),
+                "mrr_at_k": (
+                    1.0 / first_relevant_rank if first_relevant_rank is not None else 0.0
+                ),
+                "k": float(len(retrieved_ids)),
+                "n_relevant_articles": float(len(supporting_ids)),
+                "n_retrieved_relevant": float(len(found)),
+            }
+        text_only = metrics["text_only"]
+        graph_expanded = metrics["graph_expanded"]
+        rows.append(
+            {
+                "question_id": question_id,
+                "question_type": str(question["question_type"]),
+                "k": int(max(text_only["k"], graph_expanded["k"])),
+                "n_relevant_articles": int(text_only["n_relevant_articles"]),
+                "n_retrieved_text_only": int(text_only["n_retrieved_relevant"]),
+                "n_retrieved_graph_expanded": int(
+                    graph_expanded["n_retrieved_relevant"]
+                ),
+                "recall_at_k_text_only": text_only["recall_at_k"],
+                "recall_at_k_graph_expanded": graph_expanded["recall_at_k"],
+                "recall_at_k_delta": (
+                    graph_expanded["recall_at_k"] - text_only["recall_at_k"]
+                ),
+                "mrr_at_k_text_only": text_only["mrr_at_k"],
+                "mrr_at_k_graph_expanded": graph_expanded["mrr_at_k"],
+                "mrr_at_k_delta": graph_expanded["mrr_at_k"] - text_only["mrr_at_k"],
+            }
+        )
     return pd.DataFrame(rows)
 
 
@@ -792,20 +1041,38 @@ def run_paired_answers(
 ) -> pd.DataFrame:
     """Run the same answer model on approved questions for both retrieval variants."""
     approved = approved_questions(questions, split="test")
+    validate_confirmatory_question_types(approved)
     existing = pd.read_csv(results_path) if results_path.is_file() else pd.DataFrame()
-    required_existing = {"question_id", "variant", "question_hash"}
+    required_existing = {
+        "question_id",
+        "variant",
+        "question_hash",
+        "answer_correctness_review",
+    }
     if not existing.empty and not required_existing.issubset(existing.columns):
-        raise ValueError("Existing Stage 3 results file has an incompatible schema.")
+        raise ValueError(
+            "Existing Stage 3 results file has an older or incompatible schema; "
+            "preserve it, then create a current-schema results file before continuing."
+        )
     if not existing.empty:
         existing["question_id"] = existing["question_id"].astype(str)
         existing["variant"] = existing["variant"].astype(str)
         existing["question_hash"] = existing["question_hash"].astype(str)
+        for column in (
+            "retrieval_latency_ms",
+            "generation_latency_ms",
+            "total_latency_ms",
+        ):
+            if column not in existing.columns:
+                existing[column] = "not_measured"
+        if "answer_prompt_version" not in existing.columns:
+            existing["answer_prompt_version"] = "legacy_prompt_unversioned"
 
     for question in approved.itertuples(index=False):
         question_id = str(question.question_id)
         question_text = str(question.question)
         question_hash = hashlib.sha256(
-            f"{question_id}:{question_text}".encode("utf-8")
+            f"{ANSWER_PROMPT_VERSION}:{question_id}:{question_text}".encode("utf-8")
         ).hexdigest()
         for variant, graph_enabled in (("text_only", False), ("graph_expanded", True)):
             cached = (
@@ -816,12 +1083,38 @@ def run_paired_answers(
             )
             if not existing.empty and cached.any():
                 continue
+            existing_pair = (
+                existing["question_id"].eq(question_id)
+                & existing["variant"].eq(variant)
+                if not existing.empty
+                else pd.Series(dtype=bool)
+            )
+            if not existing.empty and existing_pair.any():
+                review_fields = [
+                    "answer_correctness_review",
+                    "answer_faithfulness_review",
+                    "answer_relevance_review",
+                    "temporal_grounding_review",
+                    "citation_support_review",
+                    "abstention_review",
+                    "reviewer_id",
+                ]
+                row_reviews = existing.loc[existing_pair, review_fields].fillna("").astype(str)
+                if row_reviews.apply(lambda column: column.str.strip().ne("")).any().any():
+                    raise RuntimeError(
+                        f"Refusing to overwrite human-reviewed result for {question_id!r} "
+                        f"({variant}); its question or answer-prompt version changed."
+                    )
 
+            total_started = perf_counter()
+            retrieval_started = perf_counter()
             retrieved = retriever.retrieve(
                 question_text,
                 k=top_k,
                 graph_enabled=graph_enabled,
             )
+            retrieval_latency_ms = (perf_counter() - retrieval_started) * 1000
+            generation_started = perf_counter()
             generated = generate_rag_answer(
                 question_text,
                 retrieved,
@@ -829,12 +1122,15 @@ def run_paired_answers(
                 usage_path,
                 budget_usd=budget_usd,
             )
+            generation_latency_ms = (perf_counter() - generation_started) * 1000
             row = {
                 "question_id": question_id,
                 "question_hash": question_hash,
                 "split": str(question.split),
+                "question_type": str(question.question_type),
                 "variant": variant,
                 "answer_model": ANSWER_MODEL,
+                "answer_prompt_version": ANSWER_PROMPT_VERSION,
                 "answer": generated["answer"],
                 "citations": json.dumps(generated["citations"]),
                 "retrieved_article_ids": json.dumps(
@@ -846,9 +1142,15 @@ def run_paired_answers(
                 "graph_supported_in_top_k": sum(
                     item.graph_support > 0 for item in retrieved
                 ),
+                "retrieval_latency_ms": retrieval_latency_ms,
+                "generation_latency_ms": generation_latency_ms,
+                "total_latency_ms": (perf_counter() - total_started) * 1000,
+                "answer_correctness_review": "",
                 "answer_faithfulness_review": "",
                 "answer_relevance_review": "",
                 "temporal_grounding_review": "",
+                "citation_support_review": "",
+                "abstention_review": "",
                 "reviewer_id": "",
                 "reviewer_notes": "",
                 "generated_at_utc": datetime.now(timezone.utc).isoformat(),
@@ -869,42 +1171,72 @@ def retrieval_metrics(
     questions: pd.DataFrame,
     results: pd.DataFrame,
 ) -> pd.DataFrame:
-    """Compute Recall@k and reciprocal rank from reviewed supporting article IDs."""
-    reviewed = approved_questions(questions)
-    merged = results.merge(
-        reviewed[["question_id", "supporting_article_ids"]],
-        on="question_id",
-        how="inner",
-        validate="many_to_one",
-    )
-    if merged.empty:
-        raise ValueError("No reviewed questions match the supplied retrieval results.")
-    rows: list[dict[str, Any]] = []
-    for variant, group in merged.groupby("variant", sort=True):
-        recalls: list[float] = []
-        reciprocal_ranks: list[float] = []
-        for row in group.itertuples(index=False):
-            relevant = set(json.loads(row.supporting_article_ids))
-            retrieved_ids = json.loads(row.retrieved_article_ids)
-            hit_rank = next(
-                (
-                    rank
-                    for rank, article_id in enumerate(retrieved_ids, start=1)
-                    if article_id in relevant
-                ),
-                None,
-            )
-            recalls.append(float(any(article_id in relevant for article_id in retrieved_ids)))
-            reciprocal_ranks.append(1.0 / hit_rank if hit_rank is not None else 0.0)
+    """Aggregate paired Recall@k and MRR over reviewed answerable questions."""
+    paired = paired_retrieval_comparison(questions, results)
+    rows = []
+    for variant, suffix in (
+        ("text_only", "text_only"),
+        ("graph_expanded", "graph_expanded"),
+    ):
         rows.append(
             {
                 "variant": variant,
-                "n_questions": len(group),
-                "recall_at_k": float(np.mean(recalls)),
-                "mrr_at_k": float(np.mean(reciprocal_ranks)),
-                "k": max(len(json.loads(value)) for value in group["retrieved_article_ids"]),
+                "n_questions": len(paired),
+                "recall_at_k": float(paired[f"recall_at_k_{suffix}"].mean()),
+                "mrr_at_k": float(paired[f"mrr_at_k_{suffix}"].mean()),
+                "k": int(paired["k"].max()),
             }
         )
+    return pd.DataFrame(rows)
+
+
+def retrieval_latency_metrics(
+    questions: pd.DataFrame,
+    retriever: TfidfGraphRetriever,
+    top_k: int = 5,
+    repetitions: int = 3,
+) -> pd.DataFrame:
+    """Measure local retrieval latency per reviewed question, excluding generation."""
+    if questions.empty:
+        raise ValueError("At least one reviewed question is required for latency measurement.")
+    if top_k < 1:
+        raise ValueError("top_k must be positive.")
+    if repetitions < 1:
+        raise ValueError("repetitions must be positive.")
+    required = {"question_id", "question", "question_type"}
+    missing = required - set(questions.columns)
+    if missing:
+        raise ValueError(
+            f"Latency questions are missing required columns: {sorted(missing)}."
+        )
+
+    rows: list[dict[str, Any]] = []
+    for question in questions.itertuples(index=False):
+        question_text = str(question.question)
+        for variant, graph_enabled in (("text_only", False), ("graph_expanded", True)):
+            measurements: list[float] = []
+            for repetition in range(repetitions + 1):
+                started = perf_counter()
+                retriever.retrieve(
+                    question_text,
+                    k=top_k,
+                    graph_enabled=graph_enabled,
+                )
+                elapsed_ms = (perf_counter() - started) * 1000
+                if repetition > 0:
+                    measurements.append(elapsed_ms)
+            rows.append(
+                {
+                    "question_id": str(question.question_id),
+                    "question_type": str(question.question_type),
+                    "variant": variant,
+                    "top_k": top_k,
+                    "warmup_runs": 1,
+                    "timed_runs": repetitions,
+                    "median_retrieval_latency_ms": float(np.median(measurements)),
+                    "mean_retrieval_latency_ms": float(np.mean(measurements)),
+                }
+            )
     return pd.DataFrame(rows)
 
 
@@ -914,6 +1246,7 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
         raise ValueError("No answer results are available for human review aggregation.")
     normalized_results = results.copy()
     review_columns = {
+        "answer_correctness_review": {"correct", "partially_correct", "incorrect"},
         "answer_faithfulness_review": {"supported", "partially_supported", "unsupported"},
         "answer_relevance_review": {"relevant", "partially_relevant", "irrelevant"},
         "temporal_grounding_review": {
@@ -922,8 +1255,25 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
             "unsupported",
             "not_applicable",
         },
+        "citation_support_review": {
+            "all_cited_claims_supported",
+            "some_cited_claims_unsupported",
+            "no_cited_claim_supported",
+            "no_citations",
+        },
+        "abstention_review": {
+            "correct_abstention",
+            "incorrect_abstention",
+            "not_applicable",
+        },
     }
-    required = {"variant", "reviewer_id", *review_columns}
+    required = {
+        "question_id",
+        "variant",
+        "question_type",
+        "reviewer_id",
+        *review_columns,
+    }
     missing = required - set(results.columns)
     if missing:
         raise ValueError(f"Answer results are missing review fields: {sorted(missing)}")
@@ -942,14 +1292,39 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
     )
     if normalized_results["reviewer_id"].eq("").any():
         raise RuntimeError("Every reviewed answer needs a reviewer_id.")
+    normalized_results = _validate_paired_variants(normalized_results)
+    normalized_results["question_type"] = (
+        normalized_results["question_type"].fillna("").astype(str).str.strip()
+    )
+    question_types = normalized_results["question_type"]
+    if question_types.eq("").any():
+        raise RuntimeError("Every reviewed answer needs a question_type.")
+    unanswerable = question_types.eq("unanswerable")
+    abstention = normalized_results["abstention_review"]
+    if (unanswerable & abstention.eq("not_applicable")).any() or (
+        ~unanswerable & ~abstention.eq("not_applicable")
+    ).any():
+        raise RuntimeError(
+            "Use abstention labels only for unanswerable questions; mark other types "
+            "not_applicable."
+        )
 
     rows: list[dict[str, Any]] = []
     for variant, group in normalized_results.groupby("variant", sort=True):
         temporal = group.loc[group["temporal_grounding_review"].ne("not_applicable")]
+        cited = group.loc[group["citation_support_review"].ne("no_citations")]
+        unanswerable_group = group.loc[group["question_type"].eq("unanswerable")]
+        correctness_scores = group["answer_correctness_review"].map(
+            {"correct": 1.0, "partially_correct": 0.5, "incorrect": 0.0}
+        )
         rows.append(
             {
                 "variant": variant,
                 "n_answers": len(group),
+                "correctness_rate": float(
+                    group["answer_correctness_review"].eq("correct").mean()
+                ),
+                "mean_correctness_score": float(correctness_scores.mean()),
                 "faithfulness_supported_rate": float(
                     group["answer_faithfulness_review"].eq("supported").mean()
                 ),
@@ -962,6 +1337,151 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
                     if not temporal.empty
                     else np.nan
                 ),
+                "n_answers_with_citations": len(cited),
+                "all_citations_supported_rate": (
+                    float(
+                        cited["citation_support_review"].eq(
+                            "all_cited_claims_supported"
+                        ).mean()
+                    )
+                    if not cited.empty
+                    else np.nan
+                ),
+                "n_unanswerable": len(unanswerable_group),
+                "correct_abstention_rate": (
+                    float(
+                        unanswerable_group["abstention_review"].eq(
+                            "correct_abstention"
+                        ).mean()
+                    )
+                    if not unanswerable_group.empty
+                    else np.nan
+                ),
+            }
+        )
+    return pd.DataFrame(rows)
+
+
+def paired_answer_quality_comparison(results: pd.DataFrame) -> pd.DataFrame:
+    """Return per-question paired human scores for correctness and evidence quality."""
+    if not answer_reviews_complete(results):
+        raise RuntimeError(
+            "Paired answer comparison requires complete human answer reviews."
+        )
+    normalized = results.copy()
+    normalized["question_id"] = normalized["question_id"].astype(str)
+    score_maps = {
+        "correctness": {"correct": 1.0, "partially_correct": 0.5, "incorrect": 0.0},
+        "faithfulness": {
+            "supported": 1.0,
+            "partially_supported": 0.5,
+            "unsupported": 0.0,
+        },
+        "relevance": {"relevant": 1.0, "partially_relevant": 0.5, "irrelevant": 0.0},
+        "temporal_grounding": {
+            "supported": 1.0,
+            "partially_supported": 0.5,
+            "unsupported": 0.0,
+            "not_applicable": np.nan,
+        },
+        "citation_support": {
+            "all_cited_claims_supported": 1.0,
+            "some_cited_claims_unsupported": 0.5,
+            "no_cited_claim_supported": 0.0,
+            "no_citations": 0.0,
+        },
+        "abstention": {
+            "correct_abstention": 1.0,
+            "incorrect_abstention": 0.0,
+            "not_applicable": np.nan,
+        },
+    }
+    source_columns = {
+        "correctness": "answer_correctness_review",
+        "faithfulness": "answer_faithfulness_review",
+        "relevance": "answer_relevance_review",
+        "temporal_grounding": "temporal_grounding_review",
+        "citation_support": "citation_support_review",
+        "abstention": "abstention_review",
+    }
+    for metric, column in source_columns.items():
+        normalized[column] = (
+            normalized[column].fillna("").astype(str).str.strip()
+        )
+        normalized[f"{metric}_score"] = normalized[column].map(score_maps[metric])
+
+    wide = normalized.pivot(
+        index=["question_id", "question_type"],
+        columns="variant",
+        values=[f"{metric}_score" for metric in score_maps],
+    )
+    rows: list[dict[str, Any]] = []
+    for (question_id, question_type), values in wide.iterrows():
+        row: dict[str, Any] = {
+            "question_id": question_id,
+            "question_type": question_type,
+        }
+        for metric in score_maps:
+            text_score = values[(f"{metric}_score", "text_only")]
+            graph_score = values[(f"{metric}_score", "graph_expanded")]
+            row[f"{metric}_text_only"] = text_score
+            row[f"{metric}_graph_expanded"] = graph_score
+            row[f"{metric}_delta"] = (
+                graph_score - text_score
+                if pd.notna(text_score) and pd.notna(graph_score)
+                else np.nan
+            )
+        rows.append(row)
+    return pd.DataFrame(rows)
+
+
+def paired_bootstrap_intervals(
+    paired: pd.DataFrame,
+    metric_deltas: dict[str, str],
+    sample_count: int = 10_000,
+    seed: int = 20261104,
+) -> pd.DataFrame:
+    """Estimate percentile intervals for mean paired deltas by resampling questions."""
+    if paired.empty:
+        raise ValueError("Paired rows are required to estimate uncertainty.")
+    if sample_count < 1:
+        raise ValueError("sample_count must be positive.")
+    if not metric_deltas:
+        raise ValueError("At least one metric delta column is required.")
+    missing = set(metric_deltas.values()) - set(paired.columns)
+    if missing:
+        raise ValueError(f"Paired results are missing delta columns: {sorted(missing)}")
+    if "question_id" in paired:
+        if paired["question_id"].astype(str).duplicated().any():
+            raise ValueError("Bootstrap input must contain one paired row per question.")
+        question_count = paired["question_id"].nunique()
+    else:
+        question_count = len(paired)
+    if question_count < 2:
+        raise ValueError("At least two paired questions are required for an interval.")
+
+    generator = np.random.default_rng(seed)
+    rows: list[dict[str, Any]] = []
+    for metric, delta_column in metric_deltas.items():
+        deltas = pd.to_numeric(paired[delta_column], errors="raise").to_numpy(
+            dtype=float
+        )
+        if not np.isfinite(deltas).all():
+            raise ValueError(f"Metric {metric!r} contains non-finite paired deltas.")
+        bootstrap_means = np.empty(sample_count, dtype=float)
+        for index in range(sample_count):
+            sample_indices = generator.integers(0, len(deltas), size=len(deltas))
+            bootstrap_means[index] = float(deltas[sample_indices].mean())
+        rows.append(
+            {
+                "metric": metric,
+                "n_pairs": question_count,
+                "mean_delta_graph_minus_text": float(deltas.mean()),
+                "ci_95_low": float(np.quantile(bootstrap_means, 0.025)),
+                "ci_95_high": float(np.quantile(bootstrap_means, 0.975)),
+                "method": "paired percentile bootstrap over questions",
+                "bootstrap_samples": sample_count,
+                "seed": seed,
             }
         )
     return pd.DataFrame(rows)
@@ -970,6 +1490,7 @@ def answer_quality_metrics(results: pd.DataFrame) -> pd.DataFrame:
 def answer_reviews_complete(results: pd.DataFrame) -> bool:
     """Return whether every answer has a valid, attributable human review."""
     review_columns = {
+        "answer_correctness_review": {"correct", "partially_correct", "incorrect"},
         "answer_faithfulness_review": {"supported", "partially_supported", "unsupported"},
         "answer_relevance_review": {"relevant", "partially_relevant", "irrelevant"},
         "temporal_grounding_review": {
@@ -978,15 +1499,41 @@ def answer_reviews_complete(results: pd.DataFrame) -> bool:
             "unsupported",
             "not_applicable",
         },
+        "citation_support_review": {
+            "all_cited_claims_supported",
+            "some_cited_claims_unsupported",
+            "no_cited_claim_supported",
+            "no_citations",
+        },
+        "abstention_review": {
+            "correct_abstention",
+            "incorrect_abstention",
+            "not_applicable",
+        },
     }
-    required = {"reviewer_id", *review_columns}
+    required = {"question_id", "variant", "reviewer_id", "question_type", *review_columns}
     if results.empty or not required.issubset(results.columns):
         return False
     for column, allowed in review_columns.items():
         values = results[column].fillna("").astype(str).str.strip()
         if values.eq("").any() or not set(values).issubset(allowed):
             return False
-    return not results["reviewer_id"].fillna("").astype(str).str.strip().eq("").any()
+    if results["reviewer_id"].fillna("").astype(str).str.strip().eq("").any():
+        return False
+    try:
+        _validate_paired_variants(results)
+    except ValueError:
+        return False
+    question_types = results["question_type"].fillna("").astype(str).str.strip()
+    if question_types.eq("").any():
+        return False
+    unanswerable = question_types.eq("unanswerable")
+    abstention = results["abstention_review"].fillna("").astype(str).str.strip()
+    if (unanswerable & abstention.eq("not_applicable")).any() or (
+        ~unanswerable & ~abstention.eq("not_applicable")
+    ).any():
+        return False
+    return True
 
 
 def cooccurrence_reviews_complete(reviews: pd.DataFrame) -> bool:
@@ -1027,3 +1574,79 @@ def cooccurrence_reviews_complete(reviews: pd.DataFrame) -> bool:
     return not (
         unsupported & normalized["review_notes"].eq("")
     ).any()
+
+
+def cooccurrence_review_metrics(reviews: pd.DataFrame) -> pd.DataFrame:
+    """Summarize reviewed entity links and source-level co-mention support."""
+    if not cooccurrence_reviews_complete(reviews):
+        raise RuntimeError(
+            "Co-occurrence review metrics require complete, attributable human labels."
+        )
+    normalized = reviews.copy()
+    for column in (
+        "entity_a_review",
+        "entity_b_review",
+        "source_cooccurrence_review",
+    ):
+        normalized[column] = normalized[column].fillna("").astype(str).str.strip()
+
+    entity_a_determinate = normalized["entity_a_review"].ne("uncertain")
+    entity_b_determinate = normalized["entity_b_review"].ne("uncertain")
+    source_determinate = normalized["source_cooccurrence_review"].ne("unclear")
+    all_determinate = (
+        entity_a_determinate & entity_b_determinate & source_determinate
+    )
+    fully_supported = (
+        normalized["entity_a_review"].eq("correct")
+        & normalized["entity_b_review"].eq("correct")
+        & normalized["source_cooccurrence_review"].eq("both_mentioned")
+    )
+    rows = len(normalized)
+    determinate_rows = int(all_determinate.sum())
+    return pd.DataFrame(
+        [
+            {
+                "n_edges_reviewed": rows,
+                "n_entity_a_determinate": int(entity_a_determinate.sum()),
+                "entity_a_link_correct_rate": (
+                    float(
+                        normalized.loc[entity_a_determinate, "entity_a_review"]
+                        .eq("correct")
+                        .mean()
+                    )
+                    if entity_a_determinate.any()
+                    else np.nan
+                ),
+                "n_entity_b_determinate": int(entity_b_determinate.sum()),
+                "entity_b_link_correct_rate": (
+                    float(
+                        normalized.loc[entity_b_determinate, "entity_b_review"]
+                        .eq("correct")
+                        .mean()
+                    )
+                    if entity_b_determinate.any()
+                    else np.nan
+                ),
+                "n_source_determinate": int(source_determinate.sum()),
+                "source_both_mentioned_rate": (
+                    float(
+                        normalized.loc[
+                            source_determinate, "source_cooccurrence_review"
+                        ]
+                        .eq("both_mentioned")
+                        .mean()
+                    )
+                    if source_determinate.any()
+                    else np.nan
+                ),
+                "n_all_fields_determinate": determinate_rows,
+                "n_fully_supported_edges": int(fully_supported.sum()),
+                "fully_supported_rate_all_reviewed": float(fully_supported.mean()),
+                "fully_supported_rate_determinate": (
+                    float(fully_supported[all_determinate].mean())
+                    if determinate_rows
+                    else np.nan
+                ),
+            }
+        ]
+    )

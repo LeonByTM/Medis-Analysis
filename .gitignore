@@ -12,6 +12,10 @@ __pycache__/
 # Large regenerable data files (the notebook recreates them; GitHub rejects files over 100 MB)
 data/processed/*.parquet
 audits/STAGE1_IMPROVEMENT_PLAN.md
+audits/Stage3_final_checks.md
+audits/where_we_are_stuck.md
+stage3_rag.py
+tests/test_stage3_rag.py
 outputs/models/
 CTL/
 where we are stuck.md
